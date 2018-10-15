@@ -24,7 +24,9 @@ class CreateUsersTable extends Migration
             $table->boolean('is_classteacher')->default(0)->comment('Applies only to teachers which are leading a class.');
             $table->integer('grade_id')->default(0);
             $table->index('grade_id');
-            $table->integer('family_link_id')->default(0);
+            $table->integer('school_id')->default(0);
+            $table->index('school_id');
+            $table->integer('family_link_id')->default(0)->comment('Applies only to parents and students.');
             $table->index('family_link_id');
             $table->boolean('info_downloaded')->default(0)->comment('GDPR');
             $table->boolean('verified')->default(0);
