@@ -13,7 +13,7 @@ class ClassbookController extends Controller
      */
     public function index()
     {
-        //
+        // Here is the index page
     }
 
     /**
