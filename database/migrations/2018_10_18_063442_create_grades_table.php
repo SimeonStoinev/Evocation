@@ -18,6 +18,8 @@ class CreateGradesTable extends Migration
             $table->longText('students');
             $table->integer('classteacher_id');
             $table->index('classteacher_id');
+            $table->integer('classbook_id');
+            $table->index('classbook_id');
             $table->integer('school_id');
             $table->index('school_id');
             $table->timestamps();

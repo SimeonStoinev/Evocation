@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClassbooksTable extends Migration
+class CreateAbsencesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,8 @@ class CreateClassbooksTable extends Migration
      */
     public function up()
     {
-        Schema::create('classbooks', function (Blueprint $table) {
+        Schema::create('absences', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('school_id');
-            $table->index('school_id');
-            $table->integer('grade_id');
-            $table->index('grade_id');
-            $table->integer('cirriculum_id');
-            $table->index('cirriculum_id');
             $table->timestamps();
         });
     }
@@ -32,6 +26,6 @@ class CreateClassbooksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classbooks');
+        Schema::dropIfExists('absences');
     }
 }
