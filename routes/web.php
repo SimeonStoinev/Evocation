@@ -18,3 +18,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resources([
+    'absences' => 'AbsenceController',
+    'cirricula' => 'CirriculumController',
+    'classbooks' => 'ClassbookController',
+    'entries' => 'EntryController',
+    'exams' => 'ExamController',
+    'grades' => 'GradeController',
+    'leaves' => 'LeaveController',
+    'polls' => 'PollController',
+    'presentations' => 'PresentationController',
+    'schools' => 'SchoolController'
+]);
