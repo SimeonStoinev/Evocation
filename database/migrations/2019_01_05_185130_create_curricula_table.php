@@ -17,6 +17,11 @@ class CreateCurriculaTable extends Migration
             $table->increments('id');
             $table->integer('grade_id');
             $table->index('grade_id');
+            $table->integer('school_id');
+            $table->index('school_id');
+            $table->json('lesson_timeRanges');
+            $table->json('lesson_subject_ids');
+            $table->json('lesson_teacher_ids');
             $table->timestamps();
         });
     }

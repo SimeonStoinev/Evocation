@@ -15,13 +15,14 @@ class CreateGradesTable extends Migration
     {
         Schema::create('grades', function (Blueprint $table) {
             $table->increments('id');
-            $table->longText('students');
-            $table->integer('classteacher_id');
+            $table->string('title');
+            $table->json('student_ids')->nullable();
+            $table->integer('classteacher_id')->default(0);
             $table->index('classteacher_id');
-            $table->integer('classbook_id');
-            $table->index('classbook_id');
-            $table->integer('school_id');
+            $table->integer('school_id')->default(0);
             $table->index('school_id');
+            $table->integer('curriculum_id')->default(0);
+            $table->index('curriculum_id');
             $table->timestamps();
         });
     }

@@ -55,7 +55,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'rank' => [
                 'required',
-                Rule::in(['headmaster', 'subheadmaster', 'teacher', 'student', 'parent'])
+                Rule::in(['subheadmaster', 'teacher', 'student', 'parent'])
             ],
             'password' => 'required|string|min:6|confirmed',
         ]);

@@ -21,7 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resources([
     'absences' => 'AbsenceController',
-    'cirricula' => 'CirriculumController',
+    'cirricula' => 'CurriculumController',
     'classbooks' => 'ClassbookController',
     'entries' => 'EntryController',
     'exams' => 'ExamController',

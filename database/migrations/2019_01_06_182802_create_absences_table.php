@@ -15,6 +15,12 @@ class CreateAbsencesTable extends Migration
     {
         Schema::create('absences', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id');
+            $table->index('user_id');
+            $table->integer('grade_id');
+            $table->index('grade_id');
+            $table->integer('school_id');
+            $table->index('school_id');
             $table->timestamps();
         });
     }

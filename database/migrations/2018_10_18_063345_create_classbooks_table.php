@@ -19,8 +19,8 @@ class CreateClassbooksTable extends Migration
             $table->index('school_id');
             $table->integer('grade_id');
             $table->index('grade_id');
-            $table->integer('cirriculum_id');
-            $table->index('cirriculum_id');
+            $table->integer('curriculum_id');
+            $table->index('curriculum_id');
             $table->timestamps();
         });
     }

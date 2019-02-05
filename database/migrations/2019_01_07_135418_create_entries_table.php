@@ -15,6 +15,14 @@ class CreateEntriesTable extends Migration
     {
         Schema::create('entries', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->string('family');
+            $table->integer('user_id');
+            $table->index('user_id');
+            $table->integer('grade_id')->default(0);
+            $table->index('grade_id');
+            $table->integer('school_id');
+            $table->index('school_id');
             $table->timestamps();
         });
     }
