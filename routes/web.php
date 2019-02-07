@@ -17,6 +17,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Overwriting the default register index route
+//Route::get('/register', 'Auth\RegisterController@index')->name('register');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resources([

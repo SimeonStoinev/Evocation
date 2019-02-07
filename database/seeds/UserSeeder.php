@@ -12,6 +12,14 @@ class UserSeeder extends Seeder
     /**
      * Run the database seeds.
      *
+     * Truncates all tables that have something to do with this file.
+     * Creates a hardcoded Admin record in Users table.
+     * Creates a school record and updates all of it's fields in the end of the function.
+     * Calls protected function createHeadmasterAndSubheadmasters
+     * Creates grades and fills them with students, parents and a classteacher.
+     * Creates legit curricula and matches them to the grades.
+     * Updates the grades with a curriculum, school ID and JSON students.
+     *
      * @return void
      */
     public function run()
@@ -84,7 +92,7 @@ class UserSeeder extends Seeder
                 'title' => $gradeTitlesArray[$i]
             ])->id;
 
-            // Classteacher
+            // Creates a classteacher and matches it with the grade ID
             $classteacherID = factory(\App\User::class)->create([
                 'rank' => 'teacher',
                 'is_classteacher' => 1,
@@ -117,18 +125,21 @@ class UserSeeder extends Seeder
                 User::find($studentID)->update(['family_link_id' => $parentID]);
             }
 
-            $teachersResult = DB::table('users')->orderBy('id')->where('rank', 'teacher')->select('id')->get()->toArray();
+            // Gets all ids of the teachers in the school
+            $teachersResult = DB::table('users')->orderBy('id')->where(['rank' => 'teacher', 'school_id' => $schoolID])->select('id')->get()->toArray();
             $teachers = [];
             foreach ($teachersResult as $row) {
                 $teachers[] = $row->id;
             }
 
+            // Gets all ids of the subjects
             $subjectsResult = DB::table('subjects')->orderBy('id')->select('id')->get()->toArray();
             $subjects = [];
             foreach ($subjectsResult as $row) {
                 $subjects[] = $row->id;
             }
 
+            // This if cuts the curricula in a half - being able to create 2 equally populated shifts
             if ($i < 15) {
                 // 1st curriculum shift
                 $timeRanges = [
@@ -185,9 +196,11 @@ class UserSeeder extends Seeder
             ]);
         }
 
+        // Updates the school's fields that got left with the default '0' value.
         $schoolStudentsCount = DB::table('users')->where(['school_id' => $schoolID, 'rank' => 'student'])->count();
         $schoolTeachersCount = DB::table('users')->where(['school_id' => $schoolID, 'rank' => 'teacher'])->count();
         $schoolGradesCount = DB::table('grades')->where('school_id', $schoolID)->count();
+
         School::find($schoolID)->update([
             'grades_number' => $schoolGradesCount,
             'students_number' => $schoolStudentsCount,

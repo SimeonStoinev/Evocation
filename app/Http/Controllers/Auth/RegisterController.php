@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Grade;
+use App\School;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -42,6 +44,27 @@ class RegisterController extends Controller
     }
 
     /**
+     * Takes care of displaying the register page and the passing down of the proper data to the view.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showRegistrationForm () {
+        $schools = School::all()->toArray();
+        $gradesBySchool = [];
+
+        foreach ($schools as $row) {
+            $gradesBySchool[$row['id']] = Grade::gradesBySchoolID($row['id'])->get()->toArray();
+        }
+
+        $data = [
+            'schools' => $schools,
+            'grades' => $gradesBySchool
+        ];
+
+        return view('auth.register', $data);
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -57,6 +80,8 @@ class RegisterController extends Controller
                 'required',
                 Rule::in(['subheadmaster', 'teacher', 'student', 'parent'])
             ],
+            'school' => 'required|string|max:10',
+            'grade' => 'string|max:10',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -69,11 +94,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        //dd($data);
         return User::create([
+            'card_id' => str_random(16),
             'name' => $data['name'],
             'family' => $data['family'],
             'email' => $data['email'],
             'rank' => $data['rank'],
+            'school_id' => $data['school'],
+            'grade_id' => $data['grade'],
             'password' => Hash::make($data['password'])
         ]);
     }

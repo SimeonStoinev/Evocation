@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
+{{--@php var_dump($grades); die(); @endphp--}}
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -57,18 +60,52 @@
                             <label for="rank" class="col-md-4 col-form-label text-md-right">{{ __('Вие сте:') }}</label>
 
                             <div class="col-md-6">
-                                <select id="rank" name="rank" class="form-control{{ $errors->has('rank') ? ' is-invalid' : '' }}" required>
+                                <select id="rank" name="rank" class="form-control{{ $errors->has('rank') ? ' is-invalid' : '' }}" onchange="rankRegisterForm({{ json_encode($grades) }})" required>
                                     <option>Моля изберете</option>
-                                    <option id="headmaster_rank" value="headmaster">Директор</option>
                                     <option value="subheadmaster">Зам. директор</option>
                                     <option value="teacher">Учител</option>
-                                    <option id="student_rank" value="student">Ученик</option>
-                                    <option id="parent_rank" value="parent">Родител</option>
+                                    <option value="student">Ученик</option>
+                                    <option value="parent">Родител</option>
                                 </select>
 
                                 @if ($errors->has('rank'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('rank') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="school" class="col-md-4 col-form-label text-md-right">{{ __('Училище:') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="school" name="school" class="form-control{{ $errors->has('school') ? ' is-invalid' : '' }}" onchange="schoolRegisterForm($(this), {{ json_encode($grades) }})" required>
+                                    <option value="0">Моля изберете</option>
+                                    @foreach($schools as $row)
+                                        <option value="{{ $row['id'] }}">{{ $row['title'] }}</option>
+                                    @endforeach
+                                </select>
+
+                                @if ($errors->has('school'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('school') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div id="gradesWrapper" class="form-group row">
+                            <label for="grade" class="col-md-4 col-form-label text-md-right">{{ __('Клас:') }}</label>
+
+                            <div class="col-md-6">
+                                <select id="grade" name="grade" class="form-control{{ $errors->has('grade') ? ' is-invalid' : '' }}" required>
+                                    <option value="0">Моля изберете</option>
+                                </select>
+
+                                @if ($errors->has('grade'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('grade') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -99,7 +136,7 @@
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    Регистрация
+                                    {{ __('Регистрация') }}
                                 </button>
                             </div>
                         </div>
@@ -109,4 +146,5 @@
         </div>
     </div>
 </div>
+
 @endsection
