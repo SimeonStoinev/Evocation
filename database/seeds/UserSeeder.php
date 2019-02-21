@@ -6,6 +6,8 @@ use App\User;
 use App\School;
 use App\Grade;
 use App\Curriculum;
+use App\Subject;
+use App\Lesson;
 
 class UserSeeder extends Seeder
 {
@@ -28,6 +30,7 @@ class UserSeeder extends Seeder
         School::truncate();
         Grade::truncate();
         Curriculum::truncate();
+        Lesson::truncate();
 
         // Inserts a hard-coded admin user
         User::create([
@@ -133,13 +136,13 @@ class UserSeeder extends Seeder
             }
 
             // Gets all ids of the subjects
-            $subjectsResult = DB::table('subjects')->orderBy('id')->select('id')->get()->toArray();
+            $subjectsResult = Subject::where('title', '!=', '')->orderBy('id')->select('title')->get()->toArray();
             $subjects = [];
             foreach ($subjectsResult as $row) {
-                $subjects[] = $row->id;
+                $subjects[] = $row['title'];
             }
 
-            // This if cuts the curricula in a half - being able to create 2 equally populated shifts
+            // This if statement cuts the curricula in a half - being able to create 2 equally populated shifts
             if ($i < 15) {
                 // 1st curriculum shift
                 $timeRanges = [
@@ -152,16 +155,32 @@ class UserSeeder extends Seeder
                     '12:30 - 13:10'
                 ];
 
-                $subjectIDs = array_random($subjects, 7);
+                $shift = 1;
+                $curriculumData = [];
 
-                $teacherIDs = array_random($teachers, 7);
+                for ($dayCount = 1; $dayCount <= 5; $dayCount++) {
+                    // Decides the day of the week based on the number in the foreach.
+                    if($dayCount==1){$day='Mon';}elseif($dayCount==2){$day='Tue';}elseif($dayCount==3){$day='Wed';}elseif($dayCount==4){$day='Thu';}elseif($dayCount==5){$day='Fri';}
+
+                    for ($c = 0; $c <= 6; $c++) {
+                        $timeRange = explode(' - ', $timeRanges[$c]);
+
+                        $lesson = new Lesson();
+                        $lesson->title = array_random($subjects);
+                        $lesson->grade_id = $gradeID;
+                        $lesson->teacher_id = array_random($teachers);
+                        $lesson->time_range_from = $timeRange[0];
+                        $lesson->time_range_to = $timeRange[1];
+                        $lesson->day = $day;
+                        $lesson->save();
+
+                        $curriculumData[$day][] = $lesson->id;
+                    }
+                }
 
                 $curriculumID = factory(Curriculum::class)->create([
                     'grade_id' => $gradeID,
-                    'school_id' => $schoolID,
-                    'lesson_timeRanges' => json_encode($timeRanges),
-                    'lesson_subject_ids' => json_encode($subjectIDs),
-                    'lesson_teacher_ids' => json_encode($teacherIDs)
+                    'lessons_data' => json_encode($curriculumData)
                 ])->id;
             } else {
                 // 2nd curriculum shift
@@ -175,16 +194,32 @@ class UserSeeder extends Seeder
                     '18:30 - 19:10'
                 ];
 
-                $subjectIDs = array_random($subjects, 7);
+                $shift = 2;
+                $curriculumData = [];
 
-                $teacherIDs = array_random($teachers, 7);
+                for ($dayCount = 1; $dayCount <= 5; $dayCount++) {
+                    // Decides the day of the week based on the number in the foreach.
+                    if($dayCount==1){$day='Mon';}elseif($dayCount==2){$day='Tue';}elseif($dayCount==3){$day='Wed';}elseif($dayCount==4){$day='Thu';}elseif($dayCount==5){$day='Fri';}
+
+                    for ($c = 0; $c <= 6; $c++) {
+                        $timeRange = explode(' - ', $timeRanges[$c]);
+
+                        $lesson = new Lesson();
+                        $lesson->title = array_random($subjects);
+                        $lesson->grade_id = $gradeID;
+                        $lesson->teacher_id = array_random($teachers);
+                        $lesson->time_range_from = $timeRange[0];
+                        $lesson->time_range_to = $timeRange[1];
+                        $lesson->day = $day;
+                        $lesson->save();
+
+                        $curriculumData[$day][] = $lesson->id;
+                    }
+                }
 
                 $curriculumID = factory(Curriculum::class)->create([
                     'grade_id' => $gradeID,
-                    'school_id' => $schoolID,
-                    'lesson_timeRanges' => json_encode($timeRanges),
-                    'lesson_subject_ids' => json_encode($subjectIDs),
-                    'lesson_teacher_ids' => json_encode($teacherIDs)
+                    'lessons_data' => json_encode($curriculumData)
                 ])->id;
             }
 
@@ -192,7 +227,8 @@ class UserSeeder extends Seeder
                 'student_ids' => json_encode($studentIDsArray),
                 'classteacher_id' => $classteacherID,
                 'school_id' => $schoolID,
-                'curriculum_id' => $curriculumID
+                'curriculum_id' => $curriculumID,
+                'shift' => $shift
             ]);
         }
 

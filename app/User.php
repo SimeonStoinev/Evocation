@@ -28,4 +28,52 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @param $query
+     * @param $id
+     *
+     * Gets current (logged) user rank by id.
+     *
+     * @return mixed (string)
+     */
+    public function scopeGetCurrUserRank ($query, $id) {
+        return $query->where('id', $id)->select('rank');
+    }
+
+    /**
+     * @param $query
+     * @param $id
+     *
+     * Gets user's name and family by id.
+     *
+     * @return mixed
+     */
+    public function scopeGetUserFullName ($query, $id) {
+        return $query->where('id', $id)->select('name', 'family');
+    }
+
+    /**
+     * @param $query
+     * @param $cardID
+     *
+     * Gets user's id and rank by unique card ID.
+     *
+     * @return mixed
+     */
+    public function scopeGetUserByCardID ($query, $cardID) {
+        return $query->where('card_id', $cardID)->select('id', 'rank');
+    }
+
+    /**
+     * @param $query
+     * @param $id
+     *
+     * Gets user's id, grade_id and school_id - necessary for creating an absence.
+     *
+     * @return mixed
+     */
+    public function scopeGetUserGradeAndSchool ($query, $id) {
+        return $query->where('id', $id)->select('id', 'grade_id', 'school_id');
+    }
 }

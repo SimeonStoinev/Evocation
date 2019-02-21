@@ -23,3 +23,46 @@ function rankRegisterForm (grades) {
         $('#gradesWrapper').fadeOut(250);
     }
 }
+
+// Function used to make a DB record in the checkin_listeners table, AJAX request
+function openCheckinListener (gradeID, studentIDs, lessonID) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: "/checkins/",
+        type: "POST",
+        data:{
+            gradeID: gradeID,
+            studentIDs: studentIDs,
+            lessonID: lessonID
+        },
+        success: function(data){
+            location.reload();
+        }
+    });
+}
+
+// Function used to close checkin listener and make absence records for every student that haven't checked himself, AJAX request
+function closeCheckinListener (listenerID, lessonID) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: "/checkins/close/",
+        type: "POST",
+        data: {
+            listenerID: listenerID,
+            lessonID: lessonID
+        },
+        success: function (data) {
+            console.log('success');
+        }
+    });
+}

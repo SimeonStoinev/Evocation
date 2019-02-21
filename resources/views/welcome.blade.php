@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Evocation</title>
 
         <!-- Favicons -->
         <link href="{{ asset('img/favicon.png') }}" rel="icon">  <!-- add favicon in the folder later -->
@@ -26,12 +26,8 @@
         <link href="{{ asset('lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
 
         <link href="{{ asset('css/landing/style.css') }}" rel="stylesheet">
-
-
-
     </head>
     <body>
-
 
     <header id="header">
         <div class="container-fluid">
@@ -42,8 +38,8 @@
 
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
-                    <li class="menu-active"><a href="#facts">Регистрация</a></li>
-                    <li><a href="#prices">Вход</a></li>
+                    <li><a href="/login">Вход</a></li>
+                    <li class="menu-active"><a href="/register">Регистрация</a></li>
                 </ul>
             </nav>
         </div>
@@ -194,157 +190,157 @@
 
             </div>
         </section>
-        {{--<section id="portfolio"  class="section-bg" >--}}
-            {{--<div class="container">--}}
 
-                {{--<header class="section-header">--}}
-                    {{--<h3 class="section-title">Дизайни</h3>--}}
-                {{--</header>--}}
+        {{--<section id="portfolio"  class="section-bg" >
+            <div class="container">
 
-                {{--<div class="row">--}}
-                    {{--<div class="col-lg-12">--}}
-                        {{--<ul id="portfolio-flters">--}}
-                            {{--<li data-filter="*" class="filter-active">Всички</li>--}}
-                            {{--<li data-filter=".filter-app">Строги</li>--}}
-                            {{--<li data-filter=".filter-card">Забавни</li>--}}
-                            {{--<li data-filter=".filter-web">Тематични</li>--}}
-                        {{--</ul>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
+                <header class="section-header">
+                    <h3 class="section-title">Дизайни</h3>
+                </header>
 
-                {{--<div class="row portfolio-container">--}}
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul id="portfolio-flters">
+                            <li data-filter="*" class="filter-active">Всички</li>
+                            <li data-filter=".filter-app">Строги</li>
+                            <li data-filter=".filter-card">Забавни</li>
+                            <li data-filter=".filter-web">Тематични</li>
+                        </ul>
+                    </div>
+                </div>
 
-                    {{--<div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp">--}}
-                        {{--<div class="portfolio-wrap">--}}
-                            {{--<figure>--}}
-                                {{--<img src="img/portfolio/app1.jpg" class="img-fluid" alt="">--}}
-                                {{--<!-- <a href="img/portfolio/app1.jpg" data-lightbox="portfolio" data-title="App 1" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a> -->--}}
-                                {{--<a href="#" class="link-details">Избери</a>--}}
-                            {{--</figure>--}}
+                <div class="row portfolio-container">
 
-                            {{--<div class="portfolio-info">--}}
-                                {{--<h4><a href="#">Строго</a></h4>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp">
+                        <div class="portfolio-wrap">
+                            <figure>
+                                <img src="img/portfolio/app1.jpg" class="img-fluid" alt="">
+                                <!-- <a href="img/portfolio/app1.jpg" data-lightbox="portfolio" data-title="App 1" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a> -->
+                                <a href="#" class="link-details">Избери</a>
+                            </figure>
 
-                    {{--<div class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp" data-wow-delay="0.1s">--}}
-                        {{--<div class="portfolio-wrap">--}}
-                            {{--<figure>--}}
-                                {{--<img src="img/portfolio/web3.jpg" class="img-fluid" alt="">--}}
-                                {{--<!-- <a href="img/portfolio/web3.jpg" class="link-preview" data-lightbox="portfolio" data-title="Web 3" title="Preview"><i class="ion ion-eye"></i></a> -->--}}
-                                {{--<a href="#" class="link-details">Избери</a>--}}
-                            {{--</figure>--}}
+                            <div class="portfolio-info">
+                                <h4><a href="#">Строго</a></h4>
+                            </div>
+                        </div>
+                    </div>
 
-                            {{--<div class="portfolio-info">--}}
-                                {{--<h4><a href="#">Тематично</a></h4>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="portfolio-wrap">
+                            <figure>
+                                <img src="img/portfolio/web3.jpg" class="img-fluid" alt="">
+                                <!-- <a href="img/portfolio/web3.jpg" class="link-preview" data-lightbox="portfolio" data-title="Web 3" title="Preview"><i class="ion ion-eye"></i></a> -->
+                                <a href="#" class="link-details">Избери</a>
+                            </figure>
 
-                    {{--<div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" data-wow-delay="0.2s">--}}
-                        {{--<div class="portfolio-wrap">--}}
-                            {{--<figure>--}}
-                                {{--<img src="img/portfolio/app2.jpg" class="img-fluid" alt="">--}}
-                                {{--<!-- <a href="img/portfolio/app2.jpg" class="link-preview" data-lightbox="portfolio" data-title="App 2" title="Preview"><i class="ion ion-eye"></i></a> -->--}}
-                                {{--<a href="#" class="link-details">Избери</a>--}}
-                            {{--</figure>--}}
+                            <div class="portfolio-info">
+                                <h4><a href="#">Тематично</a></h4>
+                            </div>
+                        </div>
+                    </div>
 
-                            {{--<div class="portfolio-info">--}}
-                                {{--<h4><a href="#">По-строго</a></h4>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="portfolio-wrap">
+                            <figure>
+                                <img src="img/portfolio/app2.jpg" class="img-fluid" alt="">
+                                <!-- <a href="img/portfolio/app2.jpg" class="link-preview" data-lightbox="portfolio" data-title="App 2" title="Preview"><i class="ion ion-eye"></i></a> -->
+                                <a href="#" class="link-details">Избери</a>
+                            </figure>
 
-                    {{--<div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp">--}}
-                        {{--<div class="portfolio-wrap">--}}
-                            {{--<figure>--}}
-                                {{--<img src="img/portfolio/card2.jpg" class="img-fluid" alt="">--}}
-                                {{--<!--  <a href="img/portfolio/card2.jpg" class="link-preview" data-lightbox="portfolio" data-title="Card 2" title="Preview"><i class="ion ion-eye"></i></a> -->--}}
-                                {{--<a href="#" class="link-details">Избери</a>--}}
-                            {{--</figure>--}}
+                            <div class="portfolio-info">
+                                <h4><a href="#">По-строго</a></h4>
+                            </div>
+                        </div>
+                    </div>
 
-                            {{--<div class="portfolio-info">--}}
-                                {{--<h4><a href="#">Забавно</a></h4>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp">
+                        <div class="portfolio-wrap">
+                            <figure>
+                                <img src="img/portfolio/card2.jpg" class="img-fluid" alt="">
+                                <!--  <a href="img/portfolio/card2.jpg" class="link-preview" data-lightbox="portfolio" data-title="Card 2" title="Preview"><i class="ion ion-eye"></i></a> -->
+                                <a href="#" class="link-details">Избери</a>
+                            </figure>
 
-                    {{--<div class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp" data-wow-delay="0.1s">--}}
-                        {{--<div class="portfolio-wrap">--}}
-                            {{--<figure>--}}
-                                {{--<img src="img/portfolio/web2.jpg" class="img-fluid" alt="">--}}
-                                {{--<!--  <a href="img/portfolio/web2.jpg" class="link-preview" data-lightbox="portfolio" data-title="Web 2" title="Preview"><i class="ion ion-eye"></i></a> -->--}}
-                                {{--<a href="#" class="link-details">Избери</a>--}}
-                            {{--</figure>--}}
+                            <div class="portfolio-info">
+                                <h4><a href="#">Забавно</a></h4>
+                            </div>
+                        </div>
+                    </div>
 
-                            {{--<div class="portfolio-info">--}}
-                                {{--<h4><a href="#">По-тематично</a></h4>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="portfolio-wrap">
+                            <figure>
+                                <img src="img/portfolio/web2.jpg" class="img-fluid" alt="">
+                                <!--  <a href="img/portfolio/web2.jpg" class="link-preview" data-lightbox="portfolio" data-title="Web 2" title="Preview"><i class="ion ion-eye"></i></a> -->
+                                <a href="#" class="link-details">Избери</a>
+                            </figure>
 
-                    {{--<div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" data-wow-delay="0.2s">--}}
-                        {{--<div class="portfolio-wrap">--}}
-                            {{--<figure>--}}
-                                {{--<img src="img/portfolio/app3.jpg" class="img-fluid" alt="">--}}
-                                {{--<!--  <a href="img/portfolio/app3.jpg" class="link-preview" data-lightbox="portfolio" data-title="App 3" title="Preview"><i class="ion ion-eye"></i></a> -->--}}
-                                {{--<a href="#" class="link-details">Избери</a>--}}
-                            {{--</figure>--}}
+                            <div class="portfolio-info">
+                                <h4><a href="#">По-тематично</a></h4>
+                            </div>
+                        </div>
+                    </div>
 
-                            {{--<div class="portfolio-info">--}}
-                                {{--<h4><a href="#">Най-строго</a></h4>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="portfolio-wrap">
+                            <figure>
+                                <img src="img/portfolio/app3.jpg" class="img-fluid" alt="">
+                                <!--  <a href="img/portfolio/app3.jpg" class="link-preview" data-lightbox="portfolio" data-title="App 3" title="Preview"><i class="ion ion-eye"></i></a> -->
+                                <a href="#" class="link-details">Избери</a>
+                            </figure>
 
-                    {{--<div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp">--}}
-                        {{--<div class="portfolio-wrap">--}}
-                            {{--<figure>--}}
-                                {{--<img src="img/portfolio/card1.jpg" class="img-fluid" alt="">--}}
-                                {{--<!-- <a href="img/portfolio/card1.jpg" class="link-preview" data-lightbox="portfolio" data-title="Card 1" title="Preview"><i class="ion ion-eye"></i></a> -->--}}
-                                {{--<a href="#" class="link-details" title="More Details"><i class="ion ion-android-open"></i></a>--}}
-                            {{--</figure>--}}
+                            <div class="portfolio-info">
+                                <h4><a href="#">Най-строго</a></h4>
+                            </div>
+                        </div>
+                    </div>
 
-                            {{--<div class="portfolio-info">--}}
-                                {{--<h4><a href="#">По-забавно</a></h4>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp">
+                        <div class="portfolio-wrap">
+                            <figure>
+                                <img src="img/portfolio/card1.jpg" class="img-fluid" alt="">
+                                <!-- <a href="img/portfolio/card1.jpg" class="link-preview" data-lightbox="portfolio" data-title="Card 1" title="Preview"><i class="ion ion-eye"></i></a> -->
+                                <a href="#" class="link-details" title="More Details"><i class="ion ion-android-open"></i></a>
+                            </figure>
 
-                    {{--<div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp" data-wow-delay="0.1s">--}}
-                        {{--<div class="portfolio-wrap">--}}
-                            {{--<figure>--}}
-                                {{--<img src="img/portfolio/card3.jpg" class="img-fluid" alt="">--}}
-                                {{--<!-- <a href="img/portfolio/card3.jpg" class="link-preview" data-lightbox="portfolio" data-title="Card 3" title="Preview"><i class="ion ion-eye"></i></a> -->--}}
-                                {{--<a href="#" class="link-details" title="More Details"><i class="ion ion-android-open"></i></a>--}}
-                            {{--</figure>--}}
+                            <div class="portfolio-info">
+                                <h4><a href="#">По-забавно</a></h4>
+                            </div>
+                        </div>
+                    </div>
 
-                            {{--<div class="portfolio-info">--}}
-                                {{--<h4><a href="#">Най-забавно</a></h4>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="portfolio-wrap">
+                            <figure>
+                                <img src="img/portfolio/card3.jpg" class="img-fluid" alt="">
+                                <!-- <a href="img/portfolio/card3.jpg" class="link-preview" data-lightbox="portfolio" data-title="Card 3" title="Preview"><i class="ion ion-eye"></i></a> -->
+                                <a href="#" class="link-details" title="More Details"><i class="ion ion-android-open"></i></a>
+                            </figure>
 
-                    {{--<div class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp" data-wow-delay="0.2s">--}}
-                        {{--<div class="portfolio-wrap">--}}
-                            {{--<figure>--}}
-                                {{--<img src="img/portfolio/web1.jpg" class="img-fluid" alt="">--}}
-                                {{--<!-- <a href="img/portfolio/web1.jpg" class="link-preview" data-lightbox="portfolio" data-title="Web 1" title="Preview"><i class="ion ion-eye"></i></a> -->--}}
-                                {{--<a href="#" class="link-details" title="More Details"><i class="ion ion-android-open"></i></a>--}}
-                            {{--</figure>--}}
+                            <div class="portfolio-info">
+                                <h4><a href="#">Най-забавно</a></h4>
+                            </div>
+                        </div>
+                    </div>
 
-                            {{--<div class="portfolio-info">--}}
-                                {{--<h4><a href="#">Най-тематично</a></h4>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
+                    <div class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp" data-wow-delay="0.2s">
+                        <div class="portfolio-wrap">
+                            <figure>
+                                <img src="img/portfolio/web1.jpg" class="img-fluid" alt="">
+                                <!-- <a href="img/portfolio/web1.jpg" class="link-preview" data-lightbox="portfolio" data-title="Web 1" title="Preview"><i class="ion ion-eye"></i></a> -->
+                                <a href="#" class="link-details" title="More Details"><i class="ion ion-android-open"></i></a>
+                            </figure>
 
-                {{--</div>--}}
+                            <div class="portfolio-info">
+                                <h4><a href="#">Най-тематично</a></h4>
+                            </div>
+                        </div>
+                    </div>
 
-            {{--</div>--}}
-        {{--</section>--}}
+                </div>
 
+            </div>
+        </section>--}}
 
         <section id="contact" class="section-bg wow fadeInUp">
             <div class="container">
@@ -428,8 +424,8 @@
                     <div class="col-lg-4 col-md-6 footer-links">
                         <h4>Бърз достъп</h4>
                         <ul>
-                            <li><i class="ion-ios-arrow-right"></i> <a href="#intro">Регистрация</a></li>
-                            <li><i class="ion-ios-arrow-right"></i> <a href="featured-services">Вход</a></li>
+                            <li><i class="ion-ios-arrow-right"></i> <a href="/register">Регистрация</a></li>
+                            <li><i class="ion-ios-arrow-right"></i> <a href="/login">Вход</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-6 footer-contact">

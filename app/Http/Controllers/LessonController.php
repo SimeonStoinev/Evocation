@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Absence;
+use App\Lesson;
 use Illuminate\Http\Request;
 
-class AbsenceController extends Controller
+class LessonController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AbsenceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Absence  $absence
+     * @param  \App\Lesson  $lesson
      * @return \Illuminate\Http\Response
      */
-    public function show(Absence $absence)
+    public function show(Lesson $lesson)
     {
         //
     }
@@ -52,10 +52,10 @@ class AbsenceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Absence  $absence
+     * @param  \App\Lesson  $lesson
      * @return \Illuminate\Http\Response
      */
-    public function edit(Absence $absence)
+    public function edit(Lesson $lesson)
     {
         //
     }
@@ -64,10 +64,10 @@ class AbsenceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Absence  $absence
+     * @param  \App\Lesson  $lesson
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Absence $absence)
+    public function update(Request $request, Lesson $lesson)
     {
         //
     }
@@ -75,10 +75,10 @@ class AbsenceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Absence  $absence
+     * @param  \App\Lesson  $lesson
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Absence $absence)
+    public function destroy(Lesson $lesson)
     {
         //
     }

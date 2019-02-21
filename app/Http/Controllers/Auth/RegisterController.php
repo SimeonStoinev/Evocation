@@ -31,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/verify';
 
     /**
      * Create a new controller instance.
@@ -53,7 +53,7 @@ class RegisterController extends Controller
         $gradesBySchool = [];
 
         foreach ($schools as $row) {
-            $gradesBySchool[$row['id']] = Grade::gradesBySchoolID($row['id'])->get()->toArray();
+            $gradesBySchool[$row['id']] = Grade::getGradesBySchoolID($row['id'])->get()->toArray();
         }
 
         $data = [
@@ -94,7 +94,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        //dd($data);
         return User::create([
             'card_id' => str_random(16),
             'name' => $data['name'],

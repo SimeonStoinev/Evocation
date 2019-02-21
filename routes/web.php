@@ -17,20 +17,25 @@ Route::get('/', function () {
 
 Auth::routes();
 
-// Overwriting the default register index route
-//Route::get('/register', 'Auth\RegisterController@index')->name('register');
-
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resources([
-    'absences' => 'AbsenceController',
-    'cirricula' => 'CurriculumController',
+    'checkins' => 'CheckinListenerController',
     'classbooks' => 'ClassbookController',
+    'curricula' => 'CurriculumController',
     'entries' => 'EntryController',
     'exams' => 'ExamController',
     'grades' => 'GradeController',
     'leaves' => 'LeaveController',
     'polls' => 'PollController',
     'presentations' => 'PresentationController',
-    'schools' => 'SchoolController'
+    'schools' => 'SchoolController',
+    'verify' => 'VerifyController'
+]);
+
+Route::get('/absence/{cardID?}', 'API\AbsenceController@index')->name('absences.index');
+Route::post('/checkins/close/', 'CheckinListenerController@closeCheckin')->name('checkins.close');
+
+Route::apiResource('absence', 'API\AbsenceController')->except([
+    'index'
 ]);

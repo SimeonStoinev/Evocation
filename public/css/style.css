@@ -357,3 +357,12 @@ template {
     transition: all .75s;
     display: none;
 }
+/*End register form*/
+
+.errorMessage {
+    font-size: 32px;
+    text-align: center;
+    top: 50%;
+    color: #111111;
+    margin-top: 22%;
+}

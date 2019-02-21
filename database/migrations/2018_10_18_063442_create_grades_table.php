@@ -23,6 +23,7 @@ class CreateGradesTable extends Migration
             $table->index('school_id');
             $table->integer('curriculum_id')->default(0);
             $table->index('curriculum_id');
+            $table->tinyInteger('shift')->default(1);
             $table->timestamps();
         });
     }

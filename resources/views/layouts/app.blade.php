@@ -9,9 +9,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
-    <script src="{{ asset('js/popper.min.js') }}" defer></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="{{ asset('js/scripts.js') }}" defer></script>
 
     <!-- Fonts -->
@@ -52,7 +51,22 @@
                             </li>
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Тестове <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu" role="menu">
+
+                                    <li><a href="{{ url('/test/create') }}">Създай тест</a></li>
+                                    <li><a href="{{ url('/test/mine') }}">Моите тестове</a></li>
+                                    <li><a href="{{ url('/test/verify') }}">Непроверени тестове</a></li>
+                                    <li><a href="{{ url('/test/verified') }}">Проверени тестове</a></li>
+
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
@@ -60,7 +74,7 @@
                                    <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Излез') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

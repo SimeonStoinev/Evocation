@@ -21,6 +21,8 @@ class CreateAbsencesTable extends Migration
             $table->index('grade_id');
             $table->integer('school_id');
             $table->index('school_id');
+            $table->boolean('late')->default(false);
+            $table->boolean('excused')->default(false);
             $table->timestamps();
         });
     }
