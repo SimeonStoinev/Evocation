@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Evocation</title>
+        <title>Laravel</title>
 
         <!-- Favicons -->
         <link href="{{ asset('img/favicon.png') }}" rel="icon">  <!-- add favicon in the folder later -->
@@ -26,8 +26,12 @@
         <link href="{{ asset('lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
 
         <link href="{{ asset('css/landing/style.css') }}" rel="stylesheet">
+
+
+
     </head>
     <body>
+
 
     <header id="header">
         <div class="container-fluid">
@@ -38,8 +42,8 @@
 
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
-                    <li><a href="/login">Вход</a></li>
-                    <li class="menu-active"><a href="/register">Регистрация</a></li>
+                    <li class="menu-active"><a href="#facts">Регистрация</a></li>
+                    <li><a href="#prices">Вход</a></li>
                 </ul>
             </nav>
         </div>
@@ -57,8 +61,8 @@
                         <div class="carousel-background"><img src="{{asset('img/intro/1.jpg')}}" alt=""></div>
                         <div class="carousel-container">
                             <div class="carousel-content">
-                                <h2>Ние сме професионалисти</h2>
-                                <p>Оцени своите умения. Създай автобиография си по Европейските стандарти. Избери най-добрата работа.</p>
+                                <h2>Иновация</h2>
+                                <p>Ние обединяваме училището и технологиите, за да вървим заедно към бъдещето.</p>
                             </div>
                         </div>
                     </div>
@@ -67,8 +71,8 @@
                         <div class="carousel-background"><img src="{{asset('img/intro/2.jpg')}}" alt=""></div>
                         <div class="carousel-container">
                             <div class="carousel-content">
-                                <h2>Ние сме оригинални</h2>
-                                <p>Изпъкни със своята автобиография. Покажи желанието си да бъдеш различен. Спечели със стил.</p>
+                                <h2>Сигурност</h2>
+                                <p>Evocation е изграден чрез най-новите технологии, за да гарантира висока сигурност на системата.</p>
                             </div>
                         </div>
                     </div>
@@ -77,8 +81,8 @@
                         <div class="carousel-background"><img src="{{asset('img/intro/3.jpg')}}" alt=""></div>
                         <div class="carousel-container">
                             <div class="carousel-content">
-                                <h2>Ние сме ефективни</h2>
-                                <p>Следвай стъпките ни. Напиши какво можеш. Избери работата, която винаги си търсил.</p>
+                                <h2>Улесение</h2>
+                                <p>Целта на приложението е да улесни максимално учители, родители и ученици.</p>
                             </div>
                         </div>
                     </div>
@@ -107,20 +111,20 @@
 
                     <div class="col-lg-4 box">
                         <i class="ion-ios-bookmarks-outline"></i>
-                        <h4 class="title"><a href="">Професионализъм</a></h4>
-                        <p class="description">Създай автобиография си, съобразена по последните Европейски стандарти, без да се налага да ги знаеш.</p>
+                        <h4 class="title"><a href="">Какво е Evocation?</a></h4>
+                        <p class="description">Evocation e Интернет приложение, което идентифицира посещението на учениците в училище чрез магнитна карта.</p>
                     </div>
 
                     <div class="col-lg-4 box box-bg">
                         <i class="ion-ios-stopwatch-outline"></i>
-                        <h4 class="title"><a href="">Бързина</a></h4>
-                        <p class="description">Спести време, усилия и пари, като просто следваш няколко прости стъпки.</p>
+                        <h4 class="title"><a href="">Автоматизация</a></h4>
+                        <p class="description">Данните от идентификацията в реално време се нанасят в електронен дневник, което улеснява работата на учителите и уведомява родителите.</p>
                     </div>
 
                     <div class="col-lg-4 box">
                         <i class="ion-ios-heart-outline"></i>
-                        <h4 class="title"><a href="">Креативност</a></h4>
-                        <p class="description">Отличи се от останалите с красив дизайн на автобиографията си, съобразен с позицията, за която кандидатстваш.</p>
+                        <h4 class="title"><a href="">Електронен дневник</a></h4>
+                        <p class="description">Електронният дневник предоставя детайлна информация на учениците за техните оцени, отсъствия, седмично разписание и др.</p>
                     </div>
 
                 </div>
@@ -171,177 +175,25 @@
                 <div class="row">
 
                     <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
-                        <div class="icon"><i class="ion-ios-analytics-outline"></i></div>
-                        <h4 class="title"><a href="">Готов дизайн</a></h4>
-                        <p class="description">Можеш да избереш сам своя дизайн или да получиш такъв, съобразен с позицията, за която кандидатстваш</p>
+                        <div class="icon"><i class="ion-ios-bookmarks-outline"></i></div>
+                        <h4 class="title"><a href="">Професионализъм</a></h4>
+                        <p class="description">Ние използваме най-новите технологии, за да постигнем максимална ефективност и качество.</p>
                     </div>
                     <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
-                        <div class="icon"><i class="ion-ios-bookmarks-outline"></i></div>
-                        <h4 class="title"><a href="">Система за самооценка</a></h4>
-                        <p class="description">Спести време на себе си и на работодателя си с разработените ни по Европейската скала тестове, които удостоверяват знанията ти, без да ти е необходим сертификат за тях</p>
+                        <div class="icon"><i class="ion-ios-bolt-outline"></i></div>
+                        <h4 class="title"><a href="">Бързина</a></h4>
+                        <p class="description">Главната цел на Evocation е да автоматизира процеса на въвеждане на отсъствия.</p>
                     </div>
                     <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
                         <div class="icon"><i class="ion-ios-paper-outline"></i></div>
-                        <h4 class="title"><a href="">Търсачка за работа</a></h4>
-                        <p class="description">След като направиш бързо своята автобиография, сиснемата изкарва топ 10 най-подходящи места за работа в населеното ти място от най-големите фирми</p>
+                        <h4 class="title"><a href="">Креативност</a></h4>
+                        <p class="description">Дизайнът на Evocation е responsive, за да отоговори на изискванията на всеки потребител.</p>
                     </div>
 
                 </div>
 
             </div>
         </section>
-
-        {{--<section id="portfolio"  class="section-bg" >
-            <div class="container">
-
-                <header class="section-header">
-                    <h3 class="section-title">Дизайни</h3>
-                </header>
-
-                <div class="row">
-                    <div class="col-lg-12">
-                        <ul id="portfolio-flters">
-                            <li data-filter="*" class="filter-active">Всички</li>
-                            <li data-filter=".filter-app">Строги</li>
-                            <li data-filter=".filter-card">Забавни</li>
-                            <li data-filter=".filter-web">Тематични</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="row portfolio-container">
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio/app1.jpg" class="img-fluid" alt="">
-                                <!-- <a href="img/portfolio/app1.jpg" data-lightbox="portfolio" data-title="App 1" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a> -->
-                                <a href="#" class="link-details">Избери</a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4><a href="#">Строго</a></h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio/web3.jpg" class="img-fluid" alt="">
-                                <!-- <a href="img/portfolio/web3.jpg" class="link-preview" data-lightbox="portfolio" data-title="Web 3" title="Preview"><i class="ion ion-eye"></i></a> -->
-                                <a href="#" class="link-details">Избери</a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4><a href="#">Тематично</a></h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio/app2.jpg" class="img-fluid" alt="">
-                                <!-- <a href="img/portfolio/app2.jpg" class="link-preview" data-lightbox="portfolio" data-title="App 2" title="Preview"><i class="ion ion-eye"></i></a> -->
-                                <a href="#" class="link-details">Избери</a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4><a href="#">По-строго</a></h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio/card2.jpg" class="img-fluid" alt="">
-                                <!--  <a href="img/portfolio/card2.jpg" class="link-preview" data-lightbox="portfolio" data-title="Card 2" title="Preview"><i class="ion ion-eye"></i></a> -->
-                                <a href="#" class="link-details">Избери</a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4><a href="#">Забавно</a></h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio/web2.jpg" class="img-fluid" alt="">
-                                <!--  <a href="img/portfolio/web2.jpg" class="link-preview" data-lightbox="portfolio" data-title="Web 2" title="Preview"><i class="ion ion-eye"></i></a> -->
-                                <a href="#" class="link-details">Избери</a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4><a href="#">По-тематично</a></h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio/app3.jpg" class="img-fluid" alt="">
-                                <!--  <a href="img/portfolio/app3.jpg" class="link-preview" data-lightbox="portfolio" data-title="App 3" title="Preview"><i class="ion ion-eye"></i></a> -->
-                                <a href="#" class="link-details">Избери</a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4><a href="#">Най-строго</a></h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio/card1.jpg" class="img-fluid" alt="">
-                                <!-- <a href="img/portfolio/card1.jpg" class="link-preview" data-lightbox="portfolio" data-title="Card 1" title="Preview"><i class="ion ion-eye"></i></a> -->
-                                <a href="#" class="link-details" title="More Details"><i class="ion ion-android-open"></i></a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4><a href="#">По-забавно</a></h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-card wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio/card3.jpg" class="img-fluid" alt="">
-                                <!-- <a href="img/portfolio/card3.jpg" class="link-preview" data-lightbox="portfolio" data-title="Card 3" title="Preview"><i class="ion ion-eye"></i></a> -->
-                                <a href="#" class="link-details" title="More Details"><i class="ion ion-android-open"></i></a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4><a href="#">Най-забавно</a></h4>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-web wow fadeInUp" data-wow-delay="0.2s">
-                        <div class="portfolio-wrap">
-                            <figure>
-                                <img src="img/portfolio/web1.jpg" class="img-fluid" alt="">
-                                <!-- <a href="img/portfolio/web1.jpg" class="link-preview" data-lightbox="portfolio" data-title="Web 1" title="Preview"><i class="ion ion-eye"></i></a> -->
-                                <a href="#" class="link-details" title="More Details"><i class="ion ion-android-open"></i></a>
-                            </figure>
-
-                            <div class="portfolio-info">
-                                <h4><a href="#">Най-тематично</a></h4>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>--}}
-
         <section id="contact" class="section-bg wow fadeInUp">
             <div class="container">
 
@@ -418,14 +270,14 @@
 
                     <div class="col-lg-4 col-md-6 footer-info">
                         <h3>Evocation</h3>
-                        <p>Генератор за професионални, креативни и ефективни автобиографии, придружени с адекватни квалификационни тестове и най-подходящите обяви за работа от най-големите български сайтове.</p>
+                        <p>Evocation представлява Интернет приложение, което идентифицира посещението на учениците в училище чрез магнитна карта. Данните от идентификацията в реално време се нанасят в електронен дневник, което улеснява работата на учителите и уведомява родителите.</p>
                     </div>
 
                     <div class="col-lg-4 col-md-6 footer-links">
                         <h4>Бърз достъп</h4>
                         <ul>
-                            <li><i class="ion-ios-arrow-right"></i> <a href="/register">Регистрация</a></li>
-                            <li><i class="ion-ios-arrow-right"></i> <a href="/login">Вход</a></li>
+                            <li><i class="ion-ios-arrow-right"></i> <a href="#intro">Регистрация</a></li>
+                            <li><i class="ion-ios-arrow-right"></i> <a href="featured-services">Вход</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-6 footer-contact">
