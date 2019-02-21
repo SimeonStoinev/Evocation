@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Evocation</title>
 
         <!-- Favicons -->
         <link href="{{ asset('img/favicon.png') }}" rel="icon">  <!-- add favicon in the folder later -->
@@ -26,12 +26,8 @@
         <link href="{{ asset('lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
 
         <link href="{{ asset('css/landing/style.css') }}" rel="stylesheet">
-
-
-
     </head>
     <body>
-
 
     <header id="header">
         <div class="container-fluid">
@@ -42,8 +38,8 @@
 
             <nav id="nav-menu-container">
                 <ul class="nav-menu">
-                    <li class="menu-active"><a href="#facts">Регистрация</a></li>
-                    <li><a href="#prices">Вход</a></li>
+                    <li><a href="/login">Вход</a></li>
+                    <li class="menu-active"><a href="/register">Регистрация</a></li>
                 </ul>
             </nav>
         </div>
@@ -276,8 +272,8 @@
                     <div class="col-lg-4 col-md-6 footer-links">
                         <h4>Бърз достъп</h4>
                         <ul>
-                            <li><i class="ion-ios-arrow-right"></i> <a href="#intro">Регистрация</a></li>
-                            <li><i class="ion-ios-arrow-right"></i> <a href="featured-services">Вход</a></li>
+                            <li><i class="ion-ios-arrow-right"></i> <a href="/login">Вход</a></li>
+                            <li><i class="ion-ios-arrow-right"></i> <a href="/register">Регистрация</a></li>
                         </ul>
                     </div>
                     <div class="col-lg-3 col-md-6 footer-contact">
