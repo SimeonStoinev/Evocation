@@ -136,25 +136,29 @@
 
                 <div class="row counters">
 
-                    <div class="col-lg-3 col-6 text-center">
-                        <span data-toggle="counter-up">30271</span>
+                    <div class="col-lg-4 col-6 text-center">
+                        <span data-toggle="counter-up">{{ $numbers['students'] }}</span>
                         <p>Ученици</p>
                     </div>
 
-                    <div class="col-lg-3 col-6 text-center">
-                        <span data-toggle="counter-up">1071</span>
+                    <div class="col-lg-4 col-6 text-center">
+                        <span data-toggle="counter-up">{{ $numbers['grades'] }}</span>
                         <p>Класа</p>
                     </div>
 
-                    <div class="col-lg-3 col-6 text-center">
-                        <span data-toggle="counter-up">31</span>
-                        <p>Училища</p>
+                    <div class="col-lg-4 col-6 text-center">
+                        <span data-toggle="counter-up">{{ $numbers['schools'] }}</span>
+                        @if ($numbers['schools'] == 1)
+                            <p>Училище</p>
+                        @else
+                            <p>Училища</p>
+                        @endif
                     </div>
 
-                    <div class="col-lg-3 col-6 text-center">
+                    {{--<div class="col-lg-3 col-6 text-center">
                         <span data-toggle="counter-up">7</span>
                         <p>Града</p>
-                    </div>
+                    </div>--}}
 
                 </div>
 

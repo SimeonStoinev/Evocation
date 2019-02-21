@@ -17,4 +17,12 @@ class School extends Model
     public function scopeGetSchoolTitle ($query, $schoolID) {
         return $query->where('id', $schoolID);
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeGetAllSchools ($query) {
+        return $query->where('id', '>', '0');
+    }
 }
