@@ -151,22 +151,17 @@ class HomeController extends Controller
 
         $gradeData['school'] = School::getSchoolTitle($grade['school_id'])->first()['title'];
 
-        $curriculum = Curriculum::getCurriculum($grade['curriculum_id'])->first();
+        $gradeLessons = Lesson::gradeLessonsCurriculum($grade['id']);
 
-        $gradeData['curriculumTimeRanges'] = json_decode($curriculum['lesson_timeRanges']);
-
-        // Fills the $gradeData array with all the subjects' names from this grade curriculum
-        foreach (json_decode($curriculum['lesson_subject_ids']) as $row) {
-            $gradeData['curriculumSubjects'][] = Subject::getSubjectTitle($row)->first()['title'];
-        }
-
-        // Fills the $gradeData array with all the teachers' names from this grade curriculum
-        foreach (json_decode($curriculum['lesson_teacher_ids']) as $row) {
-            $teacherFullName = User::getUserFullName($row)->first();
-            $gradeData['curriculumTeachers'][] = $teacherFullName['name'] . ' ' . $teacherFullName['family'];
-        }
+        $gradeData['mondayLessons'] = $gradeLessons['Mon'];
+        $gradeData['tuesdayLessons'] = $gradeLessons['Tue'];
+        $gradeData['wednesdayLessons'] = $gradeLessons['Wed'];
+        $gradeData['thursdayLessons'] = $gradeLessons['Thu'];
+        $gradeData['fridayLessons'] = $gradeLessons['Fri'];
+        $gradeData['todayLessons'] = $gradeLessons[date('D')];
 
         // Maybe add the Absences of the current student?
+
         //dd($gradeData);
 
         return $gradeData;
