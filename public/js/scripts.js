@@ -62,7 +62,55 @@ function closeCheckinListener (listenerID, lessonID) {
             lessonID: lessonID
         },
         success: function (data) {
-            console.log('success');
+            location.reload();
         }
     });
+}
+
+// Function used to excuse an absence of a student, AJAX request
+function excuseAbsence (lessonID, studentID) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: "absence/excuse",
+        type: "POST",
+        data: {
+            lessonID: lessonID,
+            studentID: studentID
+        },
+        success: function (data) {
+            location.reload();
+        }
+    });
+}
+
+// Function used to write an absence of a student (kick), AJAX request
+function writeAbsence (lessonID, studentID) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: "absence/write",
+        type: "POST",
+        data: {
+            lessonID: lessonID,
+            studentID: studentID
+        },
+        success: function (data) {
+            location.reload();
+        }
+    });
+}
+
+if ($('#closeListener').length) {
+    setInterval(function () {
+        location.reload();
+    }, 10000);
 }

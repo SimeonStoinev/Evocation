@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Absence;
 use App\User;
+use Illuminate\Support\Facades\Session;
 
 class CheckinListenerController extends Controller
 {
@@ -32,23 +33,13 @@ class CheckinListenerController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * Request comes from AJAX!
+     * Opens the checkin listener and card swipes are possible. Request comes from AJAX!
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | array
      */
     public function store(Request $request)
     {
-        // awGCqHpmdLzFOaBg
-        // XGQeDf5KbF5rYlMQ
-        // ERywEA6rxo3bsYhr
-        // NyEehUK5ElVXFavV
-        // 4LdBtdsov03Piai0
-        // aMCkp8XvY7PrfQuL
-        // nZXDvIXdBTAvrl0d
-        // bMmTVpz3MHasvzFu
-        // FA5n5A830HynTcQu
-
         $checkinListener = new CheckinListener();
 
         $checkinListener->teacher_id = Auth::id();
@@ -124,9 +115,9 @@ class CheckinListenerController extends Controller
                 $userData = User::getUserGradeAndSchool($row)->first();
                 $absence = new Absence();
                 $absence->user_id = $userData['id'];
+                $absence->listener_id = $request->all()['listenerID'];
                 $absence->grade_id = $userData['grade_id'];
                 $absence->school_id = $userData['school_id'];
-                $absence->excused = false;
 
                 $absence->save();
             }
