@@ -83,12 +83,9 @@
                 @endif
             </div>
 
-        <div id="gradesWrapper" class="form-group row">
-            <label for="grade" class="col-md-4 col-form-label text-md-right">{{ __('Клас') }}</label>
-
-            <div class="col-md-6">
+        <div id="gradesWrapper" class="inputsAuth">
                 <select id="grade" name="grade" class="form-control{{ $errors->has('grade') ? ' is-invalid' : '' }}" required>
-                    <option value="0">Моля изберете</option>
+                    <option value="0">{{'Изберете клас'}}</option>
                 </select>
 
                 @if ($errors->has('grade'))
@@ -96,7 +93,6 @@
                                         <strong>{{ $errors->first('grade') }}</strong>
                                     </span>
                 @endif
-            </div>
         </div>
 
         <div class="inputsAuth">
