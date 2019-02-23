@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Absence;
 use App\CheckinListener;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -84,10 +85,10 @@ class HomeController extends Controller
     protected function teacherHome () {
         $teacherLessons = Lesson::getTeacherLessonsToday(Auth::id())->get()->toArray();
 
-        $teacherLessonsData = [];
+        $teacherLessonsData = []; $teacherData = [];
         //$currentTime = date('H:i');
-        $currentTime = '09:10';
-        //dd($teacherLessons);
+        $currentTime = '10:40';
+
         $lessonCount = 1;
         foreach ($teacherLessons as $row) {
             $gradeInfo = Grade::getGradeTitleAndStudents($row['grade_id'])->first();
@@ -99,7 +100,6 @@ class HomeController extends Controller
                 $isLessonOpenedToday = true;
             }
 
-            $teacherLessonsData[$lessonCount]['lessonNumber'] = $lessonCount;
             $teacherLessonsData[$lessonCount]['lessonID'] = $row['id'];
             $teacherLessonsData[$lessonCount]['isLessonOpenedToday'] = $isLessonOpenedToday;
             $teacherLessonsData[$lessonCount]['gradeID'] = $row['grade_id'];
@@ -111,8 +111,21 @@ class HomeController extends Controller
 
             if ($row['time_range_from'] <= $currentTime && $row['time_range_to'] >= $currentTime) {
                 $teacherLessonsData[$lessonCount]['lessonSchedule'] = 'Текущ';
+
+                $notChecked = CheckinListener::notCheckedStudentsByLessonID($row['id'])->first()['not_checked'];
+
+                if ($notChecked != null) {
+                    $teacherLessonsData[$lessonCount]['studentsData'] = $this->lessonStudentsArray($gradeInfo, $notChecked);
+                }
             } elseif ($row['time_range_from'] < $currentTime) {
                 $teacherLessonsData[$lessonCount]['lessonSchedule'] = 'Минал';
+
+                $notChecked = CheckinListener::notCheckedStudentsByLessonID($row['id'])->first()['not_checked'];
+
+                if ($notChecked != null) {
+                    $teacherLessonsData[$lessonCount]['studentsData'] = $this->lessonStudentsArray($gradeInfo, $notChecked);
+                }
+                //dd($teacherLessonsData, 'Not Checked: ' . $notChecked, 'Grade Students: ' . $gradeInfo['student_ids']);
             } elseif ($row['time_range_from'] > $currentTime) {
                 $teacherLessonsData[$lessonCount]['lessonSchedule'] = 'Предстоящ';
             } else {
@@ -122,9 +135,52 @@ class HomeController extends Controller
             $lessonCount++;
         }
 
-        //dd($teacherLessonsData); Add days of the week.
+        // Reorders the array so lessons can be in a consecutive order by time
+        usort($teacherLessonsData, function($a, $b) {
+            $a = strtotime($a['timeRangeFrom']);
+            $b = strtotime($b['timeRangeFrom']);
+            return $a - $b;
+        });
 
-        return $teacherLessonsData;
+        $teacherWeeklyLessons = Lesson::teacherLessonsCurriculum(Auth::id());
+
+        $teacherData['weeklyLessons']['monday'] = $teacherWeeklyLessons['Mon'];
+        $teacherData['weeklyLessons']['tuesday'] = $teacherWeeklyLessons['Tue'];
+        $teacherData['weeklyLessons']['wednesday'] = $teacherWeeklyLessons['Wed'];
+        $teacherData['weeklyLessons']['thursday'] = $teacherWeeklyLessons['Thu'];
+        $teacherData['weeklyLessons']['friday'] = $teacherWeeklyLessons['Fri'];
+        $teacherData['weeklyLessons']['saturday'] = $teacherWeeklyLessons['Sat'];
+        $teacherData['weeklyLessons']['sunday'] = $teacherWeeklyLessons['Sun'];
+        $teacherData['todayLessons'] = $teacherLessonsData;
+
+        //dd($teacherData);
+
+        return $teacherData;
+    }
+
+    /**
+     * Helper function for teacherHome()
+     *
+     * @param $gradeInfo
+     * @param $notChecked
+     * @return array
+     */
+    protected function lessonStudentsArray ($gradeInfo, $notChecked) {
+        $lessonStudentsData = [];
+
+        // Foreaches every student in the class to add info and decide whether he was in the lesson or not.
+        foreach (json_decode($gradeInfo['student_ids']) as $studentID) {
+            $studentName = User::getUserFullName($studentID)->first();
+            $lessonStudentsData[$studentID]['studentID'] = $studentID;
+            $lessonStudentsData[$studentID]['studentName'] = $studentName['name'] . ' ' . $studentName['family'];
+            if (in_array($studentID, json_decode($notChecked))) {
+                $lessonStudentsData[$studentID]['checked'] = false; // The student is absent
+            } else {
+                $lessonStudentsData[$studentID]['checked'] = true; // The student is in the lesson
+            }
+        }
+
+        return $lessonStudentsData;
     }
 
     /**
@@ -158,9 +214,17 @@ class HomeController extends Controller
         $gradeData['wednesdayLessons'] = $gradeLessons['Wed'];
         $gradeData['thursdayLessons'] = $gradeLessons['Thu'];
         $gradeData['fridayLessons'] = $gradeLessons['Fri'];
+        $gradeData['saturdayLessons'] = $gradeLessons['Sat'];
+        $gradeData['sundayLessons'] = $gradeLessons['Sun'];
         $gradeData['todayLessons'] = $gradeLessons[date('D')];
 
-        // Maybe add the Absences of the current student?
+        $dailyAbsences = Absence::getDailyAbsences(Auth::id())->get()->toArray();
+        $weeklyAbsences = Absence::getWeeklyAbsences(Auth::id())->get()->toArray();
+        $monthlyAbsences = Absence::getMonthlyAbsences(Auth::id())->get()->toArray();
+
+        $gradeData['currentStudent']['dailyAbsences'] = $dailyAbsences;
+        $gradeData['currentStudent']['weeklyAbsences'] = $weeklyAbsences;
+        $gradeData['currentStudent']['monthlyAbsences'] = $monthlyAbsences;
 
         //dd($gradeData);
 

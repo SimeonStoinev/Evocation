@@ -17,12 +17,15 @@ class CreateAbsencesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->index('user_id');
+            $table->integer('listener_id');
+            $table->index('listener_id');
             $table->integer('grade_id');
             $table->index('grade_id');
             $table->integer('school_id');
             $table->index('school_id');
             $table->boolean('late')->default(false);
             $table->boolean('excused')->default(false);
+            $table->boolean('kicked')->default(false);
             $table->timestamps();
         });
     }

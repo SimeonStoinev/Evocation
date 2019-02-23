@@ -32,6 +32,8 @@ Route::resources([
 ]);
 
 Route::get('/absence/{cardID?}', 'API\AbsenceController@index')->name('absences.index');
+Route::post('/absence/excuse', 'API\AbsenceController@excuseAbsence')->name('absences.excuse');
+Route::post('/absence/write', 'API\AbsenceController@writeAbsence')->name('absences.write');
 Route::post('/checkins/close/', 'CheckinListenerController@closeCheckin')->name('checkins.close');
 
 Route::apiResource('absence', 'API\AbsenceController')->except([

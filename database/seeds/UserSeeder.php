@@ -158,9 +158,9 @@ class UserSeeder extends Seeder
                 $shift = 1;
                 $curriculumData = [];
 
-                for ($dayCount = 1; $dayCount <= 5; $dayCount++) {
+                for ($dayCount = 1; $dayCount <= 7; $dayCount++) {
                     // Decides the day of the week based on the number in the foreach.
-                    if($dayCount==1){$day='Mon';}elseif($dayCount==2){$day='Tue';}elseif($dayCount==3){$day='Wed';}elseif($dayCount==4){$day='Thu';}elseif($dayCount==5){$day='Fri';}
+                    if($dayCount==1){$day='Mon';}elseif($dayCount==2){$day='Tue';}elseif($dayCount==3){$day='Wed';}elseif($dayCount==4){$day='Thu';}elseif($dayCount==5){$day='Fri';}elseif($dayCount==6){$day='Sat';}elseif($dayCount==7){$day='Sun';}
 
                     for ($c = 0; $c <= 6; $c++) {
                         $timeRange = explode(' - ', $timeRanges[$c]);
@@ -197,9 +197,9 @@ class UserSeeder extends Seeder
                 $shift = 2;
                 $curriculumData = [];
 
-                for ($dayCount = 1; $dayCount <= 5; $dayCount++) {
+                for ($dayCount = 1; $dayCount <= 7; $dayCount++) {
                     // Decides the day of the week based on the number in the foreach.
-                    if($dayCount==1){$day='Mon';}elseif($dayCount==2){$day='Tue';}elseif($dayCount==3){$day='Wed';}elseif($dayCount==4){$day='Thu';}elseif($dayCount==5){$day='Fri';}
+                    if($dayCount==1){$day='Mon';}elseif($dayCount==2){$day='Tue';}elseif($dayCount==3){$day='Wed';}elseif($dayCount==4){$day='Thu';}elseif($dayCount==5){$day='Fri';}elseif($dayCount==6){$day='Sat';}elseif($dayCount==7){$day='Sun';}
 
                     for ($c = 0; $c <= 6; $c++) {
                         $timeRange = explode(' - ', $timeRanges[$c]);

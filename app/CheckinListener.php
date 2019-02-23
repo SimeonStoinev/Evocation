@@ -40,6 +40,29 @@ class CheckinListener extends Model
      * @return mixed
      */
     public function scopeGetCheckinListenerByLessonID ($query, $lessonID) {
-        return $query->where('lesson_id', $lessonID)->where('created_at', '>=', Carbon::today())->select('lesson_id');
+        return $query->where('lesson_id', $lessonID)->where('opened', 0)->where('created_at', '>=', Carbon::today())->select('lesson_id');
+    }
+
+    /**
+     * Gets only the not_checked field from a checkin listener row that has been fetched by lesson id.
+     * Lesson must be finished today. Used for students' ids manipulation in HomeController.
+     *
+     * @param $query
+     * @param $lessonID
+     * @return mixed
+     */
+    public function scopeNotCheckedStudentsByLessonID ($query, $lessonID) {
+        return $query->where('lesson_id', $lessonID)->where('created_at', '>=', Carbon::today())->select('not_checked');
+    }
+
+    /**
+     * Gets only the id field from a checkin listener row that has been fetched by lesson id. Lesson must be finished today.
+     *
+     * @param $query
+     * @param $lessonID
+     * @return mixed
+     */
+    public function scopeGetListenerIDByLessonID ($query, $lessonID) {
+        return $query->where('lesson_id', $lessonID)->where('created_at', '>=', Carbon::today())->select('id', 'not_checked');
     }
 }
