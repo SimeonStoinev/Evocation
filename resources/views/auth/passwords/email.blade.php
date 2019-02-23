@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+<div class="containerAuth" >
+
+                <div>
+                    <img src="{{asset('img/intro/1.jpg')}}" alt="">
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -16,9 +16,9 @@
 
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
-
+                        <h1>{{ __('Възстановане на парола') }}</h1>
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Е-мейл адрес:') }}</label>
 
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
@@ -31,17 +31,12 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
+                        <div class="authBtn">
+                                <button type="submit" class="btn btn-outline-primary">
+                                    {{ __('Изпращане') }}
                                 </button>
-                            </div>
                         </div>
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 @endsection
