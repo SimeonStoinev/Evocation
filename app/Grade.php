@@ -31,6 +31,17 @@ class Grade extends Model
     }
 
     /**
+     * Gets a grade by a given classteacher id.
+     *
+     * @param $query
+     * @param $teacherID
+     * @return mixed
+     */
+    public function scopeGradeByClassTeacherID ($query, $teacherID) {
+        return $query->where('classteacher_id', $teacherID);
+    }
+
+    /**
      * @param $query
      * @param $gradeID
      *

@@ -3,6 +3,72 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
+
+            <div class="page-sidebar-wrapper" style="margin-top: -10px;">
+                <div class="page-sidebar navbar-collapse collapse">
+                    <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+                        <li class="nav-item open">
+                            <a href="javascript:;" class="nav-link nav-toggle">
+                                <i class="icon-list"></i>
+                                <span class="title">Програма</span>
+                                <span class="arrow open"></span>
+                            </a>
+                            <ul class="sub-menu" style="display: block;">
+                                <li class="nav-item">
+                                    <a href="" class="nav-link ">
+                                        <i class="icon-plus"></i>
+                                        <span class="title">Днешна</span>
+                                        <span class="badge badge-success"></span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link ">
+                                        <i class="icon-clock"></i>
+                                        <span class="title">Седмична</span>
+                                        <span class="badge badge-primary"></span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link ">
+                                        <i class="icon-check"></i>
+                                        <span class="title">Понеделник</span>
+                                        <span class="badge badge-default"></span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link ">
+                                        <i class="icon-close"></i>
+                                        <span class="title">Вторник</span>
+                                        <span class="badge badge-danger"></span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link ">
+                                        <i class="icon-calendar"></i>
+                                        <span class="title">Сряда</span>
+                                        <span class="badge badge-info"></span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link ">
+                                        <i class="icon-calendar"></i>
+                                        <span class="title">Четвъртък</span>
+                                        <span class="badge badge-info"></span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link ">
+                                        <i class="icon-calendar"></i>
+                                        <span class="title">Петък</span>
+                                        <span class="badge badge-info"></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Dashboard</div>

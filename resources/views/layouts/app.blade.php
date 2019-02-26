@@ -11,6 +11,9 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/jquery.sparkline.min.js') }}" defer></script>
+    <script src="{{ asset('js/app.min.js') }}" defer></script>
+    <script src="{{ asset('js/layout.min.js') }}" defer></script>
     <script src="{{ asset('js/scripts.js') }}" defer></script>
 
     <!-- Fonts -->
@@ -18,23 +21,34 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/landing/style.css')}}">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/layout.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/default.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/landing/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Evocation
-                </a>
+                @if (\Illuminate\Support\Facades\Auth::check())
+                    <a class="navbar-brand" href="{{ url('/home') }}" style="padding: 15px;">
+                        Evocation
+                    </a>
+                @else
+                    <a class="navbar-brand" href="{{ url('/') }}" style="padding: 15px;">
+                        Evocation
+                    </a>
+                @endif
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="display: flex !important;">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
 
@@ -51,9 +65,9 @@
                                 <a class="nav-link" href="{{ route('register') }}">{{ __('Регистрация') }}</a>
                             </li>
                         @else
-                            <li class="nav-item dropdown">
+                            {{--<li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Тестове <span class="caret"></span>
+                                    Тестове
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
@@ -64,11 +78,11 @@
                                     <li><a href="{{ url('/test/verified') }}">Проверени тестове</a></li>
 
                                 </ul>
-                            </li>
+                            </li>--}}
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

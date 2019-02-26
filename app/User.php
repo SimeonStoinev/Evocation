@@ -76,4 +76,21 @@ class User extends Authenticatable
     public function scopeGetUserGradeAndSchool ($query, $id) {
         return $query->where('id', $id)->select('id', 'grade_id', 'school_id');
     }
+
+    /**
+     * Decides whether the user is classteacher or not.
+     *
+     * @param $query
+     * @param $id
+     * @return bool
+     */
+    public function scopeIsUserAClassTeacher ($query, $id) {
+        $classTeacher = $query->where('id', $id)->select('is_classteacher');
+
+        if ($classTeacher == '0') {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

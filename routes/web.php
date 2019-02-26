@@ -23,7 +23,7 @@ Route::resources([
     'curricula' => 'CurriculumController',
     'entries' => 'EntryController',
     'exams' => 'ExamController',
-    'grades' => 'GradeController',
+    'grade' => 'GradeController',
     'leaves' => 'LeaveController',
     'polls' => 'PollController',
     'presentations' => 'PresentationController',
@@ -31,11 +31,14 @@ Route::resources([
     'verify' => 'VerifyController'
 ]);
 
-Route::get('/absence/{cardID?}', 'API\AbsenceController@index')->name('absences.index');
+//Route::get('/absence/{cardID?}', 'API\AbsenceController@index')->name('absences.index');
 Route::post('/absence/excuse', 'API\AbsenceController@excuseAbsence')->name('absences.excuse');
 Route::post('/absence/write', 'API\AbsenceController@writeAbsence')->name('absences.write');
+Route::post('/checkins/refreshCheckedUsers', 'CheckinListenerController@refreshCheckedUsers')->name('checkins.refresh');
 Route::post('/checkins/close/', 'CheckinListenerController@closeCheckin')->name('checkins.close');
 
-Route::apiResource('absence', 'API\AbsenceController')->except([
+Route::post('/absence', 'API\AbsenceController@store')->name('absence.store');
+
+/*Route::apiResource('absence', 'API\AbsenceController')->except([
     'index'
-]);
+]);*/

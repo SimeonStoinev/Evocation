@@ -87,7 +87,7 @@ class HomeController extends Controller
 
         $teacherLessonsData = []; $teacherData = [];
         //$currentTime = date('H:i');
-        $currentTime = '10:40';
+        $currentTime = '09:40';
 
         $lessonCount = 1;
         foreach ($teacherLessons as $row) {
@@ -226,7 +226,7 @@ class HomeController extends Controller
         $gradeData['currentStudent']['weeklyAbsences'] = $weeklyAbsences;
         $gradeData['currentStudent']['monthlyAbsences'] = $monthlyAbsences;
 
-        //dd($gradeData);
+        dd($gradeData);
 
         return $gradeData;
     }

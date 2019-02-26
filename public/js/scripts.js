@@ -41,7 +41,26 @@ function openCheckinListener (gradeID, studentIDs, lessonID) {
             lessonID: lessonID
         },
         success: function(data){
-            location.reload();
+            var listenerID = data.listenerID;
+            var lessonID = parseInt(data.lessonID);
+            var students = data.studentsData;
+            $('#openListener').after('<button id="closeListener" onclick="closeCheckinListener(' + listenerID + ', ' + lessonID + ')">Затвори чекиране</button>')
+            $('#openListener').remove();
+            $('#closeListener').after('<ul class="lessonStudents"></ul>');
+            $(students).each(function () {
+                var items = this;
+                $.each(items, function () {
+                    if (this.checked) {
+                        var studentColor = 'green';
+                    } else {
+                        var studentColor = 'red';
+                    }
+
+                    $('<li style="color: ' + studentColor + ';">'+this.studentName+'</li>').appendTo($('.lessonStudents:last'));
+                })
+            });
+
+            setTimeout(function () { refreshCheckedUsers(listenerID) }, 8000);
         }
     });
 }
@@ -109,8 +128,40 @@ function writeAbsence (lessonID, studentID) {
     });
 }
 
-if ($('#closeListener').length) {
-    setInterval(function () {
-        location.reload();
-    }, 10000);
+// Chained after opening the checkin listener so it can refresh the users when they start to checkin
+function refreshCheckedUsers (listenerID) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: "checkins/refreshCheckedUsers",
+        type: "POST",
+        data: {
+            listenerID: listenerID
+        },
+        success: function (data) {
+            var listenerID = data.listenerID;
+            var students = data.studentsData;
+
+            $('.lessonStudents:last').empty();
+
+            $(students).each(function () {
+                var items = this;
+                $.each(items, function () {
+                    if (this.checked) {
+                        var studentColor = 'green';
+                    } else {
+                        var studentColor = 'red';
+                    }
+
+                    $('<li style="color: ' + studentColor + ';">'+this.studentName+'</li>').appendTo($('.lessonStudents:last'));
+                })
+            });
+
+            setTimeout(function () { refreshCheckedUsers(listenerID) }, 8000);
+        }
+    });
 }

@@ -72,6 +72,8 @@ class UserSeeder extends Seeder
             '5Б',
             '5В',
             '6А',
+            '6Б',
+            '6В',
             '7А',
             '7Б',
             '8А',
@@ -79,18 +81,18 @@ class UserSeeder extends Seeder
             '8В',
             '9А',
             '9Б',
+            '9В',
             '10А',
             '10Б',
+            '10В',
             '11А',
             '11Б',
             '11В',
             '12А',
-            '12Б',
-            '12В',
-            '12Г'
+            '12Б'
         ];
 
-        for ($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < count($gradeTitlesArray); $i++) {
             $gradeID = factory(Grade::class)->create([
                 'title' => $gradeTitlesArray[$i]
             ])->id;
@@ -143,7 +145,7 @@ class UserSeeder extends Seeder
             }
 
             // This if statement cuts the curricula in a half - being able to create 2 equally populated shifts
-            if ($i < 15) {
+            if ($i < (count($gradeTitlesArray) / 2)) {
                 // 1st curriculum shift
                 $timeRanges = [
                     '07:30 - 08:10',
@@ -232,6 +234,8 @@ class UserSeeder extends Seeder
             ]);
         }
 
+        $this->customTestRecords($schoolID);
+
         // Updates the school's fields that got left with the default '0' value.
         $schoolStudentsCount = DB::table('users')->where(['school_id' => $schoolID, 'rank' => 'student'])->count();
         $schoolTeachersCount = DB::table('users')->where(['school_id' => $schoolID, 'rank' => 'teacher'])->count();
@@ -304,6 +308,111 @@ class UserSeeder extends Seeder
             'school_id' => $schoolID,
             'verified' => 1,
             'remember_token' => str_random(10)
+        ]);
+    }
+
+    protected function customTestRecords ($schoolID) {
+        $gradeID = factory(Grade::class)->create([
+            'title' => '12В'
+        ])->id;
+
+        // Creates a classteacher and matches it with the grade ID
+        $classteacherID = factory(\App\User::class)->create([
+            'name' => 'Денислав',
+            'family' => 'Колев',
+            'email' => 'noit2019@example.com',
+            'rank' => 'teacher',
+            'is_classteacher' => 1,
+            'grade_id' => $gradeID,
+            'school_id' => $schoolID,
+            'verified' => 1
+        ])->id;
+
+         $studentIDsArray = [];
+         $studentsInfo = [
+             '6e3c45 Симеон Стойнев noit2019v2@example.com',
+             '372cef '
+         ];
+
+        foreach ($studentsInfo as $student) {
+            $tmp = explode(' ', $student);
+
+            // Students of the class
+            $studentID = factory(\App\User::class)->create([
+                'card_id' => $tmp[0],
+                'name' => $tmp[1],
+                'family' => $tmp[2],
+                'email' => $tmp[3],
+                'rank' => 'student',
+                'grade_id' => $gradeID,
+                'school_id' => $schoolID,
+                'verified' => 1
+            ])->id;
+
+            $studentIDsArray[] = $studentID;
+
+            // Students' parents of the class
+            $parentID = factory(\App\User::class)->create([
+                'rank' => 'parent',
+                'school_id' => $schoolID,
+                'family_link_id' => $studentID,
+                'verified' => 1
+            ])->id;
+
+            User::find($studentID)->update(['family_link_id' => $parentID]);
+        }
+
+        // Gets all ids of the subjects
+        $subjectsResult = Subject::where('title', '!=', '')->orderBy('id')->select('title')->get()->toArray();
+        $subjects = [];
+        foreach ($subjectsResult as $row) {
+            $subjects[] = $row['title'];
+        }
+
+        $timeRanges = [
+            '13:30 - 14:10',
+            '14:20 - 15:00',
+            '15:10 - 15:50',
+            '16:10 - 16:50',
+            '17:00 - 17:40',
+            '17:45 - 18:25',
+            '18:30 - 19:10'
+        ];
+
+        $shift = 2;
+        $curriculumData = [];
+
+        for ($dayCount = 1; $dayCount <= 7; $dayCount++) {
+            // Decides the day of the week based on the number in the foreach.
+            if($dayCount==1){$day='Mon';}elseif($dayCount==2){$day='Tue';}elseif($dayCount==3){$day='Wed';}elseif($dayCount==4){$day='Thu';}elseif($dayCount==5){$day='Fri';}elseif($dayCount==6){$day='Sat';}elseif($dayCount==7){$day='Sun';}
+
+            for ($c = 0; $c <= 6; $c++) {
+                $timeRange = explode(' - ', $timeRanges[$c]);
+
+                $lesson = new Lesson();
+                $lesson->title = array_random($subjects);
+                $lesson->grade_id = $gradeID;
+                $lesson->teacher_id = $classteacherID;
+                $lesson->time_range_from = $timeRange[0];
+                $lesson->time_range_to = $timeRange[1];
+                $lesson->day = $day;
+                $lesson->save();
+
+                $curriculumData[$day][] = $lesson->id;
+            }
+        }
+
+        $curriculumID = factory(Curriculum::class)->create([
+            'grade_id' => $gradeID,
+            'lessons_data' => json_encode($curriculumData)
+        ])->id;
+
+        Grade::find($gradeID)->update([
+            'student_ids' => json_encode($studentIDsArray),
+            'classteacher_id' => $classteacherID,
+            'school_id' => $schoolID,
+            'curriculum_id' => $curriculumID,
+            'shift' => $shift
         ]);
     }
 }

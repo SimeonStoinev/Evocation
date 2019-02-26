@@ -18,7 +18,7 @@ class AbsenceController extends Controller
      */
     public function index($cardID)
     {
-        $userData = User::getUserByCardID($cardID)->first();
+        /*$userData = User::getUserByCardID($cardID)->first();
 
         if ($userData == null) {
             return 'false';
@@ -26,7 +26,60 @@ class AbsenceController extends Controller
 
         if ($userData['rank'] == 'student') {
             $openedListener = CheckinListener::getOpenedCheckinListener($userData['id'])->get()->last();
-            echo 'opened';
+
+            if ($openedListener == null) {
+                $closedListener = CheckinListener::getClosedCheckinListener($userData['id'])->get()->last();
+
+                if ($closedListener == null) {
+                    return 'false';
+                } else {
+                    $absence = Absence::getAbsenceByUserID($userData['id'])->get()->last();
+                    if ($absence != null) {
+                        Absence::where('id', $absence->id)->update(['late' => 1]);
+                    }
+                }
+
+                return 'false';
+            }
+
+            $studentIDs = json_decode($openedListener['not_checked']);
+            $studentIDKey = array_search($userData['id'], $studentIDs);
+
+            if ($studentIDKey !== false) {
+                unset($studentIDs[$studentIDKey]);
+
+                // Updates the checkin_listener record
+                $listener = CheckinListener::find($openedListener['id']);
+                $listener->not_checked = json_encode(array_values($studentIDs));
+                $listener->save();
+
+                return 'success';
+            } else {
+                return 'false';
+            }
+        } else {
+            return 'Not a student.';
+        }*/
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response | string
+     */
+    public function store(Request $request)
+    {
+        return $request->tagId;
+        //return response()->json(['tagId' => $request->tagId]);
+        $userData = User::getUserByCardID($request->tagId)->first();
+
+        if ($userData == null) {
+            return 'false';
+        }
+
+        if ($userData['rank'] == 'student') {
+            $openedListener = CheckinListener::getOpenedCheckinListener($userData['id'])->get()->last();
 
             if ($openedListener == null) {
                 $closedListener = CheckinListener::getClosedCheckinListener($userData['id'])->get()->last();
@@ -61,17 +114,6 @@ class AbsenceController extends Controller
         } else {
             return 'Not a student.';
         }
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-
     }
 
     /**

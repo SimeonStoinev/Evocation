@@ -52,7 +52,29 @@ class CheckinListenerController extends Controller
 
         $checkinListener->save();
 
+        // Setting up an array to decide whether and which student was in the lesson and which wasn't.
+        $listenerInfo = CheckinListener::where('id', $checkinListener->id)->first();
+        $lessonStudentsData = [
+            'listenerID' => $checkinListener->id,
+            'lessonID' => $request->all()['lessonID']
+        ];
+
+        if ($listenerInfo != null) {
+            // Foreaches every student in the class to add info and decide whether he was in the lesson or not.
+            foreach (json_decode($listenerInfo['student_ids']) as $studentID) {
+                $studentName = User::getUserFullName($studentID)->first();
+                $lessonStudentsData['studentsData'][$studentID]['studentID'] = $studentID;
+                $lessonStudentsData['studentsData'][$studentID]['studentName'] = $studentName['name'] . ' ' . $studentName['family'];
+                if (in_array($studentID, json_decode($listenerInfo['not_checked']))) {
+                    $lessonStudentsData['studentsData'][$studentID]['checked'] = false; // The student is absent
+                } else {
+                    $lessonStudentsData['studentsData'][$studentID]['checked'] = true; // The student is in the lesson
+                }
+            }
+        }
+
         $request->session()->put('listenerID', $checkinListener->id);
+        return $lessonStudentsData;
     }
 
     /**
@@ -104,7 +126,7 @@ class CheckinListenerController extends Controller
      * Request comes from AJAX!
      *
      * @param Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function closeCheckin (Request $request)
     {
@@ -128,5 +150,35 @@ class CheckinListenerController extends Controller
 
         $request->session()->forget('listenerID');
         $request->session()->put('lessonID', $request->all()['lessonID']);
+    }
+
+    /**
+     * Request comes from AJAX. Refreshes the students data in an opened checkin listener.
+     *
+     * @param Request $request
+     * @return array
+     */
+    public function refreshCheckedUsers (Request $request) {
+        // Setting up an array to decide whether and which student was in the lesson and which wasn't.
+        $listenerInfo = CheckinListener::where('id', $request->all()['listenerID'])->first();
+        $lessonStudentsData = [
+            'listenerID' => $request->all()['listenerID']
+        ];
+
+        if ($listenerInfo != null) {
+            // Foreaches every student in the class to add info and decide whether he was in the lesson or not.
+            foreach (json_decode($listenerInfo['student_ids']) as $studentID) {
+                $studentName = User::getUserFullName($studentID)->first();
+                $lessonStudentsData['studentsData'][$studentID]['studentID'] = $studentID;
+                $lessonStudentsData['studentsData'][$studentID]['studentName'] = $studentName['name'] . ' ' . $studentName['family'];
+                if (in_array($studentID, json_decode($listenerInfo['not_checked']))) {
+                    $lessonStudentsData['studentsData'][$studentID]['checked'] = false; // The student is absent
+                } else {
+                    $lessonStudentsData['studentsData'][$studentID]['checked'] = true; // The student is in the lesson
+                }
+            }
+        }
+
+        return $lessonStudentsData;
     }
 }
