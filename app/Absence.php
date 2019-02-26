@@ -17,11 +17,10 @@ class Absence extends Model
     ];
 
     /**
+     * Function used to get the last absence of the user by his id. Used to mark the absence as late, not full one.
+
      * @param $query
      * @param $userID
-     *
-     * Function used to get the last absence of the user by his id. Used to mark the absence as late, not full one.
-     *
      * @return mixed
      */
     public function scopeGetAbsenceByUserID ($query, $userID) {
@@ -34,12 +33,11 @@ class Absence extends Model
     }
 
     /**
+     * Function used to get the last absence of the user by his id. Used to mark the absence as late, not full one.
+     *
      * @param $query
      * @param $userID
      * @param $listenerID
-     *
-     * Function used to get the last absence of the user by his id. Used to mark the absence as late, not full one.
-     *
      * @return mixed
      */
     public function scopeGetUnexcusedAbsenceByUserID ($query, $userID, $listenerID) {

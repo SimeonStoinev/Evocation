@@ -30,11 +30,10 @@ class User extends Authenticatable
     ];
 
     /**
-     * @param $query
-     * @param $id
-     *
      * Gets current (logged) user rank by id.
      *
+     * @param $query
+     * @param $id
      * @return mixed (string)
      */
     public function scopeGetCurrUserRank ($query, $id) {
@@ -42,11 +41,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @param $query
-     * @param $id
-     *
      * Gets user's name and family by id.
      *
+     * @param $query
+     * @param $id
      * @return mixed
      */
     public function scopeGetUserFullName ($query, $id) {
@@ -54,11 +52,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @param $query
-     * @param $cardID
-     *
      * Gets user's id and rank by unique card ID.
      *
+     * @param $query
+     * @param $cardID
      * @return mixed
      */
     public function scopeGetUserByCardID ($query, $cardID) {
@@ -66,11 +63,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @param $query
-     * @param $id
-     *
      * Gets user's id, grade_id and school_id - necessary for creating an absence.
      *
+     * @param $query
+     * @param $id
      * @return mixed
      */
     public function scopeGetUserGradeAndSchool ($query, $id) {

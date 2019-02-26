@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class School extends Model
 {
     /**
-     * @param $query
-     * @param $schoolID
-     *
      * Gets the school title by id.
      *
+     * @param $query
+     * @param $schoolID
      * @return mixed
      */
     public function scopeGetSchoolTitle ($query, $schoolID) {

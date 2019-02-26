@@ -7,11 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Curriculum extends Model
 {
     /**
-     * @param $query
-     * @param $curriculumID
-     *
      * Gets curriculum by id.
      *
+     * @param $query
+     * @param $curriculumID
      * @return mixed
      */
     public function scopeGetCurriculum ($query, $curriculumID) {
@@ -19,11 +18,10 @@ class Curriculum extends Model
     }
 
     /**
-     * @param $query
-     * @param $teacherID
-     *
      * Gets all teacher lessons by teacher id.
      *
+     * @param $query
+     * @param $teacherID
      * @return mixed
      */
     public function scopeGetTeacherCurriculum ($query, $teacherID) {

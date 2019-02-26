@@ -8,11 +8,10 @@ use Carbon\Carbon;
 class CheckinListener extends Model
 {
     /**
-     * @param $query
-     * @param $studentID
-     *
      * Gets the opened checkin listener (By studentID) that has been created from the teacher and allows you to check your card.
      *
+     * @param $query
+     * @param $studentID
      * @return mixed
      */
     public function scopeGetOpenedCheckinListener ($query, $studentID) {
@@ -20,11 +19,10 @@ class CheckinListener extends Model
     }
 
     /**
-     * @param $query
-     * @param $studentID
-     *
      * Gets the closed checkin listener (By studentID) that has been created from the teacher.
      *
+     * @param $query
+     * @param $studentID
      * @return mixed
      */
     public function scopeGetClosedCheckinListener ($query, $studentID) {
