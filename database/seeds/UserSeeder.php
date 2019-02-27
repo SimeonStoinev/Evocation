@@ -12,8 +12,68 @@ use App\Lesson;
 class UserSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Inserts a hard-coded headmaster user record and updates the school record with headmaster's id.
+     * Inserts 3 hard-coded subheadmaster user records.
      *
+     * @param $schoolID
+     * @return void
+     */
+    protected function createHeadmasterAndSubheadmasters ($schoolID) {
+        $headmasterData = User::create([
+            'card_id' => str_random(16),
+            'name' => 'Headmaster',
+            'family' => 'Headmaster',
+            'email' => 'headmaster@gmail.com',
+            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+            'rank' => 'headmaster',
+            'school_id' => $schoolID,
+            'verified' => 1,
+            'remember_token' => str_random(10)
+        ]);
+
+        School::find($schoolID)->update(['headmaster_id' => $headmasterData->id]);
+
+        // Inserts a hard-coded subheadmaster 1
+        User::create([
+            'card_id' => str_random(16),
+            'name' => 'Subheadmaster1',
+            'family' => 'SubheadmasterF',
+            'email' => 'subheadmaster1@gmail.com',
+            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+            'rank' => 'subheadmaster',
+            'school_id' => $schoolID,
+            'verified' => 1,
+            'remember_token' => str_random(10)
+        ]);
+
+        // Inserts a hard-coded subheadmaster 2
+        User::create([
+            'card_id' => str_random(16),
+            'name' => 'Subheadmaster2',
+            'family' => 'SubheadmasterF',
+            'email' => 'subheadmaster2@gmail.com',
+            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+            'rank' => 'subheadmaster',
+            'school_id' => $schoolID,
+            'verified' => 1,
+            'remember_token' => str_random(10)
+        ]);
+
+        // Inserts a hard-coded subheadmaster 3
+        User::create([
+            'card_id' => str_random(16),
+            'name' => 'Subheadmaster3',
+            'family' => 'SubheadmasterF',
+            'email' => 'subheadmaster3@gmail.com',
+            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+            'rank' => 'subheadmaster',
+            'school_id' => $schoolID,
+            'verified' => 1,
+            'remember_token' => str_random(10)
+        ]);
+    }
+
+    /**
      * Truncates all tables that have something to do with this file.
      * Creates a hardcoded Admin record in Users table.
      * Creates a school record and updates all of it's fields in the end of the function.
@@ -22,6 +82,7 @@ class UserSeeder extends Seeder
      * Creates legit curricula and matches them to the grades.
      * Updates the grades with a curriculum, school ID and JSON students.
      *
+     * Run the database seeds.
      * @return void
      */
     public function run()
@@ -249,68 +310,11 @@ class UserSeeder extends Seeder
     }
 
     /**
+     * Creates a custom grade and users for testing with actual names.
+     *
      * @param $schoolID
-     *
-     * Inserts a hard-coded headmaster user record and updates the school record with headmaster's id.
-     * Inserts 3 hard-coded subheadmaster user records.
-     *
      * @return void
      */
-    protected function createHeadmasterAndSubheadmasters ($schoolID) {
-        $headmasterData = User::create([
-            'card_id' => str_random(16),
-            'name' => 'Headmaster',
-            'family' => 'Headmaster',
-            'email' => 'headmaster@gmail.com',
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-            'rank' => 'headmaster',
-            'school_id' => $schoolID,
-            'verified' => 1,
-            'remember_token' => str_random(10)
-        ]);
-
-        School::find($schoolID)->update(['headmaster_id' => $headmasterData->id]);
-
-        // Inserts a hard-coded subheadmaster 1
-        User::create([
-            'card_id' => str_random(16),
-            'name' => 'Subheadmaster1',
-            'family' => 'SubheadmasterF',
-            'email' => 'subheadmaster1@gmail.com',
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-            'rank' => 'subheadmaster',
-            'school_id' => $schoolID,
-            'verified' => 1,
-            'remember_token' => str_random(10)
-        ]);
-
-        // Inserts a hard-coded subheadmaster 2
-        User::create([
-            'card_id' => str_random(16),
-            'name' => 'Subheadmaster2',
-            'family' => 'SubheadmasterF',
-            'email' => 'subheadmaster2@gmail.com',
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-            'rank' => 'subheadmaster',
-            'school_id' => $schoolID,
-            'verified' => 1,
-            'remember_token' => str_random(10)
-        ]);
-
-        // Inserts a hard-coded subheadmaster 3
-        User::create([
-            'card_id' => str_random(16),
-            'name' => 'Subheadmaster3',
-            'family' => 'SubheadmasterF',
-            'email' => 'subheadmaster3@gmail.com',
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-            'rank' => 'subheadmaster',
-            'school_id' => $schoolID,
-            'verified' => 1,
-            'remember_token' => str_random(10)
-        ]);
-    }
-
     protected function customTestRecords ($schoolID) {
         $gradeID = factory(Grade::class)->create([
             'title' => '12В'
@@ -330,8 +334,34 @@ class UserSeeder extends Seeder
 
          $studentIDsArray = [];
          $studentsInfo = [
-             '6e3c45 Симеон Стойнев noit2019v2@example.com',
-             '372cef '
+             str_random(6) . ' Андрея Янчева noit2019v8@example.com Ивана Ивана noit2019v9example.com',
+             str_random(6) . ' Велислава Велкова noit2019v10@example.com Ивана Ивана noit2019v11example.com',
+             str_random(6) . ' Владислава Аврамова noit2019v12@example.com Ивана Ивана noit2019v13example.com',
+             str_random(6) . ' Даниела Петрова noit2019v14@example.com Ивана Ивана noit2019v15example.com',
+             '372cef Денислав Колев noit2019v16@example.com Ивана Ивана noit2019v17example.com',
+             str_random(6) . ' Десислава Георгиева noit2019v18@example.com Ивана Ивана noit2019v19example.com',
+             str_random(6) . ' Джанай Юмеров noit2019v20@example.com Ивана Ивана noit2019v21example.com',
+             str_random(6) . ' Диляра Гюнай noit2019v22@example.com Ивана Ивана noit2019v23example.com',
+             str_random(6) . ' Димо Русев noit2019v24@example.com Ивана Ивана noit2019v25example.com',
+             str_random(6) . ' Ивелина Георгиева noit2019v26@example.com Ивана Ивана noit2019v27example.com',
+             str_random(6) . ' Лина Димитрова noit2019v28@example.com Ивана Ивана noit2019v29example.com',
+             str_random(6) . ' Любослав Лилов noit2019v30@example.com Ивана Ивана noit2019v31example.com',
+             str_random(6) . ' Кристиян Грудев noit2019v32@example.com Ивана Ивана noit2019v33example.com',
+             str_random(6) . ' Мария Кирилова noit2019v34@example.com Ивана Ивана noit2019v35example.com',
+             str_random(6) . ' Михаел Веселинов noit2019v36@example.com Ивана Ивана noit2019v37example.com',
+             str_random(6) . ' Мустафа Мустафов noit2019v38@example.com Ивана Ивана noit2019v39example.com',
+             str_random(6) . ' Недялка Стойчкова noit2019v40@example.com Ивана Ивана noit2019v41example.com',
+             str_random(6) . ' Петя Аделинова noit2019v42@example.com Ивана Ивана noit2019v43example.com',
+             str_random(6) . ' Пламена Георгиева noit2019v44@example.com Ивана Ивана noit2019v45example.com',
+             str_random(6) . ' Пламена Денева noit2019v46@example.com Ивана Ивана noit2019v47example.com',
+             str_random(6) . ' Пресиан Петров noit2019v48@example.com Ивана Ивана noit2019v49example.com',
+             str_random(6) . ' Радостин Нецов noit2019v50@example.com Ивана Ивана noit2019v51example.com',
+             str_random(6) . ' Радостина Бонева noit2019v52@example.com Ивана Ивана noit2019v53example.com',
+             str_random(6) . ' Ралица Русева noit2019v54@example.com Ивана Ивана noit2019v55example.com',
+             '6e3c45 Симеон Стойнев noit2019v2@example.com Росица Стойнева noit2019v4@example.com',
+             str_random(6) . ' Станислав Кирилов noit2019v58@example.com Ивана Ивана noit2019v59example.com',
+             str_random(6) . ' Стефан Стефанов noit2019v60@example.com Ивана Ивана noit2019v61example.com',
+             str_random(6) . ' Цветина Манова noit2019v62@example.com Ивана Ивана noit2019v63example.com'
          ];
 
         foreach ($studentsInfo as $student) {
@@ -353,6 +383,9 @@ class UserSeeder extends Seeder
 
             // Students' parents of the class
             $parentID = factory(\App\User::class)->create([
+                'name' => $tmp[4],
+                'family' => $tmp[5],
+                'email' => $tmp[6],
                 'rank' => 'parent',
                 'school_id' => $schoolID,
                 'family_link_id' => $studentID,
@@ -362,12 +395,21 @@ class UserSeeder extends Seeder
             User::find($studentID)->update(['family_link_id' => $parentID]);
         }
 
-        // Gets all ids of the subjects
-        $subjectsResult = Subject::where('title', '!=', '')->orderBy('id')->select('title')->get()->toArray();
-        $subjects = [];
-        foreach ($subjectsResult as $row) {
-            $subjects[] = $row['title'];
-        }
+        $subjects = [
+            'Български език и литература',
+            'Математика',
+            'Английски език',
+            'Немски език',
+            'Руски език',
+            'Физика',
+            'Физическо възпитание и спорт',
+            'Свят и личност',
+            'География',
+            'История и цивилизация',
+            'Информационни технологии',
+            'Информатика',
+            'Час на класа'
+        ];
 
         $timeRanges = [
             '13:30 - 14:10',

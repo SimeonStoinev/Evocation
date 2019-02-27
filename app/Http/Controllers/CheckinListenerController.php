@@ -43,10 +43,10 @@ class CheckinListenerController extends Controller
         $checkinListener = new CheckinListener();
 
         $checkinListener->teacher_id = Auth::id();
-        $checkinListener->grade_id = $request->all()['gradeID'];
-        $checkinListener->lesson_id = $request->all()['lessonID'];
-        $checkinListener->student_ids = str_replace('"', '', json_encode($request->all()['studentIDs']));
-        $checkinListener->not_checked = str_replace('"', '', json_encode($request->all()['studentIDs']));
+        $checkinListener->grade_id = $request->gradeID;
+        $checkinListener->lesson_id = $request->lessonID;
+        $checkinListener->student_ids = str_replace('"', '', json_encode($request->studentIDs));
+        $checkinListener->not_checked = str_replace('"', '', json_encode($request->studentIDs));
         $checkinListener->opened = true;
         $checkinListener->time = date('H:i');
 
@@ -56,7 +56,7 @@ class CheckinListenerController extends Controller
         $listenerInfo = CheckinListener::where('id', $checkinListener->id)->first();
         $lessonStudentsData = [
             'listenerID' => $checkinListener->id,
-            'lessonID' => $request->all()['lessonID']
+            'lessonID' => $request->lessonID
         ];
 
         if ($listenerInfo != null) {
@@ -130,14 +130,14 @@ class CheckinListenerController extends Controller
      */
     public function closeCheckin (Request $request)
     {
-        $listener = CheckinListener::find($request->all()['listenerID']);
+        $listener = CheckinListener::find($request->listenerID);
 
         if ($listener->opened == true) {
             foreach (json_decode($listener->not_checked) as $row) {
                 $userData = User::getUserGradeAndSchool($row)->first();
                 $absence = new Absence();
                 $absence->user_id = $userData['id'];
-                $absence->listener_id = $request->all()['listenerID'];
+                $absence->listener_id = $request->listenerID;
                 $absence->grade_id = $userData['grade_id'];
                 $absence->school_id = $userData['school_id'];
 
@@ -149,7 +149,7 @@ class CheckinListenerController extends Controller
         $listener->save();
 
         $request->session()->forget('listenerID');
-        $request->session()->put('lessonID', $request->all()['lessonID']);
+        $request->session()->put('lessonID', $request->lessonID);
     }
 
     /**
@@ -160,9 +160,9 @@ class CheckinListenerController extends Controller
      */
     public function refreshCheckedUsers (Request $request) {
         // Setting up an array to decide whether and which student was in the lesson and which wasn't.
-        $listenerInfo = CheckinListener::where('id', $request->all()['listenerID'])->first();
+        $listenerInfo = CheckinListener::where('id', $request->listenerID)->first();
         $lessonStudentsData = [
-            'listenerID' => $request->all()['listenerID']
+            'listenerID' => $request->listenerID
         ];
 
         if ($listenerInfo != null) {

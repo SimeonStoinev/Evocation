@@ -44,7 +44,7 @@ function openCheckinListener (gradeID, studentIDs, lessonID) {
             var listenerID = data.listenerID;
             var lessonID = parseInt(data.lessonID);
             var students = data.studentsData;
-            $('#openListener').after('<button id="closeListener" onclick="closeCheckinListener(' + listenerID + ', ' + lessonID + ')">Затвори чекиране</button>')
+            $('#openListener').after('<button id="closeListener" class="btn btn-outline-primary small-btn" onclick="closeCheckinListener(' + listenerID + ', ' + lessonID + ')">Затвори чекиране</button>');
             $('#openListener').remove();
             $('#closeListener').after('<ul class="lessonStudents"></ul>');
             $(students).each(function () {
@@ -161,7 +161,19 @@ function refreshCheckedUsers (listenerID) {
                 })
             });
 
-            setTimeout(function () { refreshCheckedUsers(listenerID) }, 8000);
+            setTimeout(function () { refreshCheckedUsers(listenerID) }, 5000);
         }
     });
+}
+
+function displayHomeContent (el) {
+    $('li.active').removeClass('active');
+    $(el).parent().addClass('active');
+    var contentElement = $('div[content='+el.attr('data-content')+']');
+    $(contentElement).siblings('div').fadeOut(300);
+    $(contentElement).fadeIn(300);
+    var menuTitle = $(el).parent().parent().siblings('a').find('.title').html();
+    $('.card-header').html(menuTitle);
+    //console.log(menuTitle);
+    //setTimeout(function(){$(contentElement).fadeIn(300)}, 300);
 }

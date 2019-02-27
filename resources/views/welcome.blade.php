@@ -106,21 +106,21 @@
                 <div class="row">
 
                     <div class="col-lg-4 box">
-                        <i class="ion-ios-bookmarks-outline"></i>
-                        <h4 class="title"><a href="">Какво е Evocation?</a></h4>
+                        <i class="ion-information-circled"></i>
+                        <h4 class="title"><a href="javascript:;">Какво е Evocation?</a></h4>
                         <p class="description">Evocation e Интернет приложение, което идентифицира посещението на учениците в училище чрез магнитна карта.</p>
                     </div>
 
                     <div class="col-lg-4 box box-bg">
-                        <i class="ion-ios-stopwatch-outline"></i>
-                        <h4 class="title"><a href="">Автоматизация</a></h4>
+                        <i class="ion-android-settings"></i>
+                        <h4 class="title"><a href="javascript:;">Автоматизация</a></h4>
                         <p class="description">Данните от идентификацията в реално време се нанасят в електронен дневник, което улеснява работата на учителите и уведомява родителите.</p>
                     </div>
 
                     <div class="col-lg-4 box">
-                        <i class="ion-ios-heart-outline"></i>
-                        <h4 class="title"><a href="">Електронен дневник</a></h4>
-                        <p class="description">Електронният дневник предоставя детайлна информация на учениците за техните оцени, отсъствия, седмично разписание и др.</p>
+                        <i class="ion-ios-bookmarks-outline"></i>
+                        <h4 class="title"><a href="javascript:;">Електронен дневник</a></h4>
+                        <p class="description">Електронният дневник предоставя детайлна информация за отсъствията на учениците, за седмичното разписание на училището и др.</p>
                     </div>
 
                 </div>
@@ -155,11 +155,6 @@
                         @endif
                     </div>
 
-                    {{--<div class="col-lg-3 col-6 text-center">
-                        <span data-toggle="counter-up">7</span>
-                        <p>Града</p>
-                    </div>--}}
-
                 </div>
 
                 <div class="facts-img">
@@ -175,9 +170,9 @@
                 <div class="row">
 
                     <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
-                        <div class="icon"><i class="ion-ios-bookmarks-outline"></i></div>
-                        <h4 class="title"><a href="">Професионализъм</a></h4>
-                        <p class="description">Ние използваме най-новите технологии, за да постигнем максимална ефективност и качество.</p>
+                        <div class="icon"><i class="ion-android-lock"></i></div>
+                        <h4 class="title"><a href="">Сигурност</a></h4>
+                        <p class="description">Ние използваме най-новите технологии, за да постигнем максимална ефективност и сигурност.</p>
                     </div>
                     <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
                         <div class="icon"><i class="ion-ios-bolt-outline"></i></div>
@@ -185,7 +180,7 @@
                         <p class="description">Главната цел на Evocation е да автоматизира процеса на въвеждане на отсъствия.</p>
                     </div>
                     <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
-                        <div class="icon"><i class="ion-ios-paper-outline"></i></div>
+                        <div class="icon"><i class="ion-ios-lightbulb-outline"></i></div>
                         <h4 class="title"><a href="">Креативност</a></h4>
                         <p class="description">Дизайнът на Evocation е responsive, за да отоговори на изискванията на всеки потребител.</p>
                     </div>

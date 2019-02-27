@@ -83,11 +83,51 @@ class HomeController extends Controller
      * @return array
      */
     protected function teacherHome () {
+        $teacherInfo = User::where('id', Auth::id())->first()->toArray();
+
+        if ($teacherInfo != null) {
+            $teacherInfo['school'] = School::getSchoolTitle($teacherInfo['school_id'])->first()['title'];
+            if ($teacherInfo['is_classteacher']) {
+                $teacherInfo['gradeTitle'] = Grade::gradeByClassTeacherID($teacherInfo['id'])->first()['title'];
+
+                $grade = Grade::gradeByClassTeacherID(Auth::id())->first();
+
+                $gradeData = [];
+
+                // Fills the $gradeData array with all the students' names from this grade
+                foreach (json_decode($grade['student_ids']) as $row) {
+                    $nameAndFamily = User::getUserFullName($row)->first();
+                    $dailyAbsences = Absence::getDailyAbsences($row)->get()->toArray();
+                    $weeklyAbsences = Absence::getWeeklyAbsences($row)->get()->toArray();
+                    $monthlyAbsences = Absence::getMonthlyAbsences($row)->get()->toArray();
+                    $gradeData['students'][] = [
+                        'name' => $nameAndFamily['name'] . ' ' . $nameAndFamily['family'],
+                        'dailyAbsences' => $dailyAbsences,
+                        'weeklyAbsences' => $weeklyAbsences,
+                        'monthlyAbsences' => $monthlyAbsences
+                    ];
+                }
+
+                $gradeLessons = Lesson::gradeLessonsCurriculum($grade['id']);
+
+                $gradeData['mondayLessons'] = $gradeLessons['Mon'];
+                $gradeData['tuesdayLessons'] = $gradeLessons['Tue'];
+                $gradeData['wednesdayLessons'] = $gradeLessons['Wed'];
+                $gradeData['thursdayLessons'] = $gradeLessons['Thu'];
+                $gradeData['fridayLessons'] = $gradeLessons['Fri'];
+                $gradeData['saturdayLessons'] = $gradeLessons['Sat'];
+                $gradeData['sundayLessons'] = $gradeLessons['Sun'];
+                $gradeData['todayLessons'] = $gradeLessons[date('D')];
+
+                $teacherInfo['gradeData'] = $gradeData;
+            }
+        }
+
         $teacherLessons = Lesson::getTeacherLessonsToday(Auth::id())->get()->toArray();
 
-        $teacherLessonsData = []; $teacherData = [];
+        $teacherLessonsData = []; $teacherData = ['teacherInfo' => $teacherInfo];
         //$currentTime = date('H:i');
-        $currentTime = '09:40';
+        $currentTime = '14:40';
 
         $lessonCount = 1;
         foreach ($teacherLessons as $row) {

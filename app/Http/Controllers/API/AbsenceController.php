@@ -70,8 +70,7 @@ class AbsenceController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->tagId;
-        //return response()->json(['tagId' => $request->tagId]);
+        //return $request->tagId;
         $userData = User::getUserByCardID($request->tagId)->first();
 
         if ($userData == null) {
@@ -156,10 +155,10 @@ class AbsenceController extends Controller
      * @param Request $request
      */
     public function excuseAbsence (Request $request) {
-        $listener = CheckinListener::getListenerIDByLessonID($request->all()['lessonID'])->first();
+        $listener = CheckinListener::getListenerIDByLessonID($request->lessonID)->first();
 
         $studentIDs = json_decode($listener['not_checked']);
-        $studentIDKey = array_search($request->all()['studentID'], $studentIDs);
+        $studentIDKey = array_search($request->studentID, $studentIDs);
 
         if ($studentIDKey !== false) {
             unset($studentIDs[$studentIDKey]);
@@ -170,7 +169,7 @@ class AbsenceController extends Controller
             $listener->save();
         }
 
-        $absence = Absence::getUnexcusedAbsenceByUserID($request->all()['studentID'], $listener['id'])->first();
+        $absence = Absence::getUnexcusedAbsenceByUserID($request->studentID, $listener['id'])->first();
 
         Absence::find($absence['id'])->update(['excused' => true]);
     }
@@ -181,26 +180,32 @@ class AbsenceController extends Controller
      * @param Request $request
      */
     public function writeAbsence (Request $request) {
-        $listener = CheckinListener::getListenerIDByLessonID($request->all()['lessonID'])->first();
+        $listener = CheckinListener::getListenerIDByLessonID($request->lessonID)->first();
 
         $studentIDs = json_decode($listener['not_checked']);
-        $studentIDs[] = intval($request->all()['studentID']);
+        $studentIDs[] = intval($request->studentID);
 
         // Updating listener
         $listener = CheckinListener::find($listener['id']);
         $listener->not_checked = json_encode(array_values($studentIDs));
         $listener->save();
 
-        // Creating a new absence
-        $userData = User::getUserGradeAndSchool($request->all()['studentID'])->first();
+        $existingAbsence = Absence::getExistingAbsence($request->studentID, $listener['id'])->first();
 
-        $absence = new Absence();
-        $absence->user_id = $userData['id'];
-        $absence->listener_id = $listener['id'];
-        $absence->grade_id = $userData['grade_id'];
-        $absence->school_id = $userData['school_id'];
-        $absence->kicked = true;
+        if ($existingAbsence != null) {
+            Absence::find($existingAbsence['id'])->update(['excused' => false, 'kicked' => true]);
+        } else {
+            // Creating a new absence
+            $userData = User::getUserGradeAndSchool($request->studentID)->first();
 
-        $absence->save();
+            $absence = new Absence();
+            $absence->user_id = $userData['id'];
+            $absence->listener_id = $listener['id'];
+            $absence->grade_id = $userData['grade_id'];
+            $absence->school_id = $userData['school_id'];
+            $absence->kicked = true;
+
+            $absence->save();
+        }
     }
 }

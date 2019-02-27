@@ -13,7 +13,7 @@ class Absence extends Model
      * @var array
      */
     protected $fillable = [
-        'excused'
+        'excused', 'kicked'
     ];
 
     /**
@@ -91,5 +91,20 @@ class Absence extends Model
             $carbon->startOfMonth()->format('Y-m-d H:i'),
             $carbon->endOfMonth()->format('Y-m-d H:i')
         ]);
+    }
+
+    /**
+     * Gets an existing absence today by user and listener id. Used to kick a student from a lesson.
+     *
+     * @param $query
+     * @param $userID
+     * @param $listenerID
+     * @return mixed
+     */
+    public function scopeGetExistingAbsence ($query, $userID, $listenerID) {
+        return $query->where([
+            'user_id' => $userID,
+            'listener_id' => $listenerID
+        ])->where('created_at', '>=', Carbon::today());
     }
 }

@@ -357,14 +357,22 @@ template {
     background-color: transparent;
 }
 
+#navbarSupportedContent {
+    padding-right: 0;
+}
+
+.ml-auto .nav-menu a {
+    padding: 0 8px;
+}
+
 .nav-link{
-    font-size: 1.2em;
-    padding: 10px !important;
-    color: black !important;
+    font-size: 18px;
+    padding: 10px;
+    color: black;
 }
 
 .nav-link:hover{
-    color: #2b95e0 !important;
+    color: #2b95e0;
 }
 
 .navbar-brand{
@@ -489,10 +497,17 @@ main .containerAuth form h1{
     border: none;
     font-size: 16px;
     padding: 6px 16px;
+    outline: none;
+}
+
+.small-btn {
+    font-size: 14px;
 }
 
 .btn-outline-primary:hover {
-    color: #111111;
+    background: #1f81c6;
+    border-color: #1f81c6;
+    color: #ffffff;
 }
 
 select.form-control:not([size]):not([multiple]) {
@@ -501,4 +516,102 @@ select.form-control:not([size]):not([multiple]) {
 
 .title {
     vertical-align: text-bottom;
+}
+
+#app nav {
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 0;
+}
+
+#school {
+    font-size: 22px;
+    color: #fff;
+}
+
+#school > i {
+    color: #2b95e0;
+    font-weight: 800;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #ffffff;
+}
+
+/*Begin home page*/
+.page-sidebar .page-sidebar-menu .sub-menu li>a,
+.page-sidebar-closed.page-sidebar-fixed .page-sidebar:hover .page-sidebar-menu .sub-menu li>a {
+    padding: 10px 0 9px 40px;
+}
+
+.card-header {
+    text-align: center;
+    font-size: 20px;
+}
+
+.card-body > div {
+    display: none;
+}
+
+.card-body > div:first-child {
+    display: block;
+}
+
+.lesson {
+    padding: 8px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #eee;
+    color: #333333;
+}
+
+.lesson:last-child {
+    border: none;
+}
+
+.lessonInfo {
+    display: flex;
+}
+
+.studentsWrapper {
+    text-align: center;
+    padding: 15px 0 5px 0;
+}
+
+.lessonInfo div {
+    width: 33.3%;
+}
+
+.lessonInfo div:nth-child(2) {
+    text-align: center;
+    font-weight: 600;
+}
+
+.lessonInfo div:last-child {
+    text-align: right;
+}
+
+.lessonStudents, .gradeStudents {
+    display: flex;
+    margin-top: 15px;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.lessonStudents li, .gradeStudents li {
+    list-style: none;
+    width: 25%;
+    text-align: center;
+    padding: 5px 0;
+}
+
+.gradeStudents li {
+    width: 33.3%;
+}
+
+.lessonStudents li:nth-child(4) {
+    clear: both;
+}
+
+.container {
+    width: 94%;
+    max-width: none;
 }

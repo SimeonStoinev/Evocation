@@ -32,17 +32,19 @@
 </head>
 <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
-            <div class="container">
-                @if (\Illuminate\Support\Facades\Auth::check())
-                    <a class="navbar-brand" href="{{ url('/home') }}" style="padding: 15px;">
-                        Evocation
-                    </a>
-                @else
-                    <a class="navbar-brand" href="{{ url('/') }}" style="padding: 15px;">
-                        Evocation
-                    </a>
-                @endif
+        <nav id="header" class="navbar navbar-expand-md navbar-light navbar-laravel" style="position: relative;">
+            <div class="container" style="width: 100%;">
+                <div id="logo" style="padding-left: 0;">
+                    @if (\Illuminate\Support\Facades\Auth::check())
+                        <h1>
+                            <a href="{{ url('/home') }}">Evocation</a>
+                        </h1>
+                    @else
+                        <h1>
+                            <a href="{{ url('/') }}">Evocation</a>
+                        </h1>
+                    @endif
+                </div>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -54,16 +56,21 @@
 
                     </ul>
 
+                    @if (isset($data['teacherInfo']))
+                        <span id="school">
+                            <i class="icon-graduation"></i>
+                            {{ $data['teacherInfo']['school'] }}
+                        </span>
+                    @endif
+
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item" >
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Вход') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Регистрация') }}</a>
-                            </li>
+                            <ul class="nav-menu">
+                                <li><a href="{{ route('login') }}">{{ __('Вход') }}</a></li>
+                                <li class="menu-active"><a href="{{ route('register') }}">{{ __('Регистрация') }}</a></li>
+                            </ul>
                         @else
                             {{--<li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -82,7 +89,7 @@
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->name }} {{ Auth::user()->family }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
