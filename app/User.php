@@ -30,6 +30,14 @@ class User extends Authenticatable
     ];
 
     /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeGetAllUsers ($query) {
+        return $query->where('id', '>', '0')->where('rank', '!=', 'admin');
+    }
+
+    /**
      * Gets current (logged) user rank by id.
      *
      * @param $query
@@ -88,5 +96,16 @@ class User extends Authenticatable
         } else {
             return true;
         }
+    }
+
+    /**
+     * Gets the children linked to your id.
+     *
+     * @param $query
+     * @param $parentID
+     * @return mixed
+     */
+    public function scopeGetLinkedChildren ($query, $parentID) {
+        return $query->where('family_link_id', $parentID);
     }
 }

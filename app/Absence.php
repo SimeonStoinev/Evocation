@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Lesson;
 
 class Absence extends Model
 {
@@ -51,6 +52,45 @@ class Absence extends Model
     }
 
     /**
+     * Count student's absences.
+     *
+     * @param $query
+     * @param $userID
+     * @return mixed
+     */
+    public function scopeCountAbsences ($query, $userID) {
+        $absences = $query->where('user_id', $userID)->where('excused', false)->select('late')->get()->toArray();
+
+        if ($absences == null) {
+            return 0;
+        } else {
+            $count = 0;
+            foreach ($absences as $absence) {
+                if ($absence['late']) {
+                    $count += 0.5;
+                } else {
+                    $count++;
+                }
+            }
+
+            return $count;
+        }
+    }
+
+    /**
+     * Count student's excused absences.
+     *
+     * @param $query
+     * @param $userID
+     * @return mixed
+     */
+    public function scopeCountExcusedAbsences ($query, $userID) {
+        $absences = $query->where('user_id', $userID)->where('excused', true)->select('id')->get()->toArray();
+
+        return count($absences);
+    }
+
+    /**
      * Student absences from today.
      *
      * @param $query
@@ -58,7 +98,23 @@ class Absence extends Model
      * @return mixed
      */
     public function scopeGetDailyAbsences ($query, $userID) {
-        return $query->where('user_id', $userID)->where('created_at', '>=', Carbon::today());
+        $result = $query->where('user_id', $userID)->where('excused', false)->where('created_at', '>=', Carbon::today())
+                ->select('id', 'lesson_id', 'user_id', 'late', 'kicked', 'created_at')->get()->toArray();
+
+        if (!empty($result)) {
+            foreach ($result as &$row) {
+                $lessonData = Lesson::getLessonTitleAndDay($row['lesson_id']);
+                $row['lessonTitle'] = $lessonData[0];
+                $row['lessonDay'] = $lessonData[1];
+                $timestamp = explode(' ', $row['created_at']);
+                $date = explode('-', $timestamp[0]);
+                $row['time'] = $timestamp[1];
+                $row['date'] = $date[2] . '.' . $date[1] . '.' . $date[0];
+                unset($row['created_at']);
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -71,10 +127,25 @@ class Absence extends Model
     public function scopeGetWeeklyAbsences ($query, $userID) {
         $carbon = new Carbon();
 
-        return $query->where('user_id', $userID)->whereBetween('created_at', [
+        $result = $query->where('user_id', $userID)->where('excused', false)->whereBetween('created_at', [
             $carbon->startOfWeek()->format('Y-m-d H:i'),
             $carbon->endOfWeek()->format('Y-m-d H:i')
-        ]);
+        ])->select('id', 'lesson_id', 'user_id', 'late', 'kicked', 'created_at')->get()->toArray();
+
+        if (!empty($result)) {
+            foreach ($result as &$row) {
+                $lessonData = Lesson::getLessonTitleAndDay($row['lesson_id']);
+                $row['lessonTitle'] = $lessonData[0];
+                $row['lessonDay'] = $lessonData[1];
+                $timestamp = explode(' ', $row['created_at']);
+                $date = explode('-', $timestamp[0]);
+                $row['time'] = $timestamp[1];
+                $row['date'] = $date[2] . '.' . $date[1] . '.' . $date[0];
+                unset($row['created_at']);
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -87,10 +158,52 @@ class Absence extends Model
     public function scopeGetMonthlyAbsences ($query, $userID) {
         $carbon = new Carbon();
 
-        return $query->where('user_id', $userID)->whereBetween('created_at', [
+        $result = $query->where('user_id', $userID)->where('excused', false)->whereBetween('created_at', [
             $carbon->startOfMonth()->format('Y-m-d H:i'),
             $carbon->endOfMonth()->format('Y-m-d H:i')
-        ]);
+        ])->select('id', 'lesson_id', 'user_id', 'late', 'kicked', 'created_at')->get()->toArray();
+
+        if (!empty($result)) {
+            foreach ($result as &$row) {
+                $lessonData = Lesson::getLessonTitleAndDay($row['lesson_id']);
+                $row['lessonTitle'] = $lessonData[0];
+                $row['lessonDay'] = $lessonData[1];
+                $timestamp = explode(' ', $row['created_at']);
+                $date = explode('-', $timestamp[0]);
+                $row['time'] = $timestamp[1];
+                $row['date'] = $date[2] . '.' . $date[1] . '.' . $date[0];
+                unset($row['created_at']);
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * All student's excused absences.
+     *
+     * @param $query
+     * @param $userID
+     * @return mixed
+     */
+    public function scopeGetExcusedAbsences ($query, $userID) {
+        $result = $query->where('user_id', $userID)->where('excused', true)
+            ->select('id', 'lesson_id', 'user_id', 'created_at')->get()->toArray();
+
+        if (!empty($result)) {
+            foreach ($result as &$row) {
+                $lessonData = Lesson::getLessonTitleAndDay($row['lesson_id']);
+                $row['lessonTitle'] = $lessonData[0];
+                $row['lessonDay'] = $lessonData[1];
+                $timestamp = explode(' ', $row['created_at']);
+                $date = explode('-', $timestamp[0]);
+                $row['time'] = $timestamp[1];
+                $row['date'] = $date[2] . '.' . $date[1] . '.' . $date[0];
+                unset($row['created_at']);
+            }
+        }
+
+        return $result;
     }
 
     /**

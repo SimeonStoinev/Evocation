@@ -15,6 +15,7 @@ class CreateEntriesTable extends Migration
     {
         Schema::create('entries', function (Blueprint $table) {
             $table->increments('id');
+            $table->tinyInteger('status')->comment('0 - вход; 1 - изход');
             $table->string('name');
             $table->string('family');
             $table->integer('user_id');

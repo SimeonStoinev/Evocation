@@ -522,13 +522,21 @@ select.form-control:not([size]):not([multiple]) {
     background: rgba(0, 0, 0, 0.9);
     border-radius: 0;
 }
+#logo {
+    max-width: 250px;
+}
 
-#school {
+#logo img {
+    width: 100%;
+    transform: translate(0, -4%);
+}
+
+#schoolTitle {
     font-size: 22px;
     color: #fff;
 }
 
-#school > i {
+#schoolTitle > i {
     color: #2b95e0;
     font-weight: 800;
 }
@@ -548,12 +556,8 @@ select.form-control:not([size]):not([multiple]) {
     font-size: 20px;
 }
 
-.card-body > div {
+.card-body > div, .adminContent {
     display: none;
-}
-
-.card-body > div:first-child {
-    display: block;
 }
 
 .lesson {
@@ -574,6 +578,20 @@ select.form-control:not([size]):not([multiple]) {
 .studentsWrapper {
     text-align: center;
     padding: 15px 0 5px 0;
+}
+
+.lessonStudents button, .absencesDetails button, .adminList button {
+    border: none;
+    background: transparent;
+    box-shadow: none;
+    outline: none;
+    padding: 4px 0 0 3px;
+}
+
+.lessonStudents button i, .absencesDetails button i {
+    font-weight: 600;
+    font-size: 1.2em;
+    vertical-align: middle;
 }
 
 .lessonInfo div {
@@ -614,4 +632,192 @@ select.form-control:not([size]):not([multiple]) {
 .container {
     width: 94%;
     max-width: none;
+}
+
+.dayOfWeek {
+    text-align: center;
+}
+
+.dayOfWeek > h3 {
+    display: inline-block;
+    color: #2b95e0;
+    padding-top: 10px;
+    border-bottom: 1px solid #000;
+}
+
+.gradeAbsences, .childAbsences {
+    margin-top: 15px;
+    padding: 0;
+}
+
+.studentAbsenceInfo {
+    display: flex;
+    list-style: none;
+    padding: 8px 20px;
+    flex-wrap: wrap;
+}
+
+.studentAbsenceInfo div {
+    width: 33.3%;
+}
+
+.studentAbsenceInfo div a:hover {
+    color: #1f81c6;
+}
+
+.totalAbsences {
+    color: #000;
+    font-weight: 600;
+    font-size: 1.5rem;
+    vertical-align: middle;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.absencesDetails, .excusedAbsencesDetails {
+    list-style: none;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    background-color: #f8f8f8;
+    color: #282828;
+    padding: 15px;
+    display: none;
+    position: relative;
+}
+
+.gradeAbsences > li.opened, .childAbsences > li.opened {
+    display: list-item;
+}
+
+.absencesDetails h5, .excusedAbsencesDetails h5 {
+    display: block;
+    text-align: center;
+}
+
+.absencesDetails p, .excusedAbsencesDetails p {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.absenceStatistics {
+    display: flex;
+}
+
+.absenceStatistics div {
+    width: 33.3%;
+    text-align: center;
+}
+
+/*Parent's Home*/
+.parentHomeBody {
+    position: relative;
+}
+
+.upperLeft, .upperRight {
+    position: absolute;
+    top: 0;
+    color: #444;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    padding: 5px;
+}
+
+.upperRight {
+    right: 0;
+    border-left: 1px solid rgba(0,0,0,.125);
+    border-radius: 0 0 0 10px;
+}
+
+.upperLeft {
+    left: 0;
+    border-right: 1px solid rgba(0,0,0,.125);
+    border-radius: 0 0 10px 0;
+}
+
+.parentHomeBody .parentMainInfo {
+    text-align: center;
+    color: #000;
+}
+
+.childAbsenceInfo div {
+    width: 50%;
+}
+
+.childAbsences .absencesDetails, .childAbsences .excusedAbsencesDetails {
+    display: block;
+}
+
+.childAbsences .absencesDetails p:last-of-type, .childAbsences .excusedAbsencesDetails p:last-of-type {
+    margin-bottom: 40px;
+}
+
+.parentAbsenceWrapper p {
+    width: 50%;
+    text-align: center;
+}
+
+/*Admin panel*/
+.adminContent {
+    padding: 8px;
+}
+
+.adminContent > h3 {
+    color: #111111;
+    text-align: center;
+}
+
+.adminList li {
+    list-style: none;
+}
+
+.upperRight button {
+    background-color: #36c6d3;
+}
+
+.modalWrapper {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    border: 1px solid #fff;
+    width: 100%;
+    padding: 15px;
+    -webkit-box-shadow: 0 0 39px 12px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 0 39px 12px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 39px 12px rgba(0, 0, 0, 0.4);
+}
+
+.modalWrapper button {
+    background-color: #2b95e0;
+    color: #ffffff;
+    width: 30%;
+    border-radius: 38px;
+    font-size: 1.5rem;
+    position: relative;
+    text-transform: uppercase;
+    -webkit-transition: all 250ms ease;
+    -moz-transition: all 250ms ease;
+    -o-transition: all 250ms ease;
+    transition: all 250ms ease;
+    margin: 6% 0 2% 0;
+    outline: none !important;
+    cursor: pointer;
+    border: none;
+    padding: 20px;
+}
+
+.modalWrapper button:hover {
+    background-color: #1f81c6;
+}
+
+#uglipop_content_fixed {
+    z-index: 8000;
+    width: 50%;
+    text-align: center;
+}
+
+#uglipop_content_fixed input {
+    color: #000;
+    width: 50%;
+    margin-top: 3%;
 }

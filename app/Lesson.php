@@ -3,9 +3,35 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Grade;
 
 class Lesson extends Model
 {
+    /**
+     * Gets a lesson's title and day by a given lesson ID.
+     *
+     * @param $query
+     * @param $lessonID
+     * @return mixed
+     */
+    public function scopeGetLessonTitleAndDay ($query, $lessonID) {
+        $result = $query->where('id', $lessonID)->select('title', 'day')->first();
+
+        if ($result['day'] == 'Mon') {
+            $day = 'Понеделник';
+        } elseif ($result['day'] == 'Tue') {
+            $day = 'Вторник';
+        }  elseif ($result['day'] == 'Wed') {
+            $day = 'Сряда';
+        }  elseif ($result['day'] == 'Thu') {
+            $day = 'Четвъртък';
+        }  else {
+            $day = 'Петък';
+        }
+
+        return [$result['title'], $day];
+    }
+
     /**
      * Gets all teacher's lessons for today by teacher id.
      *
@@ -46,7 +72,9 @@ class Lesson extends Model
             'Sun' => []
         ];
 
-        $lessons = $query->where('grade_id', $gradeID)->whereIn('day', $weekDays)->orderBy('time_range_from')->get()->toArray();
+        $lessons = $query->where('grade_id', $gradeID)->whereIn('day', $weekDays)
+            ->select('id', 'title', 'grade_id', 'teacher_id', 'time_range_from as timeRangeFrom', 'time_range_to as timeRangeTo', 'day')
+            ->orderBy('time_range_from')->get()->toArray();
 
         foreach ($lessons as $lesson) {
             if ($lesson['day'] == 'Mon') {
@@ -97,9 +125,14 @@ class Lesson extends Model
             'Sun' => []
         ];
 
-        $lessons = $query->where('teacher_id', $teacherID)->whereIn('day', $weekDays)->orderBy('time_range_from')->get()->toArray();
+        $lessons = $query->where('teacher_id', $teacherID)->whereIn('day', $weekDays)
+            ->select('id', 'title', 'grade_id', 'teacher_id', 'time_range_from as timeRangeFrom', 'time_range_to as timeRangeTo', 'day')
+            ->orderBy('time_range_from')->get()->toArray();
 
         foreach ($lessons as $lesson) {
+            $gradeInfo = Grade::getGradeTitleAndStudents($lesson['grade_id'])->first();
+            $lesson['gradeTitle'] = $gradeInfo['title'];
+
             if ($lesson['day'] == 'Mon') {
                 $teacherLessons['Mon'][] = $lesson;
             } elseif ($lesson['day'] == 'Tue') {

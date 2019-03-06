@@ -10,7 +10,7 @@ class EntryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function index()
     {
@@ -20,7 +20,7 @@ class EntryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function create()
     {
@@ -31,7 +31,7 @@ class EntryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function store(Request $request)
     {
@@ -42,7 +42,7 @@ class EntryController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Entry  $entry
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function show(Entry $entry)
     {
@@ -53,7 +53,7 @@ class EntryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Entry  $entry
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function edit(Entry $entry)
     {
@@ -65,7 +65,7 @@ class EntryController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Entry  $entry
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function update(Request $request, Entry $entry)
     {
@@ -76,7 +76,7 @@ class EntryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Entry  $entry
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function destroy(Entry $entry)
     {

@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
             //EntrySeeder::class,
             //ExamSeeder::class,
             //GradeSeeder::class,
-            //LeaveSeeder::class,
             //PollSeeder::class,
             //PresentationSeeder::class,
             //SchoolSeeder::class,

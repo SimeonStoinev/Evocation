@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Absence;
-use App\CheckinListener;
+use App\Curriculum;
+use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use App\Absence;
+use App\CheckinListener;
 use App\User;
 use App\Grade;
 use App\School;
-use App\Curriculum;
-use App\Subject;
 use App\Lesson;
+use App\Entry;
 
 class HomeController extends Controller
 {
@@ -28,7 +30,7 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function index()
     {
@@ -64,8 +66,31 @@ class HomeController extends Controller
         }
     }
 
+    /**
+     * Gathers all the data needed to display the admin account.
+     * Should only be used for home page on an admin login.
+     *
+     * @return array
+     */
     protected function adminHome () {
-        return [];
+        $adminData = [];
+
+        $adminData['schools'] = School::getAllSchools()->get()->toArray();
+        $adminData['grades'] = Grade::getAllGrades()->get()->toArray();
+        $adminData['users'] = User::getAllUsers()->take(100)->get()->toArray(); // Paging!
+        $curricula = Curriculum::getAllCurricula()->get()->toArray();
+
+        foreach ($curricula as &$curriculum) {
+            $curriculum['gradeTitle'] = Grade::getGradeTitleAndStudents($curriculum['grade_id'])->first()['title'];
+        }
+
+        $adminData['curricula'] = $curricula;
+
+        $adminData['subjects'] = Subject::getAllSubjects()->get()->toArray();
+
+        //dd($adminData);
+
+        return $adminData;
     }
 
     protected function headmasterHome () {
@@ -97,14 +122,15 @@ class HomeController extends Controller
                 // Fills the $gradeData array with all the students' names from this grade
                 foreach (json_decode($grade['student_ids']) as $row) {
                     $nameAndFamily = User::getUserFullName($row)->first();
-                    $dailyAbsences = Absence::getDailyAbsences($row)->get()->toArray();
-                    $weeklyAbsences = Absence::getWeeklyAbsences($row)->get()->toArray();
-                    $monthlyAbsences = Absence::getMonthlyAbsences($row)->get()->toArray();
+
                     $gradeData['students'][] = [
                         'name' => $nameAndFamily['name'] . ' ' . $nameAndFamily['family'],
-                        'dailyAbsences' => $dailyAbsences,
-                        'weeklyAbsences' => $weeklyAbsences,
-                        'monthlyAbsences' => $monthlyAbsences
+                        'absencesCount' => Absence::countAbsences($row),
+                        'dailyAbsences' => Absence::getDailyAbsences($row),
+                        'weeklyAbsences' => Absence::getWeeklyAbsences($row),
+                        'monthlyAbsences' => Absence::getMonthlyAbsences($row),
+                        'excusedAbsencesCount' => Absence::countExcusedAbsences($row),
+                        'excusedAbsences' => Absence::getExcusedAbsences($row)
                     ];
                 }
 
@@ -126,8 +152,8 @@ class HomeController extends Controller
         $teacherLessons = Lesson::getTeacherLessonsToday(Auth::id())->get()->toArray();
 
         $teacherLessonsData = []; $teacherData = ['teacherInfo' => $teacherInfo];
-        //$currentTime = date('H:i');
-        $currentTime = '14:40';
+        $currentTime = date('H:i');
+        //$currentTime = '13:33';
 
         $lessonCount = 1;
         foreach ($teacherLessons as $row) {
@@ -232,46 +258,110 @@ class HomeController extends Controller
     protected function studentHome () {
         $grade = Grade::gradeByStudentID(Auth::id())->first();
 
-        $gradeData = [
+        $studentData = [
             'title' => $grade['title']
         ];
 
-        // Fills the $gradeData array with all the students' names from this grade
+        // Fills the $studentData array with all the students' names from this grade
         foreach (json_decode($grade['student_ids']) as $row) {
             $nameAndFamily = User::getUserFullName($row)->first();
-            $gradeData['students'][] = $nameAndFamily['name'] . ' ' . $nameAndFamily['family'];
+            $studentData['students'][] = $nameAndFamily['name'] . ' ' . $nameAndFamily['family'];
         }
 
         $classteacher = User::getUserFullName($grade['classteacher_id'])->first();
-        $gradeData['classteacher'] = $classteacher['name'] . ' ' . $classteacher['family'];
+        $studentData['classteacher'] = $classteacher['name'] . ' ' . $classteacher['family'];
 
-        $gradeData['school'] = School::getSchoolTitle($grade['school_id'])->first()['title'];
+        $studentData['school'] = School::getSchoolTitle($grade['school_id'])->first()['title'];
 
         $gradeLessons = Lesson::gradeLessonsCurriculum($grade['id']);
 
-        $gradeData['mondayLessons'] = $gradeLessons['Mon'];
-        $gradeData['tuesdayLessons'] = $gradeLessons['Tue'];
-        $gradeData['wednesdayLessons'] = $gradeLessons['Wed'];
-        $gradeData['thursdayLessons'] = $gradeLessons['Thu'];
-        $gradeData['fridayLessons'] = $gradeLessons['Fri'];
-        $gradeData['saturdayLessons'] = $gradeLessons['Sat'];
-        $gradeData['sundayLessons'] = $gradeLessons['Sun'];
-        $gradeData['todayLessons'] = $gradeLessons[date('D')];
+        $studentData['mondayLessons'] = $gradeLessons['Mon'];
+        $studentData['tuesdayLessons'] = $gradeLessons['Tue'];
+        $studentData['wednesdayLessons'] = $gradeLessons['Wed'];
+        $studentData['thursdayLessons'] = $gradeLessons['Thu'];
+        $studentData['fridayLessons'] = $gradeLessons['Fri'];
+        $studentData['saturdayLessons'] = $gradeLessons['Sat'];
+        $studentData['sundayLessons'] = $gradeLessons['Sun'];
+        $studentData['todayLessons'] = $gradeLessons[date('D')];
 
-        $dailyAbsences = Absence::getDailyAbsences(Auth::id())->get()->toArray();
-        $weeklyAbsences = Absence::getWeeklyAbsences(Auth::id())->get()->toArray();
-        $monthlyAbsences = Absence::getMonthlyAbsences(Auth::id())->get()->toArray();
+        $studentData['currentStudent']['absencesCount'] = Absence::countAbsences(Auth::id());
+        $studentData['currentStudent']['dailyAbsences'] = Absence::getDailyAbsences(Auth::id());
+        $studentData['currentStudent']['weeklyAbsences'] = Absence::getWeeklyAbsences(Auth::id());
+        $studentData['currentStudent']['monthlyAbsences'] = Absence::getMonthlyAbsences(Auth::id());
+        $studentData['currentStudent']['excusedAbsencesCount'] = Absence::countExcusedAbsences(Auth::id());
+        $studentData['currentStudent']['excusedAbsences'] = Absence::getExcusedAbsences(Auth::id());
 
-        $gradeData['currentStudent']['dailyAbsences'] = $dailyAbsences;
-        $gradeData['currentStudent']['weeklyAbsences'] = $weeklyAbsences;
-        $gradeData['currentStudent']['monthlyAbsences'] = $monthlyAbsences;
+        //dd($studentData);
 
-        dd($gradeData);
-
-        return $gradeData;
+        return $studentData;
     }
 
+    /**
+     * Gathers all the data needed to display a parent profile info.
+     * Should only be used for home page on a parent login.
+     *
+     * @return array
+     */
     protected function parentHome () {
-        return [];
+        $parentData = [];
+
+        $children = User::getLinkedChildren(Auth::id())->get()->toArray();
+
+        // Fills the $parentData with the necessary data about their children.
+        foreach ($children as $child) {
+            $parentData[$child['id']]['childData'] = $child;
+
+            $grade = Grade::gradeByStudentID($child['id'])->first();
+
+            $parentData[$child['id']]['childData']['gradeTitle'] = $grade['title'];
+            $parentData[$child['id']]['childData']['schoolTitle'] = School::getSchoolTitle($grade['school_id'])->first()['title'];
+
+            $entry = Entry::getUserEntries($child['id'])->get()->last()->toArray();
+
+            $parentData[$child['id']]['lastEntry'] = $entry;
+
+            // Decides if the children is in the school or not
+            if ($entry['status'] == '0') {
+                $parentData[$child['id']]['lastEntry']['isInSchool'] = true;
+            } else {
+                $parentData[$child['id']]['lastEntry']['isInSchool'] = false;
+            }
+
+            $timestamp = explode(' ', $entry['created_at']);
+            $date = explode('-', $timestamp[0]);
+            $parentData[$child['id']]['lastEntry']['time'] = $timestamp[1];
+            $parentData[$child['id']]['lastEntry']['date'] = $date[2] . '.' . $date[1] . '.' . $date[0];
+
+            $parentData[$child['id']]['absences']['absencesCount'] = Absence::countAbsences($child['id']);
+            $parentData[$child['id']]['absences']['dailyAbsences'] = Absence::getDailyAbsences($child['id']);
+            $parentData[$child['id']]['absences']['weeklyAbsences'] = Absence::getWeeklyAbsences($child['id']);
+            $parentData[$child['id']]['absences']['monthlyAbsences'] = Absence::getMonthlyAbsences($child['id']);
+            $parentData[$child['id']]['absences']['excusedAbsencesCount'] = Absence::countExcusedAbsences($child['id']);
+            $parentData[$child['id']]['absences']['excusedAbsences'] = Absence::getExcusedAbsences($child['id']);
+
+            $gradeLessons = Lesson::gradeLessonsCurriculum($child['grade_id']);
+
+            $parentData[$child['id']]['lessons']['mondayLessons'] = $gradeLessons['Mon'];
+            $parentData[$child['id']]['lessons']['tuesdayLessons'] = $gradeLessons['Tue'];
+            $parentData[$child['id']]['lessons']['wednesdayLessons'] = $gradeLessons['Wed'];
+            $parentData[$child['id']]['lessons']['thursdayLessons'] = $gradeLessons['Thu'];
+            $parentData[$child['id']]['lessons']['fridayLessons'] = $gradeLessons['Fri'];
+            $parentData[$child['id']]['lessons']['saturdayLessons'] = $gradeLessons['Sat'];
+            $parentData[$child['id']]['lessons']['sundayLessons'] = $gradeLessons['Sun'];
+        }
+
+        //dd(array_reverse($parentData));
+
+        return array_reverse($parentData);
+    }
+
+    /**
+     * Request comes from AJAX.
+     *
+     * @param Request $request
+     */
+    public function putHomeSession (Request $request) {
+        Session::put('home', $request->sessionValue);
+        Session::put('cardHeader', $request->cardHeader);
     }
 }

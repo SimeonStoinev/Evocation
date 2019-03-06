@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Grade extends Model
 {
     /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeGetAllGrades ($query) {
+        return $query->where('id', '>', '0');
+    }
+
+    /**
      * Gets all grades by a given school id.
      *
      * @param $query

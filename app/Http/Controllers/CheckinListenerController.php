@@ -12,9 +12,19 @@ use Illuminate\Support\Facades\Session;
 class CheckinListenerController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function index()
     {
@@ -24,7 +34,7 @@ class CheckinListenerController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function create()
     {
@@ -81,7 +91,7 @@ class CheckinListenerController extends Controller
      * Display the specified resource.
      *
      * @param  \App\CheckinListener  $checkinListener
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function show(CheckinListener $checkinListener)
     {
@@ -92,7 +102,7 @@ class CheckinListenerController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\CheckinListener  $checkinListener
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function edit(CheckinListener $checkinListener)
     {
@@ -104,7 +114,7 @@ class CheckinListenerController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\CheckinListener  $checkinListener
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function update(Request $request, CheckinListener $checkinListener)
     {
@@ -115,7 +125,7 @@ class CheckinListenerController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\CheckinListener  $checkinListener
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function destroy(CheckinListener $checkinListener)
     {
@@ -137,6 +147,7 @@ class CheckinListenerController extends Controller
                 $userData = User::getUserGradeAndSchool($row)->first();
                 $absence = new Absence();
                 $absence->user_id = $userData['id'];
+                $absence->lesson_id = $request->lessonID;
                 $absence->listener_id = $request->listenerID;
                 $absence->grade_id = $userData['grade_id'];
                 $absence->school_id = $userData['school_id'];

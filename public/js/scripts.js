@@ -33,7 +33,7 @@ function openCheckinListener (gradeID, studentIDs, lessonID) {
     });
 
     $.ajax({
-        url: "/checkins/",
+        url: "/checkins",
         type: "POST",
         data:{
             gradeID: gradeID,
@@ -74,7 +74,7 @@ function closeCheckinListener (listenerID, lessonID) {
     });
 
     $.ajax({
-        url: "/checkins/close/",
+        url: "/checkins/close",
         type: "POST",
         data: {
             listenerID: listenerID,
@@ -100,6 +100,26 @@ function excuseAbsence (lessonID, studentID) {
         data: {
             lessonID: lessonID,
             studentID: studentID
+        },
+        success: function (data) {
+            location.reload();
+        }
+    });
+}
+
+// Function used to excuse an absence of a student by a classteacher, AJAX request
+function excuseAbsenceByClassteacher (absenceID) {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $.ajax({
+        url: "absence/excuseByClassteacher",
+        type: "POST",
+        data: {
+            absenceID: absenceID
         },
         success: function (data) {
             location.reload();
@@ -170,10 +190,117 @@ function displayHomeContent (el) {
     $('li.active').removeClass('active');
     $(el).parent().addClass('active');
     var contentElement = $('div[content='+el.attr('data-content')+']');
-    $(contentElement).siblings('div').fadeOut(300);
+    $(contentElement).siblings('div').fadeOut(0);
     $(contentElement).fadeIn(300);
     var menuTitle = $(el).parent().parent().siblings('a').find('.title').html();
     $('.card-header').html(menuTitle);
-    //console.log(menuTitle);
-    //setTimeout(function(){$(contentElement).fadeIn(300)}, 300);
+
+    $.ajax({
+        url: "/home/putSession",
+        type: "POST",
+        data: {
+            sessionValue: el.attr('data-content'),
+            cardHeader: $(el).parent().parent().siblings('a').find('.title').html()
+        }
+    });
 }
+
+function modalEdit (el, id) {
+    uglipop({
+        class:'modalWrapper',
+        source:'div',
+        content:'editRecord'
+    });
+    var val = $(el).prev().html();
+
+    $('.modalWrapper').find('input').html(val).attr('value', val);
+    $('.modalWrapper').find('button').attr('data-id', id);
+    //console.log($('#uglopop_popbox').find('input'));
+}
+
+function modalCreate (id) {
+    uglipop({
+        class:'modalWrapper',
+        source:'div',
+        content:'createRecord'
+    });
+
+    $('.modalWrapper').find('button').attr('data-id', id);
+}
+
+function editRecord (el) {
+    var recordID = $(el).attr('data-id');
+
+    $.ajax({
+        url: "schools/update",
+        type: "POST",
+        data: {
+            recordID: recordID,
+            schoolTitle: el.siblings('input[name=title]').val()
+        },
+        success: function (data) {
+            location.reload();
+        }
+    });
+}
+
+function createRecord (el) {
+    //console.log(el.siblings('input[name=title]').val());
+    $.ajax({
+        url: "/schools",
+        type: "POST",
+        data: {
+            schoolTitle: el.siblings('input[name=title]').val()
+        },
+        success: function (data) {
+            location.reload();
+        }
+    });
+}
+
+function deleteRecord (id) {
+    $.ajax({
+        url: "/schools/destroy",
+        type: "POST",
+        data: {
+            recordID: id
+        },
+        success: function (data) {
+            location.reload();
+        }
+    });
+}
+
+$('.displayAbsences').on('click', function () {
+    var absencesDetailsEl = $(this).parent().parent().next();
+
+    if (absencesDetailsEl.hasClass('animated')) {
+        $(this).html('Неизвинени');
+
+        $(absencesDetailsEl).removeClass('fadeInUp').addClass('fadeOutDown').fadeOut(800);
+        setTimeout(function () {
+            $(absencesDetailsEl).removeClass('animated fadeOutDown');
+        }, 1000);
+    } else {
+        $(this).html('Скрий неизвинени');
+
+        $(absencesDetailsEl).addClass('animated fadeInUp').fadeIn(0);
+    }
+});
+
+$('.displayExcusedAbsences').on('click', function () {
+    var absencesDetailsEl = $(this).parent().parent().next().next();
+
+    if (absencesDetailsEl.hasClass('animated')) {
+        $(this).html('Извинени');
+
+        $(absencesDetailsEl).removeClass('fadeInUp').addClass('fadeOutDown').fadeOut(800);
+        setTimeout(function () {
+            $(absencesDetailsEl).removeClass('animated fadeOutDown');
+        }, 1000);
+    } else {
+        $(this).html('Скрий извинени');
+
+        $(absencesDetailsEl).addClass('animated fadeInUp').fadeIn(0);
+    }
+});

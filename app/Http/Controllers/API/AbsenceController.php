@@ -18,48 +18,7 @@ class AbsenceController extends Controller
      */
     public function index($cardID)
     {
-        /*$userData = User::getUserByCardID($cardID)->first();
 
-        if ($userData == null) {
-            return 'false';
-        }
-
-        if ($userData['rank'] == 'student') {
-            $openedListener = CheckinListener::getOpenedCheckinListener($userData['id'])->get()->last();
-
-            if ($openedListener == null) {
-                $closedListener = CheckinListener::getClosedCheckinListener($userData['id'])->get()->last();
-
-                if ($closedListener == null) {
-                    return 'false';
-                } else {
-                    $absence = Absence::getAbsenceByUserID($userData['id'])->get()->last();
-                    if ($absence != null) {
-                        Absence::where('id', $absence->id)->update(['late' => 1]);
-                    }
-                }
-
-                return 'false';
-            }
-
-            $studentIDs = json_decode($openedListener['not_checked']);
-            $studentIDKey = array_search($userData['id'], $studentIDs);
-
-            if ($studentIDKey !== false) {
-                unset($studentIDs[$studentIDKey]);
-
-                // Updates the checkin_listener record
-                $listener = CheckinListener::find($openedListener['id']);
-                $listener->not_checked = json_encode(array_values($studentIDs));
-                $listener->save();
-
-                return 'success';
-            } else {
-                return 'false';
-            }
-        } else {
-            return 'Not a student.';
-        }*/
     }
 
     /**
@@ -70,7 +29,6 @@ class AbsenceController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->tagId;
         $userData = User::getUserByCardID($request->tagId)->first();
 
         if ($userData == null) {
@@ -119,7 +77,7 @@ class AbsenceController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function show($id)
     {
@@ -131,7 +89,7 @@ class AbsenceController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function update(Request $request, $id)
     {
@@ -142,7 +100,7 @@ class AbsenceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function destroy($id)
     {
@@ -175,6 +133,15 @@ class AbsenceController extends Controller
     }
 
     /**
+     * Request comes from AJAX. Used when the classteacher excuses an absence.
+     *
+     * @param Request $request
+     */
+    public function excuseAbsenceByClassteacher (Request $request) {
+        Absence::find($request->absenceID)->update(['excused' => true]);
+    }
+
+    /**
      * Request comes from AJAX. Updates the not_checked field in CheckinListeners (adds student's id) and writes him an absence.
      *
      * @param Request $request
@@ -200,6 +167,7 @@ class AbsenceController extends Controller
 
             $absence = new Absence();
             $absence->user_id = $userData['id'];
+            $absence->lesson_id = $listener['lesson_id'];
             $absence->listener_id = $listener['id'];
             $absence->grade_id = $userData['grade_id'];
             $absence->school_id = $userData['school_id'];

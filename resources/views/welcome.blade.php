@@ -7,7 +7,7 @@
         <title>Evocation</title>
 
         <!-- Favicons -->
-        <link href="{{ asset('img/favicon.png') }}" rel="icon">  <!-- add favicon in the folder later -->
+        <link href="{{ 'favicon.png' }}" rel="icon">
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
@@ -33,7 +33,7 @@
         <div class="container-fluid">
 
             <div id="logo" class="pull-left">
-                <h1><a href="#intro" class="scrollto">Evocation</a></h1>
+                <h1><a href="#intro" class="scrollto"><img src="{{ asset('img/white_logo.png') }}" alt="logo"></a></h1>
             </div>
 
             <nav id="nav-menu-container">
@@ -171,17 +171,17 @@
 
                     <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
                         <div class="icon"><i class="ion-android-lock"></i></div>
-                        <h4 class="title"><a href="">Сигурност</a></h4>
+                        <h4 class="title"><a href="javascript:;">Сигурност</a></h4>
                         <p class="description">Ние използваме най-новите технологии, за да постигнем максимална ефективност и сигурност.</p>
                     </div>
                     <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
                         <div class="icon"><i class="ion-ios-bolt-outline"></i></div>
-                        <h4 class="title"><a href="">Бързина</a></h4>
+                        <h4 class="title"><a href="javascript:;">Бързина</a></h4>
                         <p class="description">Главната цел на Evocation е да автоматизира процеса на въвеждане на отсъствия.</p>
                     </div>
                     <div class="col-lg-4 col-md-6 box wow bounceInUp" data-wow-duration="1.4s">
                         <div class="icon"><i class="ion-ios-lightbulb-outline"></i></div>
-                        <h4 class="title"><a href="">Креативност</a></h4>
+                        <h4 class="title"><a href="javascript:;">Креативност</a></h4>
                         <p class="description">Дизайнът на Evocation е responsive, за да отоговори на изискванията на всеки потребител.</p>
                     </div>
 
@@ -210,7 +210,7 @@
                     <div class="col-md-4">
                         <div class="contact-phone">
                             <i class="ion-ios-people-outline"></i>
-                            <h3>Администратори</h3>
+                            <h3>Разработчици</h3>
                             <p>Симеон Стойнев</p>
                             <p>Денислав Колев</p>
                         </div>
@@ -233,20 +233,20 @@
                     <form action="" method="post" role="form" class="contactForm">
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <input type="text" name="name" class="form-control" id="name" placeholder="Име" data-rule="minlen:4" data-msg="Моля, въведи повече от 4 символа" />
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Име" data-rule="minlen:4" data-msg="Моля, въведете повече от 4 символа" />
                                 <div class="validation"></div>
                             </div>
                             <div class="form-group col-md-6">
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Е-Майл" data-rule="email" data-msg="Моля, въведи правилен е-майл" />
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Е-Майл" data-rule="email" data-msg="Моля, въведете правилен е-майл" />
                                 <div class="validation"></div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Тема" data-rule="minlen:4" data-msg="Моля, въведи повече от 8 символа" />
+                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Тема" data-rule="minlen:4" data-msg="Моля, въведете повече от 8 символа" />
                             <div class="validation"></div>
                         </div>
                         <div class="form-group">
-                            <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Моля, напиши ни нещо" placeholder="Съобщение"></textarea>
+                            <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Моля, напишете ни нещо" placeholder="Съобщение"></textarea>
                             <div class="validation"></div>
                         </div>
                         <div class="text-center"><button type="submit">Изпрати</button></div>

@@ -16,6 +16,7 @@ Route::get('/', 'WelcomeController@index')->name('welcome');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+    Route::post('/home/putSession', 'HomeController@putHomeSession')->name('home.putSession');
 
 Route::resources([
     'checkins' => 'CheckinListenerController',
@@ -24,21 +25,21 @@ Route::resources([
     'entries' => 'EntryController',
     'exams' => 'ExamController',
     'grade' => 'GradeController',
-    'leaves' => 'LeaveController',
     'polls' => 'PollController',
     'presentations' => 'PresentationController',
     'schools' => 'SchoolController',
     'verify' => 'VerifyController'
 ]);
 
-//Route::get('/absence/{cardID?}', 'API\AbsenceController@index')->name('absences.index');
 Route::post('/absence/excuse', 'API\AbsenceController@excuseAbsence')->name('absences.excuse');
+Route::post('/absence/excuseByClassteacher', 'API\AbsenceController@excuseAbsenceByClassteacher')->name('absences.excuseByClassteacher');
 Route::post('/absence/write', 'API\AbsenceController@writeAbsence')->name('absences.write');
+Route::post('/absence', 'API\AbsenceController@store')->name('absence.store');
+
+// Checkins
 Route::post('/checkins/refreshCheckedUsers', 'CheckinListenerController@refreshCheckedUsers')->name('checkins.refresh');
 Route::post('/checkins/close/', 'CheckinListenerController@closeCheckin')->name('checkins.close');
 
-Route::post('/absence', 'API\AbsenceController@store')->name('absence.store');
-
-/*Route::apiResource('absence', 'API\AbsenceController')->except([
-    'index'
-]);*/
+// Schools
+Route::post('/schools/update/', 'SchoolController@update')->name('schools.update');
+Route::post('/schools/destroy/', 'SchoolController@destroy')->name('schools.destroy');

@@ -14,6 +14,7 @@
     <script src="{{ asset('js/jquery.sparkline.min.js') }}" defer></script>
     <script src="{{ asset('js/app.min.js') }}" defer></script>
     <script src="{{ asset('js/layout.min.js') }}" defer></script>
+    <script src="{{ asset('js/uglipop.min.js') }}" defer></script>
     <script src="{{ asset('js/scripts.js') }}" defer></script>
 
     <!-- Fonts -->
@@ -21,6 +22,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/simple-line-icons.min.css') }}" rel="stylesheet" type="text/css">
@@ -29,6 +31,8 @@
     <link href="{{ asset('css/default.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/landing/style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
+
+    <link rel="shortcut icon" type="image/png" href="{{ 'favicon.png' }}"/>
 </head>
 <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
     <div id="app">
@@ -36,13 +40,9 @@
             <div class="container" style="width: 100%;">
                 <div id="logo" style="padding-left: 0;">
                     @if (\Illuminate\Support\Facades\Auth::check())
-                        <h1>
-                            <a href="{{ url('/home') }}">Evocation</a>
-                        </h1>
+                        <a href="{{ url('/home') }}"><img src="{{ asset('img/white_logo.png') }}" alt="logo"></a>
                     @else
-                        <h1>
-                            <a href="{{ url('/') }}">Evocation</a>
-                        </h1>
+                        <a href="{{ url('/') }}"><img src="{{ asset('img/white_logo.png') }}" alt="logo"></a>
                     @endif
                 </div>
 
@@ -57,9 +57,16 @@
                     </ul>
 
                     @if (isset($data['teacherInfo']))
-                        <span id="school">
+                        <span id="schoolTitle">
                             <i class="icon-graduation"></i>
                             {{ $data['teacherInfo']['school'] }}
+                        </span>
+                    @endif
+
+                    @if (isset($data['school']))
+                        <span id="schoolTitle">
+                            <i class="icon-graduation"></i>
+                            {{ $data['school'] }}
                         </span>
                     @endif
 

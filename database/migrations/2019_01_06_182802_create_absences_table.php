@@ -17,6 +17,8 @@ class CreateAbsencesTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->index('user_id');
+            $table->integer('lesson_id');
+            $table->index('lesson_id');
             $table->integer('listener_id');
             $table->index('listener_id');
             $table->integer('grade_id');

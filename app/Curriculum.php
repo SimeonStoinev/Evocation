@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Curriculum extends Model
 {
     /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeGetAllCurricula ($query) {
+        return $query->where('id', '>', '0');
+    }
+
+    /**
      * Gets curriculum by id.
      *
      * @param $query
