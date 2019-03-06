@@ -29,6 +29,7 @@ class AbsenceController extends Controller
      */
     public function store(Request $request)
     {
+        // Check if the user has entered the school...
         $userData = User::getUserByCardID($request->tagId)->first();
 
         if ($userData == null) {

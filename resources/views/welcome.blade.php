@@ -77,7 +77,7 @@
                         <div class="carousel-background"><img src="{{asset('img/intro/3.jpg')}}" alt=""></div>
                         <div class="carousel-container">
                             <div class="carousel-content">
-                                <h2>Улесение</h2>
+                                <h2>Улеснение</h2>
                                 <p>Целта на приложението е да улесни максимално учители, родители и ученици.</p>
                             </div>
                         </div>

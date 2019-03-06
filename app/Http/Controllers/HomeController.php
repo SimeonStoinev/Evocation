@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Curriculum;
 use App\Subject;
+use Illuminate\Auth\Events\Logout;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -30,7 +31,7 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Http\Response | void
+     * @return \Illuminate\Http\Response | Logout
      */
     public function index()
     {
