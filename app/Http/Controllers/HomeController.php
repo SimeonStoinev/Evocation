@@ -37,16 +37,12 @@ class HomeController extends Controller
     {
         $currUserRank = User::getCurrUserRank(Auth::id())->first()['rank'];
 
-        if ($currUserRank == 'admin') {
-            $data = $this->adminHome();
-
-            return view('home.adminHome', ['data' => $data]);
-        } elseif ($currUserRank == 'headmaster') {
+        if ($currUserRank == 'headmaster') {
             $data = $this->headmasterHome();
 
             return view('home.headmasterHome', ['data' => $data]);
         } elseif ($currUserRank == 'subheadmaster') {
-            $data = $this->subheadmasterHome();
+            $data = $this->subHeadmasterHome();
 
             return view('home.subheadmasterHome', ['data' => $data]);
         } elseif ($currUserRank == 'teacher') {
@@ -68,37 +64,22 @@ class HomeController extends Controller
     }
 
     /**
-     * Gathers all the data needed to display the admin account.
-     * Should only be used for home page on an admin login.
+     * Gathers all the data needed to display the school's Headmaster panel.
+     * Should only be used for home page on a headmaster login.
      *
      * @return array
      */
-    protected function adminHome () {
-        $adminData = [];
-
-        $adminData['schools'] = School::getAllSchools()->get()->toArray();
-        $adminData['grades'] = Grade::getAllGrades()->get()->toArray();
-        $adminData['users'] = User::getAllUsers()->take(100)->get()->toArray(); // Paging!
-        $curricula = Curriculum::getAllCurricula()->get()->toArray();
-
-        foreach ($curricula as &$curriculum) {
-            $curriculum['gradeTitle'] = Grade::getGradeTitleAndStudents($curriculum['grade_id'])->first()['title'];
-        }
-
-        $adminData['curricula'] = $curricula;
-
-        $adminData['subjects'] = Subject::getAllSubjects()->get()->toArray();
-
-        //dd($adminData);
-
-        return $adminData;
-    }
-
     protected function headmasterHome () {
         return [];
     }
 
-    protected function subheadmasterHome () {
+    /**
+     * Gathers all the data needed to display the school's SubHeadmaster panel.
+     * Should only be used for home page on a subheadmaster login.
+     *
+     * @return array
+     */
+    protected function subHeadmasterHome () {
         return [];
     }
 

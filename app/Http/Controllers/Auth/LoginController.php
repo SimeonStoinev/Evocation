@@ -40,16 +40,22 @@ class LoginController extends Controller
     }
 
     /**
+     * Decides if the user is admin and redirects him to the admin control panel (url) if so.
+     * Checks if the account is verified and if user credentials match.
+     * Returns session with errors for the user login attempt if user credentials are incorrect.
+     *
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function login(Request $request)
     {
-        if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password'), 'verified' => '1'])) {
+        if (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password'), 'rank' => 'admin', 'verified' => '1'])) {
+            return redirect('/admin/home');
+        } elseif (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password'), 'verified' => '1'])) {
             return redirect('/home');
         }
         elseif (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')]) == false) {
-            return redirect('/login')->with('wrongAuthData', 'Не съществува потребител с такъв е-майл или парола.');
+            return redirect('/login')->with('wrongAuthData', 'Не съществува потребител с такъв е-майл или парола.'); // TODO
         }
         else {
             return redirect('/verify');
