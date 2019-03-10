@@ -14,63 +14,84 @@ class UserSeeder extends Seeder
     /**
      * Inserts a hard-coded headmaster user record and updates the school record with headmaster's id.
      * Inserts 3 hard-coded subheadmaster user records.
+     * Depending on the iteration, decides whether it should go for the hard-coded records or the ones factory is generating.
      *
      * @param $schoolID
      * @return void
      */
     protected function createHeadmasterAndSubheadmasters ($schoolID) {
-        $headmasterData = User::create([
-            'card_id' => str_random(16),
-            'name' => 'Headmaster',
-            'family' => 'Headmaster',
-            'email' => 'headmaster@gmail.com',
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-            'rank' => 'headmaster',
-            'school_id' => $schoolID,
-            'verified' => 1,
-            'remember_token' => str_random(10)
-        ]);
+        if ($schoolID == 1) {
+            $headmasterData = User::create([
+                'name' => 'Headmaster',
+                'family' => 'Headmaster',
+                'email' => 'headmaster@gmail.com',
+                'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+                'rank' => 'headmaster',
+                'school_id' => $schoolID,
+                'verified' => 1
+            ]);
 
-        School::find($schoolID)->update(['headmaster_id' => $headmasterData->id]);
+            School::find($schoolID)->update(['headmaster_id' => $headmasterData->id]);
 
-        // Inserts a hard-coded subheadmaster 1
-        User::create([
-            'card_id' => str_random(16),
-            'name' => 'Subheadmaster1',
-            'family' => 'SubheadmasterF',
-            'email' => 'subheadmaster1@gmail.com',
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-            'rank' => 'subheadmaster',
-            'school_id' => $schoolID,
-            'verified' => 1,
-            'remember_token' => str_random(10)
-        ]);
+            // Inserts a hard-coded subheadmaster 1
+            User::create([
+                'name' => 'Subheadmaster1',
+                'family' => 'SubheadmasterF',
+                'email' => 'subheadmaster1@gmail.com',
+                'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+                'rank' => 'subheadmaster',
+                'school_id' => $schoolID,
+                'verified' => 1
+            ]);
 
-        // Inserts a hard-coded subheadmaster 2
-        User::create([
-            'card_id' => str_random(16),
-            'name' => 'Subheadmaster2',
-            'family' => 'SubheadmasterF',
-            'email' => 'subheadmaster2@gmail.com',
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-            'rank' => 'subheadmaster',
-            'school_id' => $schoolID,
-            'verified' => 1,
-            'remember_token' => str_random(10)
-        ]);
+            // Inserts a hard-coded subheadmaster 2
+            User::create([
+                'name' => 'Subheadmaster2',
+                'family' => 'SubheadmasterF',
+                'email' => 'subheadmaster2@gmail.com',
+                'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+                'rank' => 'subheadmaster',
+                'school_id' => $schoolID,
+                'verified' => 1
+            ]);
 
-        // Inserts a hard-coded subheadmaster 3
-        User::create([
-            'card_id' => str_random(16),
-            'name' => 'Subheadmaster3',
-            'family' => 'SubheadmasterF',
-            'email' => 'subheadmaster3@gmail.com',
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-            'rank' => 'subheadmaster',
-            'school_id' => $schoolID,
-            'verified' => 1,
-            'remember_token' => str_random(10)
-        ]);
+            // Inserts a hard-coded subheadmaster 3
+            User::create([
+                'name' => 'Subheadmaster3',
+                'family' => 'SubheadmasterF',
+                'email' => 'subheadmaster3@gmail.com',
+                'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
+                'rank' => 'subheadmaster',
+                'school_id' => $schoolID,
+                'verified' => 1
+            ]);
+        } else {
+            $headmasterData = factory(App\User::class)->create([
+                'rank' => 'headmaster',
+                'school_id' => $schoolID,
+                'verified' => 1
+            ]);
+
+            School::find($schoolID)->update(['headmaster_id' => $headmasterData->id]);
+
+            factory(App\User::class)->create([
+                'rank' => 'subheadmaster',
+                'school_id' => $schoolID,
+                'verified' => 1
+            ]);
+
+            factory(App\User::class)->create([
+                'rank' => 'subheadmaster',
+                'school_id' => $schoolID,
+                'verified' => 1
+            ]);
+
+            factory(App\User::class)->create([
+                'rank' => 'subheadmaster',
+                'school_id' => $schoolID,
+                'verified' => 1
+            ]);
+        }
     }
 
     /**
@@ -87,17 +108,11 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::truncate();
-        School::truncate();
-        Grade::truncate();
-        Curriculum::truncate();
-        Lesson::truncate();
-
-        // Inserts a hard-coded admin user
+        // Inserts a hard-coded admin user --RUN THIS FOR FIRST SEED!
         User::create([
             'card_id' => str_random(16),
             'name' => 'Admin',
-            'family' => 'Admin',
+            'family' => '',
             'email' => 'admin@gmail.com',
             'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
             'rank' => 'admin',
@@ -105,7 +120,12 @@ class UserSeeder extends Seeder
             'remember_token' => str_random(10)
         ]);
 
-        $schoolID = factory(App\School::class)->create()->id;
+        $schoolID = factory(App\School::class)->create([
+            'title' => 'II СУ "Проф. Никола Маринов"'
+        ])->id;
+
+        // RUN THIS FOR MORE THAN ONE SEEDS AND COMMENT ABOVE!
+        //$schoolID = factory(App\School::class)->create()->id;
 
         factory(\App\User::class, 30)->create([
             'rank' => 'teacher',
@@ -295,6 +315,7 @@ class UserSeeder extends Seeder
             ]);
         }
 
+        // RUN THIS FOR FIRST SEED! COMMENT FOR MORE THAN ONE SEEDS
         $this->customTestRecords($schoolID);
 
         // Updates the school's fields that got left with the default '0' value.
