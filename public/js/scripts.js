@@ -235,7 +235,7 @@ function editRecord (el, moduleURL) {
     var recordID = $(el).attr('data-id');
 
     $.ajax({
-        url: "/"+moduleURL+"/update",
+        url: "/admin/"+moduleURL+"/update",
         type: "POST",
         data: {
             recordID: recordID,
@@ -264,7 +264,7 @@ function createRecord (el, moduleURL) {
 // Used in admin panel modules to delete a record; Works only for schools and subjects!
 function deleteRecord (id, moduleURL) {
     $.ajax({
-        url: "/"+moduleURL+"/destroy",
+        url: "/admin/"+moduleURL+"/destroy",
         type: "POST",
         data: {
             recordID: id

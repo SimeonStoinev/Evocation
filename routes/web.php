@@ -59,13 +59,15 @@ Route::middleware('admin')->group(function () {
         'edit' => 'adminSchools.edit'
     ]);
 
-    Route::post('/admin/schools/update/', 'Admin\AdminSchoolController@update')->name('adminSchools.update');
-    Route::post('/admin/schools/destroy/', 'Admin\AdminSchoolController@destroy')->name('adminSchools.destroy');
+    Route::post('/admin/schools/update', 'Admin\AdminSchoolController@update')->name('adminSchools.update');
+    Route::post('/admin/schools/destroy', 'Admin\AdminSchoolController@destroy')->name('adminSchools.destroy');
     // End of Admin School routes
 
 
     // Admin Grade routes
-    Route::resource('admin/grades', 'Admin\AdminGradeController')->names([
+    Route::resource('admin/grades', 'Admin\AdminGradeController')->except([
+        'index'
+    ])->names([
         'index' => 'adminGrades.index',
         'store' => 'adminGrades.store',
         'create' => 'adminGrades.create',
@@ -80,7 +82,9 @@ Route::middleware('admin')->group(function () {
 
 
     // Admin User routes
-    Route::resource('admin/users', 'Admin\AdminUserController')->names([
+    Route::resource('admin/users', 'Admin\AdminUserController')->except([
+        'index'
+    ])->names([
         'index' => 'adminUsers.index',
         'store' => 'adminUsers.store',
         'create' => 'adminUsers.create',
@@ -95,7 +99,9 @@ Route::middleware('admin')->group(function () {
 
 
     // Admin Curriculum routes
-    Route::resource('admin/curricula', 'Admin\AdminCurriculumController')->names([
+    Route::resource('admin/curricula', 'Admin\AdminCurriculumController')->except([
+        'index'
+    ])->names([
         'index' => 'adminCurricula.index',
         'store' => 'adminCurricula.store',
         'create' => 'adminCurricula.create',
@@ -111,7 +117,7 @@ Route::middleware('admin')->group(function () {
 
     // Admin Subject routes
     Route::resource('admin/subjects', 'Admin\AdminSubjectController')->except([
-        'update', 'destroy'
+        'index', 'update', 'destroy'
     ])->names([
         'index' => 'adminSubjects.index',
         'store' => 'adminSubjects.store',
@@ -121,7 +127,7 @@ Route::middleware('admin')->group(function () {
     ]);
 
     Route::get('/admin/subjects/{perPage?}', 'Admin\AdminHomeController@subjects')->name('admin.subjects');
-    Route::post('/admin/subjects/update/', 'Admin\AdminSubjectController@update')->name('adminSubjects.update');
-    Route::post('/admin/subjects/destroy/', 'Admin\AdminSubjectController@destroy')->name('adminSubjects.destroy');
+    Route::post('/admin/subjects/update', 'Admin\AdminSubjectController@update')->name('adminSubjects.update');
+    Route::post('/admin/subjects/destroy', 'Admin\AdminSubjectController@destroy')->name('adminSubjects.destroy');
     // End of Admin Subject routes
 });

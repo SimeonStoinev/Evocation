@@ -82,7 +82,7 @@ class AdminSchoolController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response | void
      */
-    public function destroy($request)
+    public function destroy(Request $request)
     {
         $school = School::find($request->recordID);
 

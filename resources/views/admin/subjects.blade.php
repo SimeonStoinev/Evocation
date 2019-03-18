@@ -95,7 +95,7 @@
                                 <li>
                                     {{ $count }}. <span>{{ $row['title'] }}</span>
                                     <button onclick="modalEdit($(this), {{ $row['id'] }})"><i class="icon-pencil"></i></button>
-                                    <button onclick="deleteRecord({{ $row['id'] }})"><i class="icon-close" style="color: red;"></i></button>
+                                    <button onclick="deleteRecord({{ $row['id'] }}, 'subjects')"><i class="icon-close" style="color: red;"></i></button>
                                 </li>
                                 @php $count++; @endphp
                             @endforeach

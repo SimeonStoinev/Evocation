@@ -11,7 +11,7 @@
 
         <br>
 
-        <button type="button" onclick="editRecord($(this), 'school')">Редактирай</button>
+        <button type="button" onclick="editRecord($(this), 'schools')">Редактирай</button>
     </div>
 
     <div id="createRecord" style="display:none;">
@@ -24,7 +24,7 @@
 
         <br>
 
-        <button type="button" onclick="createRecord($(this), 'school')">Създай</button>
+        <button type="button" onclick="createRecord($(this), 'schools')">Създай</button>
     </div>
 
     <div class="container">
@@ -95,7 +95,7 @@
                                 <li>
                                     {{ $count }}. <span>{{ $row['title'] }}</span>
                                     <button onclick="modalEdit($(this), {{ $row['id'] }})"><i class="icon-pencil"></i></button>
-                                    <button onclick="deleteRecord({{ $row['id'] }})"><i class="icon-close" style="color: red;"></i></button>
+                                    <button onclick="deleteRecord({{ $row['id'] }}, 'schools')"><i class="icon-close" style="color: red;"></i></button>
                                 </li>
                                 @php $count++; @endphp
                             @endforeach
