@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Subject;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\School;
 
-class SubjectController extends Controller
+class AdminSchoolController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,16 +36,18 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $school = new School();
+        $school->title = $request->title;
+        $school->save();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Subject  $subject
+     * @param  int  $id
      * @return \Illuminate\Http\Response | void
      */
-    public function show(Subject $subject)
+    public function show($id)
     {
         //
     }
@@ -52,10 +55,10 @@ class SubjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Subject  $subject
+     * @param  int  $id
      * @return \Illuminate\Http\Response | void
      */
-    public function edit(Subject $subject)
+    public function edit($id)
     {
         //
     }
@@ -68,7 +71,9 @@ class SubjectController extends Controller
      */
     public function update(Request $request)
     {
-        //
+        $school = School::find($request->recordID);
+        $school->title = $request->title;
+        $school->save();
     }
 
     /**
@@ -77,8 +82,10 @@ class SubjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response | void
      */
-    public function destroy(Request $request)
+    public function destroy($request)
     {
-        //
+        $school = School::find($request->recordID);
+
+        $school->delete();
     }
 }

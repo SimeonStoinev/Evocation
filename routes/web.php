@@ -29,6 +29,7 @@ Route::resources([
     'polls' => 'PollController',
     'presentations' => 'PresentationController',
     'schools' => 'SchoolController',
+    'subjects' => 'SubjectController',
     'verify' => 'VerifyController'
 ]);
 
@@ -42,9 +43,85 @@ Route::post('/absence', 'API\AbsenceController@store')->name('absence.store');
 Route::post('/checkins/refreshCheckedUsers', 'CheckinListenerController@refreshCheckedUsers')->name('checkins.refresh');
 Route::post('/checkins/close/', 'CheckinListenerController@closeCheckin')->name('checkins.close');
 
-// Schools
-Route::post('/schools/update/', 'SchoolController@update')->name('schools.update');
-Route::post('/schools/destroy/', 'SchoolController@destroy')->name('schools.destroy');
-
 // Admin routes
-Route::get('/admin/home', 'Admin\AdminHomeController@index')->name('adminHome');
+Route::middleware('admin')->group(function () {
+    Route::get('/admin/home', 'Admin\AdminHomeController@index')->name('admin.home');
+
+
+    // Admin School routes
+    Route::resource('admin/schools', 'Admin\AdminSchoolController')->except([
+        'update', 'destroy'
+    ])->names([
+        'index' => 'adminSchools.index',
+        'store' => 'adminSchools.store',
+        'create' => 'adminSchools.create',
+        'show' => 'adminSchools.show',
+        'edit' => 'adminSchools.edit'
+    ]);
+
+    Route::post('/admin/schools/update/', 'Admin\AdminSchoolController@update')->name('adminSchools.update');
+    Route::post('/admin/schools/destroy/', 'Admin\AdminSchoolController@destroy')->name('adminSchools.destroy');
+    // End of Admin School routes
+
+
+    // Admin Grade routes
+    Route::resource('admin/grades', 'Admin\AdminGradeController')->names([
+        'index' => 'adminGrades.index',
+        'store' => 'adminGrades.store',
+        'create' => 'adminGrades.create',
+        'update' => 'adminGrades.update',
+        'destroy' => 'adminGrades.destroy',
+        'show' => 'adminGrades.show',
+        'edit' => 'adminGrades.edit'
+    ]);
+
+    Route::get('/admin/grades/{perPage?}', 'Admin\AdminHomeController@grades')->name('admin.grades');
+    // End of Admin Grade routes
+
+
+    // Admin User routes
+    Route::resource('admin/users', 'Admin\AdminUserController')->names([
+        'index' => 'adminUsers.index',
+        'store' => 'adminUsers.store',
+        'create' => 'adminUsers.create',
+        'update' => 'adminUsers.update',
+        'destroy' => 'adminUsers.destroy',
+        'show' => 'adminUsers.show',
+        'edit' => 'adminUsers.edit'
+    ]);
+
+    Route::get('/admin/users/{perPage?}', 'Admin\AdminHomeController@users')->name('admin.users');
+    // End of Admin User routes
+
+
+    // Admin Curriculum routes
+    Route::resource('admin/curricula', 'Admin\AdminCurriculumController')->names([
+        'index' => 'adminCurricula.index',
+        'store' => 'adminCurricula.store',
+        'create' => 'adminCurricula.create',
+        'update' => 'adminCurricula.update',
+        'destroy' => 'adminCurricula.destroy',
+        'show' => 'adminCurricula.show',
+        'edit' => 'adminCurricula.edit'
+    ]);
+
+    Route::get('/admin/curricula/{perPage?}', 'Admin\AdminHomeController@curricula')->name('admin.curricula');
+    // End of Admin Curriculum routes
+
+
+    // Admin Subject routes
+    Route::resource('admin/subjects', 'Admin\AdminSubjectController')->except([
+        'update', 'destroy'
+    ])->names([
+        'index' => 'adminSubjects.index',
+        'store' => 'adminSubjects.store',
+        'create' => 'adminSubjects.create',
+        'show' => 'adminSubjects.show',
+        'edit' => 'adminSubjects.edit'
+    ]);
+
+    Route::get('/admin/subjects/{perPage?}', 'Admin\AdminHomeController@subjects')->name('admin.subjects');
+    Route::post('/admin/subjects/update/', 'Admin\AdminSubjectController@update')->name('adminSubjects.update');
+    Route::post('/admin/subjects/destroy/', 'Admin\AdminSubjectController@destroy')->name('adminSubjects.destroy');
+    // End of Admin Subject routes
+});

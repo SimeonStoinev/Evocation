@@ -11,7 +11,7 @@
 
         <br>
 
-        <button type="button" onclick="editRecord($(this), 'school')">Редактирай</button>
+        <button type="button" onclick="editRecord($(this), 'subjects')">Редактирай</button>
     </div>
 
     <div id="createRecord" style="display:none;">
@@ -24,7 +24,7 @@
 
         <br>
 
-        <button type="button" onclick="createRecord($(this), 'school')">Създай</button>
+        <button type="button" onclick="createRecord($(this), 'subjects')">Създай</button>
     </div>
 
     <div class="container">
@@ -40,7 +40,7 @@
                                 <span class="arrow open"></span>
                             </a>
                             <ul class="sub-menu" style="display: block;">
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a href="{{ url('/admin/home') }}" onclick="displayHomeContent($(this))" class="nav-link " data-content="schools">
                                         <i class="icon-graduation"></i>
                                         <span class="title">Училища</span>
@@ -68,7 +68,7 @@
                                         <span class="badge badge-info"></span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a href="{{ url('/admin/subjects') }}" onclick="displayHomeContent($(this))" class="nav-link " data-content="subjects">
                                         <i class="icon-list"></i>
                                         <span class="title">Предмети</span>
@@ -87,7 +87,7 @@
                         <span class="upperRight">
                             <button onclick="modalCreate()" type="button" class="btn btn-success">Добави <i class="icon-plus"></i></button>
                         </span>
-                        <h3>Училища:</h3>
+                        <h3>Предмети:</h3>
 
                         <ul class="adminList">
                             @php $count = 1; @endphp
@@ -100,6 +100,8 @@
                                 @php $count++; @endphp
                             @endforeach
                         </ul>
+
+                        {{ $data->links() }}
                     </div>
                 </div>
             </div>

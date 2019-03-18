@@ -32,7 +32,7 @@
     <link href="{{ asset('css/landing/style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
 
-    <link rel="shortcut icon" type="image/png" href="{{ 'favicon.png' }}"/>
+    <link rel="shortcut icon" type="image/png" href="{{ '/favicon.png' }}"/>
 </head>
 <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
     <div id="app">

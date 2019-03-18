@@ -186,6 +186,7 @@ function refreshCheckedUsers (listenerID) {
     });
 }
 
+// Method that takes care of switching between different menu sections in all home pages (except for Admin's one)
 function displayHomeContent (el) {
     $('li.active').removeClass('active');
     $(el).parent().addClass('active');
@@ -205,6 +206,7 @@ function displayHomeContent (el) {
     });
 }
 
+// Pops admin modal for editing a record
 function modalEdit (el, id) {
     uglipop({
         class:'modalWrapper',
@@ -215,9 +217,9 @@ function modalEdit (el, id) {
 
     $('.modalWrapper').find('input').html(val).attr('value', val);
     $('.modalWrapper').find('button').attr('data-id', id);
-    //console.log($('#uglopop_popbox').find('input'));
 }
 
+// Pops admin modal for creating a record
 function modalCreate (id) {
     uglipop({
         class:'modalWrapper',
@@ -228,49 +230,52 @@ function modalCreate (id) {
     $('.modalWrapper').find('button').attr('data-id', id);
 }
 
-function editRecord (el) {
+// Used in admin panel modules to edit a record; Works only for schools and subjects!
+function editRecord (el, moduleURL) {
     var recordID = $(el).attr('data-id');
 
     $.ajax({
-        url: "schools/update",
+        url: "/"+moduleURL+"/update",
         type: "POST",
         data: {
             recordID: recordID,
-            schoolTitle: el.siblings('input[name=title]').val()
+            title: el.siblings('input[name=title]').val()
         },
-        success: function (data) {
+        success: function () {
             location.reload();
         }
     });
 }
 
-function createRecord (el) {
-    //console.log(el.siblings('input[name=title]').val());
+// Used in admin panel modules to create a record; Works only for schools and subjects!
+function createRecord (el, moduleURL) {
     $.ajax({
-        url: "/schools",
+        url: "/admin/"+moduleURL+"",
         type: "POST",
         data: {
-            schoolTitle: el.siblings('input[name=title]').val()
+            title: el.siblings('input[name=title]').val()
         },
-        success: function (data) {
+        success: function () {
             location.reload();
         }
     });
 }
 
-function deleteRecord (id) {
+// Used in admin panel modules to delete a record; Works only for schools and subjects!
+function deleteRecord (id, moduleURL) {
     $.ajax({
-        url: "/schools/destroy",
+        url: "/"+moduleURL+"/destroy",
         type: "POST",
         data: {
             recordID: id
         },
-        success: function (data) {
+        success: function () {
             location.reload();
         }
     });
 }
 
+// Displays and hides the unexcused absences section with an animate.css effect
 $('.displayAbsences').on('click', function () {
     var absencesDetailsEl = $(this).parent().parent().next();
 
@@ -288,6 +293,7 @@ $('.displayAbsences').on('click', function () {
     }
 });
 
+// Displays and hides the excused absences section with an animate.css effect
 $('.displayExcusedAbsences').on('click', function () {
     var absencesDetailsEl = $(this).parent().parent().next().next();
 

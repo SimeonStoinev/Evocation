@@ -1,32 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id="editRecord" style="display:none;">
-        <h3 style="text-align: center;">Редактирайте</h3>
-
-        <hr>
-
-        <label for="inputTitle">Заглавие:</label>
-        <input class="input-lg" id="inputTitle" type="text" name="title">
-
-        <br>
-
-        <button type="button" onclick="editRecord($(this), 'school')">Редактирай</button>
-    </div>
-
-    <div id="createRecord" style="display:none;">
-        <h3 style="text-align: center;">Добави</h3>
-
-        <hr>
-
-        <label for="inputTitle">Заглавие:</label>
-        <input class="input-lg" id="inputTitle" type="text" name="title">
-
-        <br>
-
-        <button type="button" onclick="createRecord($(this), 'school')">Създай</button>
-    </div>
-
     <div class="container">
         <div class="row justify-content-center">
 
@@ -40,7 +14,7 @@
                                 <span class="arrow open"></span>
                             </a>
                             <ul class="sub-menu" style="display: block;">
-                                <li class="nav-item active">
+                                <li class="nav-item">
                                     <a href="{{ url('/admin/home') }}" onclick="displayHomeContent($(this))" class="nav-link " data-content="schools">
                                         <i class="icon-graduation"></i>
                                         <span class="title">Училища</span>
@@ -61,7 +35,7 @@
                                         <span class="badge badge-danger"></span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item active">
                                     <a href="{{ url('/admin/curricula') }}" onclick="displayHomeContent($(this))" class="nav-link " data-content="curricula">
                                         <i class="icon-calendar"></i>
                                         <span class="title">Програми</span>
@@ -87,7 +61,7 @@
                         <span class="upperRight">
                             <button onclick="modalCreate()" type="button" class="btn btn-success">Добави <i class="icon-plus"></i></button>
                         </span>
-                        <h3>Училища:</h3>
+                        <h3>Програми:</h3>
 
                         <ul class="adminList">
                             @php $count = 1; @endphp
@@ -100,6 +74,8 @@
                                 @php $count++; @endphp
                             @endforeach
                         </ul>
+
+                        {{ $data->links() }}
                     </div>
                 </div>
             </div>

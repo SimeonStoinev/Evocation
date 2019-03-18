@@ -35,9 +35,7 @@ class SchoolController extends Controller
      */
     public function store(Request $request)
     {
-        $school = new School();
-        $school->title = $request->schoolTitle;
-        $school->save();
+        //
     }
 
     /**
@@ -70,9 +68,7 @@ class SchoolController extends Controller
      */
     public function update(Request $request)
     {
-        $school = School::find($request->recordID);
-        $school->title = $request->schoolTitle;
-        $school->save();
+        //
     }
 
     /**
@@ -83,8 +79,6 @@ class SchoolController extends Controller
      */
     public function destroy(Request $request)
     {
-        $school = School::find($request->recordID);
-
-        $school->delete();
+        //
     }
 }
