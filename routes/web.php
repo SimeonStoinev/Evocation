@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
-Route::post('/', 'WelcomeController@sendMail')->name('welcome.sendMail');
+Route::post('/', 'WelcomeController@sendContactMail')->name('welcome.sendContactMail');
 
 Auth::routes();
 

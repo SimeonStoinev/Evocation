@@ -36,7 +36,6 @@ class ContactMail extends Mailable
      */
     public function build()
     {
-        //dd($contact);
-        return $this->view('view.name');
+        return $this->from('info@evocation-bg.com')->view('mails.contact');
     }
 }

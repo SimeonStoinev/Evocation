@@ -35,15 +35,15 @@ class WelcomeController extends Controller
      * Sends an email from the welcome page contact form.
      *
      * @param Request $request
-     * @return ContactMail | void
+     * @return ContactMail
      */
-    public function sendMail (Request $request) {
-        $contactMail = new \stdClass();
-        $contactMail->name = $request->name;
-        $contactMail->email = $request->email;
-        $contactMail->subject = $request->subject;
-        $contactMail->message = $request->message;
+    public function sendContactMail (Request $request) {
+        $contactMail = [];
+        $contactMail['name'] = $request->name;
+        $contactMail['email'] = $request->email;
+        $contactMail['subject'] = $request->subject;
+        $contactMail['message'] = $request->message;
 
-        Mail::to(['seternals8@gmail.com'])->send(new ContactMail($contactMail));
+        return Mail::to(['seternals8@gmail.com'])->send(new ContactMail($contactMail));
     }
 }
