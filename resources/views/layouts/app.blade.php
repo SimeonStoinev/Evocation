@@ -32,7 +32,7 @@
     <link href="{{ asset('css/landing/style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
 
-    <link rel="shortcut icon" type="image/png" href="{{ '/favicon.png' }}"/>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}"/>
 </head>
 <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
     <div id="app">
@@ -79,21 +79,6 @@
                                 <li class="menu-active"><a href="{{ route('register') }}">{{ __('Регистрация') }}</a></li>
                             </ul>
                         @else
-                            {{--<li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Тестове
-                                </a>
-
-                                <ul class="dropdown-menu" role="menu">
-
-                                    <li><a href="{{ url('/test/create') }}">Създай тест</a></li>
-                                    <li><a href="{{ url('/test/mine') }}">Моите тестове</a></li>
-                                    <li><a href="{{ url('/test/verify') }}">Непроверени тестове</a></li>
-                                    <li><a href="{{ url('/test/verified') }}">Проверени тестове</a></li>
-
-                                </ul>
-                            </li>--}}
-
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} {{ Auth::user()->family }}

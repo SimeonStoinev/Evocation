@@ -1293,6 +1293,7 @@ body.mobile-nav-active #mobile-nav-toggle {
   color: #fff;
   transition: 0.4s;
   cursor: pointer;
+  outline: none;
 }
 
 #contact .form button[type="submit"]:hover {
