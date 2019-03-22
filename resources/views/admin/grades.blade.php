@@ -58,6 +58,17 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="adminContent" content="schools" style="display: block;">
+                        <span class="upperLeft">
+                            <label for="perPageSel">На страница по:</label>
+                            <select id="perPageSel" onchange="applyPerPage(this, 'grades')">
+                                <option value="5" @if($perPage == 5) selected @endif>5</option>
+                                <option value="10" @if($perPage == 10) selected @endif>10</option>
+                                <option value="25" @if($perPage == 25) selected @endif>25</option>
+                                <option value="50" @if($perPage == 50) selected @endif>50</option>
+                                <option value="100" @if($perPage == 100) selected @endif>100</option>
+                            </select>
+                        </span>
+
                         <span class="upperRight">
                             <button onclick="modalCreate()" type="button" class="btn btn-success">Добави <i class="icon-plus"></i></button>
                         </span>

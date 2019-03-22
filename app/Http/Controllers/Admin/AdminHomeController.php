@@ -43,7 +43,7 @@ class AdminHomeController extends Controller
 
         //dd($data);
 
-        return view('admin.grades', ['data' => $data]);
+        return view('admin.grades', ['data' => $data, 'perPage' => $perPage]);
     }
 
     /**
@@ -53,9 +53,9 @@ class AdminHomeController extends Controller
      * @return \Illuminate\Http\Response | Redirector
      */
     public function users ($perPage = 25) {
-        $data = User::getAllUsers()->paginate($perPage); // Paging!
+        $data = User::getAllUsers()->paginate($perPage);
 
-        return view('admin.users', ['data' => $data]);
+        return view('admin.users', ['data' => $data, 'perPage' => $perPage]);
     }
 
     /**
@@ -69,11 +69,15 @@ class AdminHomeController extends Controller
 
         foreach ($curricula as &$curriculum) {
             $curriculum['gradeTitle'] = Grade::getGradeTitleAndStudents($curriculum['grade_id'])->first()['title'];
+            $grade = Grade::find($curriculum['grade_id']);
+            $curriculum['schoolTitle'] = School::getSchoolTitle($grade['school_id'])->first()['title'];
         }
 
         $data = $curricula;
 
-        return view('admin.curricula', ['data' => $data]);
+        //dd($data);
+
+        return view('admin.curricula', ['data' => $data, 'perPage' => $perPage]);
     }
 
     /**

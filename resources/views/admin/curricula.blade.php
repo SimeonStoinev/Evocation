@@ -58,6 +58,17 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="adminContent" content="schools" style="display: block;">
+                        <span class="upperLeft">
+                            <label for="perPageSel">На страница по:</label>
+                            <select id="perPageSel" onchange="applyPerPage(this, 'curricula')">
+                                <option value="5" @if($perPage == 5) selected @endif>5</option>
+                                <option value="10" @if($perPage == 10) selected @endif>10</option>
+                                <option value="25" @if($perPage == 25) selected @endif>25</option>
+                                <option value="50" @if($perPage == 50) selected @endif>50</option>
+                                <option value="100" @if($perPage == 100) selected @endif>100</option>
+                            </select>
+                        </span>
+
                         <span class="upperRight">
                             <button onclick="modalCreate()" type="button" class="btn btn-success">Добави <i class="icon-plus"></i></button>
                         </span>
@@ -67,8 +78,8 @@
                             @php $count = 1; @endphp
                             @foreach($data as $row)
                                 <li>
-                                    {{ $count }}. <span>{{ $row['title'] }}</span>
-                                    <button onclick="modalEdit($(this), {{ $row['id'] }})"><i class="icon-pencil"></i></button>
+                                    {{ $count }}. <span>Програма на <b>{{ $row['gradeTitle'] }} клас</b>, {{ $row['schoolTitle'] }}</span>
+                                    <button onclick="location.href = '/admin/curriculum/'+{{ $row['id'] }};"><i class="icon-pencil"></i></button>
                                     <button onclick="deleteRecord({{ $row['id'] }})"><i class="icon-close" style="color: red;"></i></button>
                                 </li>
                                 @php $count++; @endphp

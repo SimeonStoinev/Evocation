@@ -310,3 +310,8 @@ $('.displayExcusedAbsences').on('click', function () {
         $(absencesDetailsEl).addClass('animated fadeInUp').fadeIn(0);
     }
 });
+
+// Applies the per page filter in the admin panel
+function applyPerPage (el, module) {
+    location.href = '/admin/' + module + '/' + $(el).val();
+}
