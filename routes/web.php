@@ -76,6 +76,7 @@ Route::middleware('admin')->group(function () {
     ]);
 
     Route::get('/admin/grades/{perPage?}', 'Admin\AdminHomeController@grades')->name('admin.grades');
+    Route::get('/admin/grade/{id?}', 'Admin\AdminGradeController@display')->name('adminGrades.display');
     // End of Admin Grade routes
 
 
@@ -92,6 +93,7 @@ Route::middleware('admin')->group(function () {
     ]);
 
     Route::get('/admin/users/{perPage?}', 'Admin\AdminHomeController@users')->name('admin.users');
+    Route::get('/admin/user/{id?}', 'Admin\AdminUserController@display')->name('adminUsers.display');
     // End of Admin User routes
 
 

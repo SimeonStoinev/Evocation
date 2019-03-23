@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Auth;
 class AdminHomeController extends Controller
 {
     /**
-     * Display a listing of the resource.
      * Displays all schools in the Admin home page.
      *
      * @return \Illuminate\Http\Response | Redirector
@@ -28,7 +27,7 @@ class AdminHomeController extends Controller
     }
 
     /**
-     *
+     * Displays all grades in the Admin home page.
      *
      * @param int $perPage
      * @return \Illuminate\Http\Response | Redirector
@@ -41,13 +40,11 @@ class AdminHomeController extends Controller
 
         }
 
-        //dd($data);
-
         return view('admin.grades', ['data' => $data, 'perPage' => $perPage]);
     }
 
     /**
-     *
+     * Displays all users in the Admin home page.
      *
      * @param int $perPage
      * @return \Illuminate\Http\Response | Redirector
@@ -59,7 +56,7 @@ class AdminHomeController extends Controller
     }
 
     /**
-     *
+     * Displays all curricula in the Admin home page.
      *
      * @param int $perPage
      * @return \Illuminate\Http\Response | Redirector
@@ -75,12 +72,11 @@ class AdminHomeController extends Controller
 
         $data = $curricula;
 
-        //dd($data);
-
         return view('admin.curricula', ['data' => $data, 'perPage' => $perPage]);
     }
 
     /**
+     * Displays all subjects in the Admin home page.
      *
      * @param int $perPage
      * @return \Illuminate\Http\Response | Redirector

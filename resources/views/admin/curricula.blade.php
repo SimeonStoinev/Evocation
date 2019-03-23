@@ -70,7 +70,7 @@
                         </span>
 
                         <span class="upperRight">
-                            <button onclick="modalCreate()" type="button" class="btn btn-success">Добави <i class="icon-plus"></i></button>
+                            <button onclick="location.href = '/admin/curricula/create';" type="button" class="btn btn-success">Добави <i class="icon-plus"></i></button>
                         </span>
                         <h3>Програми:</h3>
 

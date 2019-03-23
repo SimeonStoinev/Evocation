@@ -20,11 +20,11 @@ class AdminUserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response | void
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('admin.createUser');
     }
 
     /**
@@ -42,13 +42,11 @@ class AdminUserController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function show($id)
     {
-        $data = [];
-
-        return view('admin.showUser', ['date' => $data]);
+        //
     }
 
     /**
@@ -83,5 +81,17 @@ class AdminUserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function display($id) {
+        $data = [];
+
+        return view('admin.showUser', ['date' => $data]);
     }
 }

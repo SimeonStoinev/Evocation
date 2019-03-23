@@ -70,7 +70,7 @@
                         </span>
 
                         <span class="upperRight">
-                            <button onclick="modalCreate()" type="button" class="btn btn-success">Добави <i class="icon-plus"></i></button>
+                            <button onclick="location.href = '/admin/users/create';" type="button" class="btn btn-success">Добави <i class="icon-plus"></i></button>
                         </span>
                         <h3>Потребители:</h3>
 
@@ -79,7 +79,7 @@
                             @foreach($data as $row)
                                 <li>
                                     {{ $count }}. <span>{{ $row['name'] }} {{ $row['family'] }}</span>
-                                    <button onclick="modalEdit($(this), {{ $row['id'] }})"><i class="icon-pencil"></i></button>
+                                    <button onclick="location.href = '/admin/user/'+{{ $row['id'] }};"><i class="icon-pencil"></i></button>
                                     <button onclick="deleteRecord({{ $row['id'] }})"><i class="icon-close" style="color: red;"></i></button>
                                 </li>
                                 @php $count++; @endphp

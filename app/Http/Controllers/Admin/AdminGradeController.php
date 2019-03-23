@@ -25,9 +25,7 @@ class AdminGradeController extends Controller
      */
     public function create()
     {
-        $data = [];
-
-        return view('admin.showGrade', ['date' => $data]);
+        return view('admin.createGrade');
     }
 
     /**
@@ -84,5 +82,17 @@ class AdminGradeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function display($id) {
+        $data = [];
+
+        return view('admin.showGrade', ['date' => $data]);
     }
 }
