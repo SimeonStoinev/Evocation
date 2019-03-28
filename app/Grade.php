@@ -26,6 +26,17 @@ class Grade extends Model
     }
 
     /**
+     * Gets all grade' ids and titles by a given school id.
+     *
+     * @param $query
+     * @param $schoolID
+     * @return mixed
+     */
+    public function scopeGetGradesInfoBySchoolID ($query, $schoolID) {
+        return $query->where('school_id', $schoolID)->select('id', 'title');
+    }
+
+    /**
      * Gets a grade by a given student id, through searching in the JSON field of student ids in the grade.
      *
      * @param $query

@@ -32,7 +32,7 @@
     <link href="{{ asset('css/landing/style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
 
-    <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}"/>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('favicon2.png') }}"/>
 </head>
 <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
     <div id="app">
@@ -40,7 +40,11 @@
             <div class="container" style="width: 100%;">
                 <div id="logo" style="padding-left: 0;">
                     @if (\Illuminate\Support\Facades\Auth::check())
-                        <a href="{{ url('/home') }}"><img src="{{ asset('img/white_logo.png') }}" alt="logo"></a>
+                        @if (\Illuminate\Support\Facades\Auth::user()['rank'] === 'admin')
+                            <a href="{{ url('admin/home') }}"><img src="{{ asset('img/white_logo.png') }}" alt="logo"></a>
+                        @else
+                            <a href="{{ url('/home') }}"><img src="{{ asset('img/white_logo.png') }}" alt="logo"></a>
+                        @endif
                     @else
                         <a href="{{ url('/') }}"><img src="{{ asset('img/white_logo.png') }}" alt="logo"></a>
                     @endif

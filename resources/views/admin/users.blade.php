@@ -15,35 +15,35 @@
                             </a>
                             <ul class="sub-menu" style="display: block;">
                                 <li class="nav-item">
-                                    <a href="{{ url('/admin/home') }}" onclick="displayHomeContent($(this))" class="nav-link " data-content="schools">
+                                    <a href="{{ url('/admin/home') }}">
                                         <i class="icon-graduation"></i>
                                         <span class="title">Училища</span>
                                         <span class="badge badge-success"></span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('/admin/grades') }}" onclick="displayHomeContent($(this))" class="nav-link " data-content="grades">
+                                    <a href="{{ url('/admin/grades') }}">
                                         <i class="icon-book-open"></i>
                                         <span class="title">Класове</span>
                                         <span class="badge badge-default"></span>
                                     </a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a href="{{ url('/admin/users') }}" onclick="displayHomeContent($(this))" class="nav-link " data-content="users">
+                                    <a href="{{ url('/admin/users') }}">
                                         <i class="icon-user"></i>
                                         <span class="title">Потребители</span>
                                         <span class="badge badge-danger"></span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('/admin/curricula') }}" onclick="displayHomeContent($(this))" class="nav-link " data-content="curricula">
+                                    <a href="{{ url('/admin/curricula') }}">
                                         <i class="icon-calendar"></i>
                                         <span class="title">Програми</span>
                                         <span class="badge badge-info"></span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('/admin/subjects') }}" onclick="displayHomeContent($(this))" class="nav-link " data-content="subjects">
+                                    <a href="{{ url('/admin/subjects') }}">
                                         <i class="icon-list"></i>
                                         <span class="title">Предмети</span>
                                         <span class="badge badge-info"></span>
@@ -57,7 +57,7 @@
 
             <div class="col-md-8">
                 <div class="card">
-                    <div class="adminContent" content="schools" style="display: block;">
+                    <div class="adminContent" style="display: block;">
                         <span class="upperLeft">
                             <label for="perPageSel">На страница по:</label>
                             <select id="perPageSel" onchange="applyPerPage(this, 'users')">
@@ -80,7 +80,6 @@
                                 <li>
                                     {{ $count }}. <span>{{ $row['name'] }} {{ $row['family'] }}</span>
                                     <button onclick="location.href = '/admin/user/'+{{ $row['id'] }};"><i class="icon-pencil"></i></button>
-                                    <button onclick="deleteRecord({{ $row['id'] }})"><i class="icon-close" style="color: red;"></i></button>
                                 </li>
                                 @php $count++; @endphp
                             @endforeach

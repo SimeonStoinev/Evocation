@@ -9,6 +9,10 @@
             @csrf
             <h1>{{'Вход'}}</h1>
 
+            @if (\Illuminate\Support\Facades\Session::has('wrongAuthData'))
+                <p class="danger" style="text-align: center;color: red;">{{ session('wrongAuthData') }}</p>
+            @endif
+
             <div class="inputsAuth">
                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus placeholder="{{'Е-мейл адрес'}}">
 

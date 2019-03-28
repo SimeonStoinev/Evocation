@@ -25,50 +25,11 @@ class GradeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | void
      */
     public function index()
     {
-        $isClassTeacher = User::isUserAClassTeacher(Auth::id());
-
-        if ($isClassTeacher) {
-            $grade = Grade::gradeByClassTeacherID(Auth::id())->first();
-
-            $gradeData = [
-                'title' => $grade['title']
-            ];
-
-            // Fills the $gradeData array with all the students' names from this grade
-            foreach (json_decode($grade['student_ids']) as $row) {
-                $nameAndFamily = User::getUserFullName($row)->first();
-                $dailyAbsences = Absence::getDailyAbsences($row)->get()->toArray();
-                $weeklyAbsences = Absence::getWeeklyAbsences($row)->get()->toArray();
-                $monthlyAbsences = Absence::getMonthlyAbsences($row)->get()->toArray();
-                $gradeData['students'][] = [
-                    'name' => $nameAndFamily['name'] . ' ' . $nameAndFamily['family'],
-                    'dailyAbsences' => $dailyAbsences,
-                    'weeklyAbsences' => $weeklyAbsences,
-                    'monthlyAbsences' => $monthlyAbsences
-                ];
-            }
-
-            $gradeData['school'] = School::getSchoolTitle($grade['school_id'])->first()['title'];
-
-            $gradeLessons = Lesson::gradeLessonsCurriculum($grade['id']);
-
-            $gradeData['mondayLessons'] = $gradeLessons['Mon'];
-            $gradeData['tuesdayLessons'] = $gradeLessons['Tue'];
-            $gradeData['wednesdayLessons'] = $gradeLessons['Wed'];
-            $gradeData['thursdayLessons'] = $gradeLessons['Thu'];
-            $gradeData['fridayLessons'] = $gradeLessons['Fri'];
-            $gradeData['saturdayLessons'] = $gradeLessons['Sat'];
-            $gradeData['sundayLessons'] = $gradeLessons['Sun'];
-            $gradeData['todayLessons'] = $gradeLessons[date('D')];
-
-            //dd($gradeData);
-
-            return view('grade', ['data' => $gradeData]);
-        }
+        //
     }
 
     /**

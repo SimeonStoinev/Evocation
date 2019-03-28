@@ -77,6 +77,7 @@ Route::middleware('admin')->group(function () {
 
     Route::get('/admin/grades/{perPage?}', 'Admin\AdminHomeController@grades')->name('admin.grades');
     Route::get('/admin/grade/{id?}', 'Admin\AdminGradeController@display')->name('adminGrades.display');
+    Route::post('/admin/getGradesBySchool', 'Admin\AdminGradeController@getGradesBySchool')->name('adminGrades.getGrades');
     // End of Admin Grade routes
 
 
@@ -111,6 +112,7 @@ Route::middleware('admin')->group(function () {
 
     Route::get('/admin/curricula/{perPage?}', 'Admin\AdminHomeController@curricula')->name('admin.curricula');
     Route::get('/admin/curriculum/{id?}', 'Admin\AdminCurriculumController@display')->name('adminCurricula.display');
+    Route::post('/admin/getGradesAndTeachers', 'Admin\AdminCurriculumController@getGradesAndTeachers')->name('adminCurricula.getGradesAndTeachers');
     // End of Admin Curriculum routes
 
 

@@ -8,6 +8,15 @@ use App\Grade;
 class Lesson extends Model
 {
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'title', 'grade_id', 'teacher_id', 'time_range_from', 'time_range_to', 'day'
+    ];
+
+    /**
      * Gets a lesson's title and day by a given lesson ID.
      *
      * @param $query

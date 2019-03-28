@@ -55,7 +55,7 @@ class LoginController extends Controller
             return redirect('/home');
         }
         elseif (Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')]) == false) {
-            return redirect('/login')->with('wrongAuthData', 'Не съществува потребител с такъв е-майл или парола.'); // TODO
+            return redirect('/login')->with('wrongAuthData', 'Не съществува потребител с такъв е-майл или парола.');
         }
         else {
             return redirect('/verify');

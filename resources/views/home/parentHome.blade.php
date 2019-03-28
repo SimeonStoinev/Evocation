@@ -14,17 +14,23 @@
                                 <span class="upperRight">{{ $row['childData']['schoolTitle'] }}</span>
 
                                 <div class="parentMainInfo" style="display: block;">
-                                    <h3 class="isInSchool">
-                                        @if ($row['lastEntry']['isInSchool']) Детето Ви се намира в училище.
-                                        @else Детето Ви не е в училище.
-                                        @endif
-                                    </h3>
+                                    @if (!$row['lastEntry']['entered'])
+                                        <h4 class="isInSchool">
+                                            Детето Ви не е било отчетено в училище от системата.
+                                        </h4>
+                                    @else
+                                        <h3 class="isInSchool">
+                                            @if ($row['lastEntry']['isInSchool']) Детето Ви се намира в училище.
+                                            @else Детето Ви не е в училище.
+                                            @endif
+                                        </h3>
 
-                                    <h4 class="entryTimestamp">
-                                        @if ($row['lastEntry']['isInSchool']) Последен вход в {{ $row['lastEntry']['time'] }} часа на {{ $row['lastEntry']['date'] }}
-                                        @else Последен изход в {{ $row['lastEntry']['time'] }} часа на {{ $row['lastEntry']['date'] }}
-                                        @endif
-                                    </h4>
+                                        <h4 class="entryTimestamp">
+                                            @if ($row['lastEntry']['isInSchool']) Последен вход в {{ $row['lastEntry']['time'] }} часа на {{ $row['lastEntry']['date'] }}
+                                            @else Последен изход в {{ $row['lastEntry']['time'] }} часа на {{ $row['lastEntry']['date'] }}
+                                            @endif
+                                        </h4>
+                                    @endif
                                 </div>
 
                                 <ul class="childAbsences">

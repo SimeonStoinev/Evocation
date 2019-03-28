@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Curriculum extends Model
 {
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'grade_id', 'lessons_data'
+    ];
+
+    /**
      * @param $query
      * @return mixed
      */

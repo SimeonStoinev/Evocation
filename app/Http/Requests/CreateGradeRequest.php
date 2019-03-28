@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\App;
 
 class CreateGradeRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class CreateGradeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +24,11 @@ class CreateGradeRequest extends FormRequest
      */
     public function rules()
     {
+        App::setLocale('bg');
+
         return [
-            //
+            'title' => 'required|max:190',
+            'school_id' => 'required|gt:0'
         ];
     }
 }

@@ -108,4 +108,15 @@ class User extends Authenticatable
     public function scopeGetLinkedChildren ($query, $parentID) {
         return $query->where('family_link_id', $parentID);
     }
+
+    /**
+     * Gets all teachers in a given school.
+     *
+     * @param $query
+     * @param $schoolID
+     * @return mixed
+     */
+    public function scopeGetTeachersBySchoolID ($query, $schoolID) {
+        return $query->where(['rank' => 'teacher', 'school_id' => $schoolID])->select('id', 'name', 'family');
+    }
 }

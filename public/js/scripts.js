@@ -3,6 +3,8 @@ function schoolRegisterForm (selectEl, grades) {
     var optionValue = $(selectEl).children("option:selected").val();
 
     if ($('#rank').val() === 'student' && grades[optionValue] !== undefined) {
+        $('#grade').empty().append("<option value='" + 0 + "'>Изберете клас:</option>");
+
         $(grades[optionValue]).each(function () {
             $('#grade').children('option:last').after(
                 "<option value='" + $(this)[0].id + "'>" + $(this)[0].title + "</option>"
@@ -311,7 +313,136 @@ $('.displayExcusedAbsences').on('click', function () {
     }
 });
 
+
+
+/*
+    |--------------------------------------------------------------------------
+    | Admin Section of functions
+    |--------------------------------------------------------------------------
+    |
+    | All functions that follow from now on are used in the admin panel
+    | and/or are helping ones for the admin modules.
+    |
+*/
+
+
+
 // Applies the per page filter in the admin panel
 function applyPerPage (el, module) {
     location.href = '/admin/' + module + '/' + $(el).val();
+}
+
+// Decides if the select is on teacher value and displays the classteacher select
+$('#userFormRank').change(function () {
+    if ($(this).val() === 'teacher') {
+        $('#userFormClassteacher').children('option').attr('selected', false);
+        $('#userFormClassteacher').children('option:first').attr('selected', true);
+        $('.classteacher').fadeIn(300);
+    } else {
+        $('#userFormClassteacher').children('option:first').attr('selected', true);
+        $('.classteacher').fadeOut(300);
+    }
+
+    if ($(this).val() === 'parent') {
+        $('#userFormSchool').children('option').attr('selected', false);
+        $('#userFormSchool').children('option:first').attr('selected', true);
+        $('.school').fadeOut(300);
+        $('.grade').fadeOut(300);
+    } else {
+        $('#userFormSchool').children('option:first').attr('selected', true);
+        $('.school').fadeIn(300);
+    }
+
+    displayGradeSelect();
+});
+
+$('#userFormSchool').change(function () {
+    displayGradeSelect();
+});
+
+$('#userFormClassteacher').change(function(){
+    displayGradeSelect();
+});
+
+// Function called on change event to user form selects and displaying all needed resources in the form depending on the value
+function displayGradeSelect () {
+    if ( ($('#userFormRank').val() === 'student' && $('#userFormSchool').val() !== '0') || ($('#userFormClassteacher').val() === '1' && $('#userFormSchool').val() !== '0') ) {
+        $('.grade').fadeIn(300);
+
+        $.ajax({
+            url: "/admin/getGradesBySchool",
+            type: "POST",
+            data:{
+                schoolID: $('#userFormSchool').val()
+            },
+            success: function(data){
+                $('#userFormGrade').empty().fadeIn(300).append("<option value='" + 0 + "'>Изберете клас:</option>");
+
+                $(data).each(function () {
+                    $('#userFormGrade').children('option:last').after(
+                        "<option value='" + $(this)[0].id + "'>" + $(this)[0].title + "</option>"
+                    );
+                });
+            }
+        });
+    } else {
+        $('.grade').fadeOut(300);
+    }
+}
+
+// Binds on change event to the curriculumFormSchool select and if it's value is different than 0, display all resources in the form
+$('#curriculumFormSchool').change(function () {
+    if ($('#curriculumFormSchool').val() !== '0') {
+        $('.grade').fadeIn(300);
+        $('#lessons').fadeIn(300);
+
+        $.ajax({
+            url: "/admin/getGradesAndTeachers",
+            type: "POST",
+            data:{
+                schoolID: $('#curriculumFormSchool').val()
+            },
+            success: function(data){
+                $('#curriculumFormGrade').empty().fadeIn(300).append("<option value='" + 0 + "'>Изберете клас:</option>");
+
+                $(data[0]).each(function () {
+                    $('#curriculumFormGrade').children('option:last').after(
+                        "<option value='" + $(this)[0].id + "'>" + $(this)[0].title + "</option>"
+                    );
+                });
+
+                $('.teachers').each(function () {
+                    const teacherSelect = this;
+
+                    $(teacherSelect).empty().append("<option value='" + 0 + "'>Изберете преподавател:</option>");
+                    $(data[1]).each(function () {
+                        $(teacherSelect).children('option:last').after(
+                            "<option value='" + $(this)[0].id + "'>" + $(this)[0].name + ' ' + $(this)[0].family + "</option>"
+                        );
+                    });
+                });
+            }
+        });
+    } else {
+        $('.grade').fadeOut(300);
+        $('#lessons').fadeOut(300);
+        $('.curriculumFormGrade').empty().fadeOut(300).append("<option value='" + 0 + "'>Изберете клас:</option>");
+    }
+});
+
+// Adds a curriculum lesson form block in the admin panel
+function addFormLesson (el) {
+    const lastLesson = $(el).prev();
+    const lastLessonNumber = $(lastLesson).find('p').html().split(' ');
+
+    $(lastLesson).after('<div class="singleFormLesson" style="display: none;">' + $(lastLesson).html() + '</div>');
+    $(lastLesson).next().find('p').html('Час номер ' + (parseInt(lastLessonNumber[2]) + 1) );
+    $(lastLesson).next().find('.deleteLessonBtn').removeAttr('disabled');
+    $(lastLesson).next().fadeIn(300);
+    //console.log($('.singleFormLesson:last'));
+}
+
+// Removes a curriculum lesson form block in the admin panel
+function deleteFormLesson (el) {
+    $(el).parent().remove();
 }

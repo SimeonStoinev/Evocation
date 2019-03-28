@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\App;
+use Illuminate\Validation\Rule;
 
 class CreateUserRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class CreateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +25,20 @@ class CreateUserRequest extends FormRequest
      */
     public function rules()
     {
+        App::setLocale('bg');
+
         return [
-            //
+            'name' => 'required|string|max:190',
+            'family' => 'required|string|max:190',
+            'email' => 'required|string|email|max:190|unique:users',
+            'password' => 'required|string|min:6|max:190',
+            'rank' => [
+                'required',
+                Rule::in(['headmaster', 'subheadmaster', 'teacher', 'student', 'parent'])
+            ],
+            'is_classteacher' => 'lte:1',
+            'school_id' => '',
+            'grade' => ''
         ];
     }
 }

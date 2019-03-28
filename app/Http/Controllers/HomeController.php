@@ -298,7 +298,15 @@ class HomeController extends Controller
             $parentData[$child['id']]['childData']['gradeTitle'] = $grade['title'];
             $parentData[$child['id']]['childData']['schoolTitle'] = School::getSchoolTitle($grade['school_id'])->first()['title'];
 
-            $entry = Entry::getUserEntries($child['id'])->get()->last()->toArray();
+            $entry = Entry::getUserEntries($child['id'])->get()->last();
+
+            if ($entry == null) {
+                $entry['status'] = '1';
+                $entry['created_at'] = '2019-03-10 20:10:34';
+                $entry['entered'] = false;
+            } else {
+                $entry['entered'] = true;
+            }
 
             $parentData[$child['id']]['lastEntry'] = $entry;
 
@@ -313,6 +321,7 @@ class HomeController extends Controller
             $date = explode('-', $timestamp[0]);
             $parentData[$child['id']]['lastEntry']['time'] = $timestamp[1];
             $parentData[$child['id']]['lastEntry']['date'] = $date[2] . '.' . $date[1] . '.' . $date[0];
+            $parentData[$child['id']]['lastEntry']['entered'] = $entry['entered'];
 
             $parentData[$child['id']]['absences']['absencesCount'] = Absence::countAbsences($child['id']);
             $parentData[$child['id']]['absences']['dailyAbsences'] = Absence::getDailyAbsences($child['id']);
@@ -331,8 +340,6 @@ class HomeController extends Controller
             $parentData[$child['id']]['lessons']['saturdayLessons'] = $gradeLessons['Sat'];
             $parentData[$child['id']]['lessons']['sundayLessons'] = $gradeLessons['Sun'];
         }
-
-        //dd(array_reverse($parentData));
 
         return array_reverse($parentData);
     }
