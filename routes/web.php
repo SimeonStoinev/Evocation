@@ -11,6 +11,8 @@
 |
 */
 
+Route::post('/absence', 'API\AbsenceController@store')->name('absence.store');
+
 Route::get('/', 'WelcomeController@index')->name('welcome');
 Route::post('/', 'WelcomeController@sendContactMail')->name('welcome.sendContactMail');
 
@@ -37,7 +39,8 @@ Route::resources([
 Route::post('/absence/excuse', 'API\AbsenceController@excuseAbsence')->name('absences.excuse');
 Route::post('/absence/excuseByClassteacher', 'API\AbsenceController@excuseAbsenceByClassteacher')->name('absences.excuseByClassteacher');
 Route::post('/absence/write', 'API\AbsenceController@writeAbsence')->name('absences.write');
-Route::post('/absence', 'API\AbsenceController@store')->name('absence.store');
+
+//Route::get('/absence', 'API\AbsenceController@index')->name('absence.index');
 
 // Checkins
 Route::post('/checkins/refreshCheckedUsers', 'CheckinListenerController@refreshCheckedUsers')->name('checkins.refresh');
@@ -65,36 +68,36 @@ Route::middleware('admin')->group(function () {
 
     // Admin Grade routes
     Route::resource('admin/grades', 'Admin\AdminGradeController')->except([
-        'index', 'show'
+        'index', 'show', 'edit'
     ])->names([
         'index' => 'adminGrades.index',
         'store' => 'adminGrades.store',
         'create' => 'adminGrades.create',
         'update' => 'adminGrades.update',
-        'destroy' => 'adminGrades.destroy',
-        'edit' => 'adminGrades.edit'
+        'destroy' => 'adminGrades.destroy'
     ]);
 
     Route::get('/admin/grades/{perPage?}', 'Admin\AdminHomeController@grades')->name('admin.grades');
     Route::get('/admin/grade/{id?}', 'Admin\AdminGradeController@display')->name('adminGrades.display');
+    Route::get('/admin/grade/edit/{id?}', 'Admin\AdminGradeController@edit')->name('adminGrades.edit');
     Route::post('/admin/getGradesBySchool', 'Admin\AdminGradeController@getGradesBySchool')->name('adminGrades.getGrades');
     // End of Admin Grade routes
 
 
     // Admin User routes
     Route::resource('admin/users', 'Admin\AdminUserController')->except([
-        'index', 'show'
+        'index', 'show', 'edit'
     ])->names([
         'index' => 'adminUsers.index',
         'store' => 'adminUsers.store',
         'create' => 'adminUsers.create',
         'update' => 'adminUsers.update',
-        'destroy' => 'adminUsers.destroy',
-        'edit' => 'adminUsers.edit'
+        'destroy' => 'adminUsers.destroy'
     ]);
 
     Route::get('/admin/users/{perPage?}', 'Admin\AdminHomeController@users')->name('admin.users');
     Route::get('/admin/user/{id?}', 'Admin\AdminUserController@display')->name('adminUsers.display');
+    Route::get('/admin/user/edit/{id?}', 'Admin\AdminUserController@edit')->name('adminUsers.edit');
     // End of Admin User routes
 
 
@@ -106,12 +109,12 @@ Route::middleware('admin')->group(function () {
         'store' => 'adminCurricula.store',
         'create' => 'adminCurricula.create',
         'update' => 'adminCurricula.update',
-        'destroy' => 'adminCurricula.destroy',
-        'edit' => 'adminCurricula.edit'
+        'destroy' => 'adminCurricula.destroy'
     ]);
 
     Route::get('/admin/curricula/{perPage?}', 'Admin\AdminHomeController@curricula')->name('admin.curricula');
     Route::get('/admin/curriculum/{id?}', 'Admin\AdminCurriculumController@display')->name('adminCurricula.display');
+    Route::get('/admin/curriculum/edit/{id?}', 'Admin\AdminCurriculumController@edit')->name('adminCurricula.edit');
     Route::post('/admin/getGradesAndTeachers', 'Admin\AdminCurriculumController@getGradesAndTeachers')->name('adminCurricula.getGradesAndTeachers');
     // End of Admin Curriculum routes
 

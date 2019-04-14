@@ -76,7 +76,7 @@
                             </ul>
 
                             <div class="buttonActions" style="text-align: center;margin-top: 20px;">
-                                <button class="btn btn-primary">Редактирай</button>
+                                <button onclick="location.href = '/admin/grade/edit/'+{{ $data['id'] }};" class="btn btn-primary">Редактирай</button>
                                 <button class="btn btn-danger">Изтрий</button>
                             </div>
                         </div>

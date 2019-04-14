@@ -66,34 +66,43 @@
                             @php $count = 0; @endphp
                             @foreach ($data['lessons'] as $lessonDays)
                                 <div class="form-group dayLessonsWrapper">
-                                    <h3 style="text-align: center;">{{ $data['daysOfWeekBg'][$count] }}</h3>
+                                    <h3 style="text-align: center;position: relative;">{{ $data['daysOfWeekBg'][$count] }}
+                                        <a onclick="$(this).parent().next().slideToggle(600);$(this).fadeOut(0);$(this).next().fadeIn(0);" style="cursor: pointer;color: #000;">
+                                            <i class="icon-arrow-down" style="position: absolute;right: 0;"></i>
+                                        </a>
+                                        <a onclick="$(this).parent().next().slideToggle(600);$(this).fadeOut(0);$(this).prev().fadeIn(0);" style="cursor: pointer;color: #000;display: none;">
+                                            <i class="icon-arrow-up" style="position: absolute;right: 0;"></i>
+                                        </a>
+                                    </h3>
 
-                                    @php $i = 1; @endphp
-                                    @foreach ($lessonDays as $lesson)
-                                        <div class="singleFormLesson" style="text-align: center;">
-                                            <p style="text-align: center;">Час номер {{ $i }}</p>
+                                    <div class="curriculumLessonsWrapper" style="display: none;">
+                                        @php $i = 1; @endphp
+                                        @foreach ($lessonDays as $lesson)
+                                            <div class="singleFormLesson" style="text-align: center;">
+                                                <p style="text-align: center;">Час номер {{ $i }}</p>
 
-                                            <label>{{ 'Предмет: ' . $lesson['title'] }}</label>
-                                            <br>
-                                            <label>{{ 'Преподавател: ' . $lesson['teacherName'] }}</label>
-                                            <br>
+                                                <label>{{ 'Предмет: ' . $lesson['title'] }}</label>
+                                                <br>
+                                                <label>{{ 'Преподавател: ' . $lesson['teacherName'] }}</label>
+                                                <br>
 
-                                            <label>{{ 'Часови диапазон:' }}</label>
+                                                <label>{{ 'Часови диапазон:' }}</label>
 
-                                            <label>{{ 'От: ' }}</label> {{ $lesson['time_range_from'] }}
+                                                <label>{{ 'От: ' }}</label> {{ $lesson['time_range_from'] }}
 
-                                            <label>{{ 'До: ' }}</label> {{ $lesson['time_range_to'] }}
-                                        </div>
+                                                <label>{{ 'До: ' }}</label> {{ $lesson['time_range_to'] }}
+                                            </div>
 
-                                        @php $i++; @endphp
-                                    @endforeach
+                                            @php $i++; @endphp
+                                        @endforeach
+                                    </div>
                                 </div>
                                 @php $count++; @endphp
                             @endforeach
                         </div>
 
                         <div class="buttonActions" style="text-align: center;margin-top: 20px;">
-                            <button class="btn btn-primary">Редактирай</button>
+                            <button onclick="location.href = '/admin/curriculum/edit/'+{{ $data['id'] }};" class="btn btn-primary">Редактирай</button>
                             <button class="btn btn-danger">Изтрий</button>
                         </div>
                     </div>

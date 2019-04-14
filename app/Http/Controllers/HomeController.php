@@ -134,8 +134,8 @@ class HomeController extends Controller
         $teacherLessons = Lesson::getTeacherLessonsToday(Auth::id())->get()->toArray();
 
         $teacherLessonsData = []; $teacherData = ['teacherInfo' => $teacherInfo];
-        $currentTime = date('H:i');
-        //$currentTime = '13:33';
+        //$currentTime = date('H:i');
+        $currentTime = '18:10';
 
         $lessonCount = 1;
         foreach ($teacherLessons as $row) {
