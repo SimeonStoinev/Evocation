@@ -208,118 +208,6 @@ function displayHomeContent (el) {
     });
 }
 
-// Closes admin modals
-function closeModal () {
-    $('#uglipop_overlay_wrapper').fadeOut(0);
-    $('#uglipop_overlay').fadeOut(0);
-    $('#uglipop_content_fixed').fadeOut(0);
-}
-
-// Pops admin modal for editing a record
-function modalEdit (el, id) {
-    uglipop({
-        class:'modalWrapper',
-        source:'div',
-        content:'editRecord'
-    });
-    var val = $(el).prev().html();
-
-    $('.modalWrapper').find('input[name=title]').html(val).attr('value', val).focus();
-    $('.modalWrapper').find('button').attr('data-id', id);
-}
-
-// Pops admin modal for creating a record
-function modalCreate () {
-    uglipop({
-        class:'modalWrapper',
-        source:'div',
-        content:'createRecord'
-    });
-
-    $('.modalWrapper').find('input').focus();
-}
-
-// Pops admin modal for deleting a record
-function modalDelete (id) {
-    uglipop({
-        class:'modalWrapper',
-        source:'div',
-        content:'deleteRecord'
-    });
-
-    $('.modalWrapper').find('.btn-success').attr('data-id', id);
-}
-
-// Used in admin panel modules to edit a record; Works only for schools and subjects!
-function editRecord (el) {
-    let recordID = $(el).attr('data-id');
-    let title = escapeString(el.siblings('input[name=title]').val().trim());
-    let module = $(el).siblings('.module').val();
-
-    if (title !== '' && title !== undefined && title !== null) {
-        $.ajax({
-            url: "/admin/"+module+"/update",
-            type: "POST",
-            data: {
-                recordID: recordID,
-                title: title
-            },
-            success: function () {
-                location.reload();
-            }
-        });
-    }
-}
-
-// Used in admin panel modules to create a record; Works only for schools and subjects!
-function createRecord (el) {
-    let title = escapeString(el.siblings('input[name=title]').val().trim());
-    let module = $(el).siblings('.module').val();
-
-    if (title !== '' && title !== undefined && title !== null) {
-        $.ajax({
-            url: "/admin/"+module+"",
-            type: "POST",
-            data: {
-                title: title
-            },
-            success: function () {
-                location.reload();
-            }
-        });
-    }
-}
-
-// Used in admin panel modules to delete a record; Works only for schools and subjects!
-function deleteRecord (el) {
-    let module = $(el).siblings('.module').val();
-
-    $.ajax({
-        url: "/admin/"+module+"/destroy",
-        type: "POST",
-        data: {
-            recordID: $(el).attr('data-id')
-        },
-        success: function () {
-            location.reload();
-        }
-    });
-}
-
-// Escapes string's dangerous symbols
-function escapeString (string) {
-    const entityMap = {
-        '?': '',
-        '<': '',
-        '>': '',
-        ';': '',
-    };
-
-    return String(string).replace(/[?<>;]/g, function (s) {
-        return entityMap[s];
-    });
-}
-
 // Displays and hides the unexcused absences section with an animate.css effect
 $('.displayAbsences').on('click', function () {
     var absencesDetailsEl = $(this).parent().parent().next();
@@ -488,4 +376,124 @@ function addFormLesson (el) {
 // Removes a curriculum lesson form block in the admin panel
 function deleteFormLesson (el) {
     $(el).parent().remove();
+}
+
+
+/*
+    |--------------------------------------------------------------------------
+    | Admin Modals
+    |--------------------------------------------------------------------------
+*/
+
+
+// Closes admin modals
+function closeModal () {
+    $('#uglipop_overlay_wrapper').fadeOut(0);
+    $('#uglipop_overlay').fadeOut(0);
+    $('#uglipop_content_fixed').fadeOut(0);
+}
+
+// Pops admin modal for editing a record
+function modalEdit (el, id) {
+    uglipop({
+        class:'modalWrapper',
+        source:'div',
+        content:'editRecord'
+    });
+    var val = $(el).prev().html();
+
+    $('.modalWrapper').find('input[name=title]').html(val).attr('value', val).focus();
+    $('.modalWrapper').find('button').attr('data-id', id);
+}
+
+// Pops admin modal for creating a record
+function modalCreate () {
+    uglipop({
+        class:'modalWrapper',
+        source:'div',
+        content:'createRecord'
+    });
+
+    $('.modalWrapper').find('input').focus();
+}
+
+// Pops admin modal for deleting a record
+function modalDelete (id) {
+    uglipop({
+        class:'modalWrapper',
+        source:'div',
+        content:'deleteRecord'
+    });
+
+    $('.modalWrapper').find('.btn-success').attr('data-id', id);
+}
+
+// Used in admin panel modules to edit a record; Works only for schools and subjects!
+function editRecord (el) {
+    let recordID = $(el).attr('data-id');
+    let title = escapeString(el.siblings('input[name=title]').val().trim());
+    let module = $(el).siblings('.module').val();
+
+    if (title !== '' && title !== undefined && title !== null) {
+        $.ajax({
+            url: "/admin/"+module+"/update",
+            type: "POST",
+            data: {
+                recordID: recordID,
+                title: title
+            },
+            success: function () {
+                location.reload();
+            }
+        });
+    }
+}
+
+// Used in admin panel modules to create a record; Works only for schools and subjects!
+function createRecord (el) {
+    let title = escapeString(el.siblings('input[name=title]').val().trim());
+    let module = $(el).siblings('.module').val();
+
+    if (title !== '' && title !== undefined && title !== null) {
+        $.ajax({
+            url: "/admin/"+module+"",
+            type: "POST",
+            data: {
+                title: title
+            },
+            success: function () {
+                location.reload();
+            }
+        });
+    }
+}
+
+// Used in admin panel modules to delete a record; Works only for schools and subjects!
+function deleteRecord (el) {
+    let module = $(el).siblings('.module').val();
+
+    $.ajax({
+        url: "/admin/"+module+"/destroy",
+        type: "POST",
+        data: {
+            recordID: $(el).attr('data-id')
+        },
+        success: function () {
+            location.reload();
+        }
+    });
+}
+
+// Escapes string's dangerous symbols
+function escapeString (string) {
+    const entityMap = {
+        '?': '',
+        '<': '',
+        '>': '',
+        ';': '',
+    };
+
+    return String(string).replace(/[?<>;]/g, function (s) {
+        return entityMap[s];
+    });
 }

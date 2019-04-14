@@ -100,12 +100,14 @@ class AdminGradeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response | void
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $grade = Grade::find($request->recordID);
+
+        $grade->delete();
     }
 
     /**
