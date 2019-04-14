@@ -216,7 +216,7 @@ class HomeController extends Controller
     protected function lessonStudentsArray ($gradeInfo, $notChecked) {
         $lessonStudentsData = [];
 
-        // Foreaches every student in the class to add info and decide whether he was in the lesson or not.
+        // Loops through every student in the class to add info and decide whether he was in the lesson or not.
         foreach (json_decode($gradeInfo['student_ids']) as $studentID) {
             $studentName = User::getUserFullName($studentID)->first();
             $lessonStudentsData[$studentID]['studentID'] = $studentID;

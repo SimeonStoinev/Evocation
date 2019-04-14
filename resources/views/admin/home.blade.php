@@ -1,31 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div id="editRecord" style="display:none;">
-        <h3 style="text-align: center;">Редактирайте</h3>
-
-        <hr>
-
-        <label for="inputTitle">Заглавие:</label>
-        <input class="input-lg" id="inputTitle" type="text" name="title">
-
-        <br>
-
-        <button type="button" onclick="editRecord($(this), 'schools')">Редактирай</button>
-    </div>
-
-    <div id="createRecord" style="display:none;">
-        <h3 style="text-align: center;">Добави</h3>
-
-        <hr>
-
-        <label for="inputTitle">Заглавие:</label>
-        <input class="input-lg" id="inputTitle" type="text" name="title">
-
-        <br>
-
-        <button type="button" onclick="createRecord($(this), 'schools')">Създай</button>
-    </div>
+    @include('admin.modals')
 
     <div class="container">
         <div class="row justify-content-center">
@@ -95,7 +71,7 @@
                                 <li>
                                     {{ $count }}. <span>{{ $row['title'] }}</span>
                                     <button onclick="modalEdit($(this), {{ $row['id'] }})"><i class="icon-pencil"></i></button>
-                                    <button onclick="deleteRecord({{ $row['id'] }}, 'schools')"><i class="icon-close" style="color: red;"></i></button>
+                                    <button onclick="modalDelete({{ $row['id'] }})"><i class="icon-close" style="color: red;"></i></button>
                                 </li>
                                 @php $count++; @endphp
                             @endforeach

@@ -23,7 +23,7 @@ class AdminHomeController extends Controller
     {
         $data = School::getAllSchools()->get()->toArray();
 
-        return view('admin.home', ['data' => $data]);
+        return view('admin.home', ['data' => $data, 'module' => 'schools']);
     }
 
     /**
@@ -84,6 +84,6 @@ class AdminHomeController extends Controller
     public function subjects ($perPage = 50) {
         $data = Subject::getAllSubjects()->paginate($perPage);
 
-        return view('admin.subjects', ['data' => $data]);
+        return view('admin.subjects', ['data' => $data, 'module' => 'subjects']);
     }
 }

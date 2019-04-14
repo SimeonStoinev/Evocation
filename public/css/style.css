@@ -791,7 +791,6 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .modalWrapper button {
-    background-color: #2b95e0;
     color: #ffffff;
     width: 30%;
     border-radius: 38px;
@@ -804,13 +803,37 @@ select.form-control:not([size]):not([multiple]) {
     transition: all 250ms ease;
     margin: 6% 0 2% 0;
     outline: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
     cursor: pointer;
     border: none;
     padding: 20px;
 }
+.modalWrapper > button:first-of-type {
+    margin-right: 5px;
+}
+.modalWrapper > button:last-of-type {
+    margin-left: 5px;
+}
 
-.modalWrapper button:hover {
+.modalWrapper > .btn-success {
+    background-color: #2b95e0;
+}   .modalWrapper > .btn-success:hover {
     background-color: #1f81c6;
+}
+.btn-success:not(:disabled):not(.disabled).active, .btn-success:not(:disabled):not(.disabled):active, .show>.btn-success.dropdown-toggle {
+    background-color: #1f81c6;
+}
+
+.modalWrapper > .btn-danger {
+    background-color: #cc0000;
+}   .modalWrapper > .btn-danger:hover {
+    background-color: #aa0000;
+}
+
+.modalWrapper label {
+    font-size: 1.5em;
 }
 
 #uglipop_content_fixed {
