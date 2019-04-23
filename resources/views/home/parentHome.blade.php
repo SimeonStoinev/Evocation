@@ -10,8 +10,8 @@
                             <div class="card-header" style="color: #2b95e0;">{{ $row['childData']['name'] . ' ' . $row['childData']['family'] }}</div>
 
                             <div class="card-body parentHomeBody">
-                                <span class="upperLeft">{{ $row['childData']['gradeTitle'] }}</span>
-                                <span class="upperRight">{{ $row['childData']['schoolTitle'] }}</span>
+                                <span class="upperLeft" style="position: absolute;margin: 0;">{{ $row['childData']['gradeTitle'] }}</span>
+                                <span class="upperRight" style="position: absolute;margin: 0;">{{ $row['childData']['schoolTitle'] }}</span>
 
                                 <div class="parentMainInfo" style="display: block;">
                                     @if (!$row['lastEntry']['entered'])

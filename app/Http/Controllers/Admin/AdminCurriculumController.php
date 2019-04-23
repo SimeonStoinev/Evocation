@@ -151,7 +151,7 @@ class AdminCurriculumController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function display($id) {
-        $data = Curriculum::find($id)->first()->toArray();
+        $data = Curriculum::where('id', $id)->first()->toArray();
 
         $grade = Grade::where('id', $data['grade_id'])->first();
         $data['grade'] = $grade['title'];

@@ -14,7 +14,7 @@
                             <br>
                             <label>Училище:</label> {{ $data['schoolTitle'] }}
                             <br>
-                            <label>Класен ръководител:</label> {{ $data['classteacher']['name'] . $data['classteacher']['family'] }}
+                            <label>Класен ръководител:</label> {{ $data['classteacher']['name'] . ' ' . $data['classteacher']['family'] }}
                             <br>
                             <label>Смяна:</label> {{ $data['shift'] }}
                             <br>

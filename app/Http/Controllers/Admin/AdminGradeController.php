@@ -117,7 +117,7 @@ class AdminGradeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function display($id) {
-        $grade = Grade::find($id)->first()->toArray();
+        $grade = Grade::where('id', $id)->first()->toArray();
 
         foreach (json_decode($grade['student_ids']) as $row) {
             $nameAndFamily = User::getUserFullName($row)->first();

@@ -125,7 +125,7 @@
                                         <div>Час №{{ $count }} - {{ $row['lessonSchedule'] }}</div>
                                     </section>
                                     <section class="studentsWrapper">
-                                        @if ($row['lessonSchedule'] === 'Минал' && !empty($row['studentsData']))
+                                        @if ($row['lessonSchedule'] === 'Минал' && isset($row['studentsData']) && !empty($row['studentsData']))
                                             <ul class="lessonStudents">
                                                 @php $studentCount = 1; @endphp
                                                 @foreach ($row['studentsData'] as $student)
