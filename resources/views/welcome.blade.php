@@ -7,7 +7,7 @@
         <title>Evocation</title>
 
         <!-- Favicons -->
-        <link href="{{ 'favicon2.png' }}" rel="icon">
+        <link href="{{ 'favicon.png' }}" rel="icon">
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">

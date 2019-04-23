@@ -86,7 +86,7 @@
         <link href="{{ asset('js/exportDataTables/dtExportButtons.css') }}" rel="stylesheet" type="text/css">
     @endif
 
-    <link rel="shortcut icon" type="image/png" href="{{ asset('favicon2.png') }}"/>
+    <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}"/>
 </head>
 <body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo">
     <div id="app">
