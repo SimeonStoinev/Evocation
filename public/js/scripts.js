@@ -263,6 +263,11 @@ function applyPerPage (el, module) {
     location.href = '/admin/' + module + '/' + $(el).val();
 }
 
+// Applies the users rank filter in the admin panel
+function applyRank (el, module) {
+    location.href = '/admin/' + module + '/' + $(el).val();
+}
+
 // Decides if the select is on teacher value and displays the classteacher select
 $('#userFormRank').change(function () {
     if ($(this).val() === 'teacher') {
@@ -306,7 +311,7 @@ function displayGradeSelect () {
             data:{
                 schoolID: $('#userFormSchool').val()
             },
-            success: function(data){
+            success: function (data) {
                 $('#userFormGrade').empty().fadeIn(300).append("<option value='" + 0 + "'>Изберете клас:</option>");
 
                 $(data).each(function () {
@@ -319,6 +324,20 @@ function displayGradeSelect () {
     } else {
         $('.grade').fadeOut(300);
     }
+}
+
+// Function called in admin panel verify accounts module (verifies account)
+function verifyUser (id) {
+    $.ajax({
+        url: "/admin/user/verify",
+        type: "POST",
+        data:{
+            userID: id
+        },
+        success: function () {
+            location.reload();
+        }
+    });
 }
 
 // Binds on change event to the curriculumFormSchool select and if it's value is different than 0, display all resources in the form
@@ -400,10 +419,10 @@ function modalEdit (el, id) {
         source:'div',
         content:'editRecord'
     });
-    var val = $(el).prev().html();
+    var val = $(el).parent().siblings('.modalTarget').html();
 
     $('.modalWrapper').find('input[name=title]').html(val).attr('value', val).focus();
-    $('.modalWrapper').find('button').attr('data-id', id);
+    $('.modalWrapper').find('.btn-success').attr('data-id', id);
 }
 
 // Pops admin modal for creating a record
@@ -423,6 +442,17 @@ function modalDelete (id) {
         class:'modalWrapper',
         source:'div',
         content:'deleteRecord'
+    });
+
+    $('.modalWrapper').find('.btn-success').attr('data-id', id);
+}
+
+// Pops admin modal for deleting a record
+function modalAbsences (id) {
+    uglipop({
+        class:'modalWrapper',
+        source:'div',
+        content:'absencesOptions'
     });
 
     $('.modalWrapper').find('.btn-success').attr('data-id', id);
@@ -482,6 +512,28 @@ function deleteRecord (el) {
             location.reload();
         }
     });
+}
+
+// Used in admin panel modules to edit an absence record; Works only for absences module!
+function editAbsence (el) {
+    let absenceAction = $(el).attr('data-absence-action');
+
+    $.ajax({
+        url: "/admin/absences/update",
+        type: "POST",
+        data: {
+            recordID: $(el).attr('data-id'),
+            absenceAction: absenceAction
+        },
+        success: function () {
+            location.reload();
+        }
+    });
+}
+
+// Used to pass absence select values to the success button's data
+function absenceSelectActions (el) {
+    $(el).siblings('.btn-success').attr('data-absence-action', $(el).val());
 }
 
 // Escapes string's dangerous symbols

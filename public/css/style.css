@@ -581,7 +581,7 @@ select.form-control:not([size]):not([multiple]) {
     padding: 15px 0 5px 0;
 }
 
-.lessonStudents button, .absencesDetails button, .adminList button {
+.lessonStudents button, .absencesDetails button, .adminList button, #adminDataTable tbody button {
     border: none;
     background: transparent;
     box-shadow: none;
@@ -606,6 +606,11 @@ select.form-control:not([size]):not([multiple]) {
 
 .lessonInfo div:last-child {
     text-align: right;
+}
+
+div[content=todayLessons] .studentsWrapper .lessonStudents button {
+    float: right;
+    padding: 0;
 }
 
 .lessonStudents, .gradeStudents {
@@ -716,23 +721,22 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .upperLeft, .upperRight {
-    position: absolute;
     top: 0;
     color: #444;
     font-weight: 600;
-    border-bottom: 1px solid rgba(0,0,0,.125);
-    padding: 5px;
+    padding: 0 5px 5px;
+    margin: 0 0 10px 10px;
 }
 
 .upperRight {
     right: 0;
-    border-left: 1px solid rgba(0,0,0,.125);
+    float: right;
     border-radius: 0 0 0 10px;
 }
 
 .upperLeft {
     left: 0;
-    border-right: 1px solid rgba(0,0,0,.125);
+    float: left;
     border-radius: 0 0 10px 0;
 }
 
@@ -759,13 +763,80 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 /*Admin panel*/
+.adminContainer {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
 .adminContent {
     padding: 8px;
 }
 
-.adminContent > h3 {
-    color: #111111;
+.adminContent select {
+    outline: none;
+}
+
+#adminDataTable_length label, #adminDataTable_filter label {
+    font-size: 16px;
+}
+
+#adminDataTable_filter label .dataTableSearch {
+    outline: none;
+    padding: 6px 12px;
+    background-color: #fff;
+    border: 1px solid #c2cad8;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+#adminDataTable_filter label .dataTableSearch:focus {
+    border-color: #93a1bb;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(147,161,187,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(147,161,187,.6);
+}
+
+#tableHeading {
+    vertical-align: middle;
     text-align: center;
+    position: relative;
+}
+
+#adminDataTable caption {
+    caption-side: top;
+    text-align: center;
+    color: #111111;
+    font-size: 2em;
+    padding-bottom: 0;
+}
+
+#adminDataTable caption .upperLeft {
+    margin: 0;
+    padding: 0;
+}
+
+#adminDataTable caption .tableTitle {
+    vertical-align: middle;
+    position: absolute;
+    transform: translate(-55%);
+    top: 0;
+}
+
+#adminDataTable caption select {
+    font-size: 18px;
+}
+
+#adminDataTable tbody button {
+    padding: 0;
+    margin: 4px 0 0 10px;
+    font-size: 1.25em;
+}
+
+#adminDataTable caption button {
+    padding: 5px 12px;
+    font-size: 18px;
+    margin: 0;
 }
 
 .adminList li {
@@ -849,6 +920,12 @@ select.form-control:not([size]):not([multiple]) {
     margin-top: 3%;
 }
 
+#uglipop_content_fixed select {
+    margin-top: 3%;
+    transform: translateX(9.5%);
+    display: block;
+}
+
 .pagination {
     display: block;
     margin: 20px auto 0;
@@ -919,4 +996,8 @@ select.form-control:not([size]):not([multiple]) {
 
 .btn-danger {
     background-color: #ed6b75;
+}
+
+.col-md-10 {
+    flex: 0 0 80%;
 }

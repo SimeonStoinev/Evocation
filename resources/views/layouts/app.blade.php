@@ -16,6 +16,56 @@
     <script src="{{ asset('js/layout.min.js') }}" defer></script>
     <script src="{{ asset('js/uglipop.min.js') }}" defer></script>
     <script src="{{ asset('js/scripts.js') }}" defer></script>
+    @if (\Illuminate\Support\Facades\Auth::user()['rank'] === 'admin')
+        <script src="{{ asset('js/dataTables.js') }}" defer></script>
+        <script src="{{ asset('js/exportDataTables/dataTables.buttons.min.js') }}" defer></script>
+        <script src="{{ asset('js/exportDataTables/jszip.min.js') }}" defer></script>
+        <script src="{{ asset('js/exportDataTables/pdfmake.min.js') }}" defer></script>
+        <script src="{{ asset('js/exportDataTables/vfs_fonts.js') }}" defer></script>
+        <script src="{{ asset('js/exportDataTables/buttons.html5.min.js') }}" defer></script>
+        <script>
+            $(document).ready(function() {
+                const dataTable = $('#adminDataTable');
+
+                if ($(dataTable).length > 0) {
+                    $(dataTable).DataTable({
+                        "pageLength": 25,
+                        "processing": true,
+                        @if (\Illuminate\Support\Facades\Request::path() == 'admin/absences')
+                        "dom": 'Bfrtip',
+                        "buttons": [
+                            'excelHtml5',
+                            'csvHtml5',
+                            'pdfHtml5'
+                        ],
+                        @endif
+                        "language": {
+                            "decimal":        "",
+                            "emptyTable":     "Няма налична информация за изобразяване.",
+                            "info":           "Показване на _START_ - _END_ от общо _TOTAL_",
+                            "infoEmpty":      "Показване на 0 до 0 от 0 резултата",
+                            "infoFiltered":   "(от _MAX_ записа)",
+                            "infoPostFix":    "",
+                            "thousands":      ",",
+                            "lengthMenu":     "Покажи _MENU_ резултата",
+                            "loadingRecords": "Зареждане...",
+                            "processing":     "Зареждане...",
+                            "search":         "Търси:",
+                            "zeroRecords":    "Не успяхме да намерим резултати.",
+                            "paginate": {
+                                "first":      "Първа",
+                                "last":       "Последна",
+                                "next":       "Следваща",
+                                "previous":   "Предишна"
+                            }
+                        }
+                    });
+
+                    $('#adminDataTable_filter').find('input[type=search]').addClass('dataTableSearch');
+                }
+            });
+        </script>
+    @endif
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -31,6 +81,10 @@
     <link href="{{ asset('css/default.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/landing/style.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css">
+    @if (\Illuminate\Support\Facades\Auth::user()['rank'] === 'admin')
+        <link href="{{ asset('css/dataTables.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('js/exportDataTables/dtExportButtons.css') }}" rel="stylesheet" type="text/css">
+    @endif
 
     <link rel="shortcut icon" type="image/png" href="{{ asset('favicon2.png') }}"/>
 </head>

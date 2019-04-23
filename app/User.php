@@ -29,12 +29,44 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /*
+        |--------------------------------------------------------------------------
+        | User ORM functions
+        |--------------------------------------------------------------------------
+    */
+
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo (School's title)
+     */
+    public function school () {
+        return $this->belongsTo('App\School')->select('title');
+    }
+
+    // End of ORM functions
+
+    /**
+     * Used only in Admin Panel!
+     *
+     * @param $query
+     * @param $rank
+     * @return mixed
+     */
+    public function scopeGetAllUsers ($query, $rank) {
+        return $query->where([
+            ['id', '>', '0'], ['rank', '!=', 'admin'], ['rank', $rank]
+        ])->select('id', 'name', 'family', 'email', 'rank', 'school_id');
+    }
+
+    /**
+     * Used only in Admin Panel!
+     *
      * @param $query
      * @return mixed
      */
-    public function scopeGetAllUsers ($query) {
-        return $query->where('id', '>', '0')->where('rank', '!=', 'admin');
+    public function scopeGetAllUnverifiedUsers ($query) {
+        return $query->where([
+            ['id', '>', '0'], ['rank', '!=', 'admin'], ['verified', '0']
+        ])->select('id', 'name', 'family', 'email', 'rank', 'school_id');
     }
 
     /**

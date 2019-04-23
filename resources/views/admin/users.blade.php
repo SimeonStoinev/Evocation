@@ -3,43 +3,60 @@
 @section('content')
     @include('admin.modals')
 
-    <div class="container">
+    <div class="container adminContainer">
         <div class="row justify-content-center">
 
             @include('admin.menu')
 
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card">
                     <div class="adminContent" style="display: block;">
-                        <span class="upperLeft">
-                            <label for="perPageSel">На страница по:</label>
-                            <select id="perPageSel" onchange="applyPerPage(this, 'users')">
-                                <option value="5" @if($perPage == 5) selected @endif>5</option>
-                                <option value="10" @if($perPage == 10) selected @endif>10</option>
-                                <option value="25" @if($perPage == 25) selected @endif>25</option>
-                                <option value="50" @if($perPage == 50) selected @endif>50</option>
-                                <option value="100" @if($perPage == 100) selected @endif>100</option>
-                            </select>
-                        </span>
-
-                        <span class="upperRight">
-                            <button onclick="location.href = '/admin/users/create';" type="button" class="btn btn-success">Добави <i class="icon-plus"></i></button>
-                        </span>
-                        <h3>Потребители:</h3>
-
-                        <ul class="adminList">
-                            @php $count = 1; @endphp
-                            @foreach($data as $row)
-                                <li>
-                                    {{ $count }}. <span>{{ $row['name'] }} {{ $row['family'] }}</span>
-                                    <button onclick="location.href = '/admin/user/'+{{ $row['id'] }};"><i class="icon-pencil"></i></button>
-                                    <button onclick="modalDelete({{ $row['id'] }})"><i class="icon-close" style="color: red;"></i></button>
-                                </li>
-                                @php $count++; @endphp
+                        <table id="adminDataTable" class="display" style="width:100%">
+                            <caption>
+                                <span class="tableTitle">Потребители:</span>
+                                <span class="upperLeft tableActionButtons">
+                                    <label for="rankSelect"></label>
+                                    <select id="rankSelect" onchange="applyRank($(this), 'users')">
+                                        <option value="student" @if($rank === 'student') selected @endif>Ученици</option>
+                                        <option value="teacher" @if($rank === 'teacher') selected @endif>Учители</option>
+                                        <option value="parent" @if($rank === 'parent') selected @endif>Родители</option>
+                                        <option value="subheadmaster" @if($rank === 'subheadmaster') selected @endif>Зам. директори</option>
+                                        <option value="headmaster" @if($rank === 'headmaster') selected @endif>Директори</option>
+                                    </select>
+                                </span>
+                                <span class="upperRight">
+                                    <button onclick="location.href = '/admin/users/create';" type="button" class="btn btn-success">Добави <i class="icon-plus"></i></button>
+                                </span>
+                            </caption>
+                            <thead>
+                            <tr>
+                                @foreach ($columns as $column)
+                                    <th>{{ $column }}</th>
+                                @endforeach
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($users as $user)
+                                <tr>
+                                    <td>{{ $user['name'] }}</td>
+                                    <td>{{ $user['family'] }}</td>
+                                    <td>{{ $user['email'] }}</td>
+                                    <td>{{ $user['schoolTitle'] }}</td>
+                                    <td>
+                                        <button onclick="location.href = '/admin/user/'+{{ $user['id'] }};"><i class="icon-pencil"></i></button>
+                                        <button onclick="modalDelete({{ $user['id'] }})"><i class="icon-close" style="color: red;"></i></button>
+                                    </td>
+                                </tr>
                             @endforeach
-                        </ul>
-
-                        {{ $data->links() }}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                @foreach ($columns as $column)
+                                    <th>{{ $column }}</th>
+                                @endforeach
+                            </tr>
+                            </tfoot>
+                        </table>
                     </div>
                 </div>
             </div>

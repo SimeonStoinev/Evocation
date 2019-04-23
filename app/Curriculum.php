@@ -15,6 +15,28 @@ class Curriculum extends Model
         'grade_id', 'lessons_data'
     ];
 
+    /*
+        |--------------------------------------------------------------------------
+        | User ORM functions
+        |--------------------------------------------------------------------------
+    */
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo (School's title)
+     */
+    public function school () {
+        return $this->belongsTo('App\School')->select('title');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo (grade's title, school_id and shift)
+     */
+    public function grade () {
+        return $this->belongsTo('App\Grade')->select('title', 'id', 'shift');
+    }
+
+    // End of ORM functions
+
     /**
      * @param $query
      * @return mixed

@@ -1,10 +1,10 @@
-<div class="page-sidebar-wrapper">
+<div class="page-sidebar-wrapper col-md-2">
     <div class="page-sidebar navbar-collapse collapse">
         <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
             <li class="nav-item open">
                 <a href="javascript:;" class="nav-link nav-toggle">
                     <i class="icon-settings"></i>
-                    <span class="title">Меню {{ session('menuModule') }}</span>
+                    <span class="title">Меню</span>
                     <span class="arrow open"></span>
                 </a>
                 <ul class="sub-menu" style="display: block;">
@@ -45,8 +45,15 @@
                     </li>
                     <li class="nav-item @if (session('menuModule') == 'absences') active @endif">
                         <a href="{{ url('/admin/absences') }}">
-                            <i class="icon-list"></i>
+                            <i class="icon-question"></i>
                             <span class="title">Отсъствия</span>
+                            <span class="badge badge-info"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item @if (session('menuModule') == 'verify') active @endif">
+                        <a href="{{ url('/admin/verify') }}">
+                            <i class="icon-check"></i>
+                            <span class="title">Потвърди акаунти</span>
                             <span class="badge badge-info"></span>
                         </a>
                     </li>

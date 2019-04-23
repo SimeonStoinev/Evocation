@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use App\Lesson;
 
 class Absence extends Model
 {
@@ -16,6 +15,43 @@ class Absence extends Model
     protected $fillable = [
         'excused', 'kicked'
     ];
+
+
+    /*
+        |--------------------------------------------------------------------------
+        | Absence ORM functions
+        |--------------------------------------------------------------------------
+    */
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo (User's name and family)
+     */
+    public function user () {
+        return $this->belongsTo('App\User');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo (Lesson's subject title)
+     */
+    public function lesson () {
+        return $this->belongsTo('App\Lesson')->select('title');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo (Grade's title)
+     */
+    public function grade () {
+        return $this->belongsTo('App\Grade')->select('title');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo (School's title)
+     */
+    public function school () {
+        return $this->belongsTo('App\School')->select('title');
+    }
+
+    // End of ORM functions
 
     /**
      * Function used to get the last absence of the user by his id. Used to mark the absence as late, not full one.

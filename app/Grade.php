@@ -6,6 +6,28 @@ use Illuminate\Database\Eloquent\Model;
 
 class Grade extends Model
 {
+    /*
+        |--------------------------------------------------------------------------
+        | User ORM functions
+        |--------------------------------------------------------------------------
+    */
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo (School's title)
+     */
+    public function school () {
+        return $this->belongsTo('App\School')->select('title');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo (Classteacher's title)
+     */
+    public function classteacher () {
+        return $this->belongsTo('App\User')->select('name', 'family');
+    }
+
+    // End of ORM functions
+
     /**
      * @param $query
      * @return mixed

@@ -153,4 +153,15 @@ class AdminUserController extends Controller
 
         return view('admin.showUser', ['data' => $data]);
     }
+
+
+    /**
+     * Request comes from AJAX!
+     *
+     * @param Request $request
+     * @return void (Updates user's record)
+     */
+    public function verifyUser (Request $request) {
+        User::where('id', $request->userID)->update(['verified' => 1]);
+    }
 }

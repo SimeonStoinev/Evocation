@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Absence;
 use App\Http\Controllers\Controller;
 use App\School;
 use App\Grade;
@@ -20,42 +21,102 @@ class AdminHomeController extends Controller
     public function index () {
         session()->put('menuModule', 'home');
 
-        $data = School::getAllSchools()->get()->toArray();
+        $data['schools'] = School::getAllSchools()->get()->toArray();
 
-        return view('admin.home', ['data' => $data, 'module' => 'schools']);
+        // Loops through all schools to match their headmaster's id to the user's name and family (ORM functions)
+        foreach ($data['schools'] as &$school) {
+            $headmasterName = School::find($school['id'])->headmaster;
+
+            $school['headmasterName'] = $headmasterName['name'] . ' ' . $headmasterName['family'];
+        }
+
+        $data['dataTableColumns'] = [
+            'Училище', 'Директор', 'Бр. класове', 'Бр. ученици', 'Бр. учители', 'Опции'
+        ];
+
+        return view('admin.home', [
+            'schools' => $data['schools'],
+            'columns' => $data['dataTableColumns'],
+            'module' => 'schools'
+        ]);
     }
 
     /**
      * Displays all grades in the Admin home page.
      *
-     * @param int $perPage
      * @return \Illuminate\Http\Response | Redirector
      */
-    public function grades ($perPage = 25) {
+    public function grades () {
         session()->put('menuModule', 'grades');
 
-        $data = Grade::getAllGrades()->paginate($perPage);
+        $data['grades'] = Grade::getAllGrades()->get()->toArray();
 
-        foreach ($data as &$row) {
-            $row['schoolTitle'] = School::getSchoolTitle($row['school_id'])->first()['title'];
-
+        // Loops through all grades to collect the necessary data (ORM functions)
+        foreach ($data['grades'] as &$grade) {
+            $grade['schoolTitle'] = Grade::find($grade['id'])->school['title'];
+            $classteacher = Grade::find($grade['id'])->classteacher;
+            $grade['classteacherName'] = $classteacher['name'] . ' ' . $classteacher['family'];
+            $grade['studentsCount'] = count(json_decode($grade['student_ids']));
         }
 
-        return view('admin.grades', ['data' => $data, 'perPage' => $perPage, 'module' => 'grades']);
+        $data['dataTableColumns'] = [
+            'Клас', 'Класен ръководител', 'Бр. ученици', 'Смяна', 'Училище', 'Опции'
+        ];
+
+        return view('admin.grades', [
+            'grades' => $data['grades'],
+            'columns' => $data['dataTableColumns'],
+            'module' => 'grades'
+        ]);
     }
 
     /**
      * Displays all users in the Admin home page.
      *
-     * @param int $perPage
+     * @param string $rank
      * @return \Illuminate\Http\Response | Redirector
      */
-    public function users ($perPage = 25) {
+    public function users ($rank = 'student') {
         session()->put('menuModule', 'users');
 
-        $data = User::getAllUsers()->paginate($perPage);
+        $data['users'] = User::getAllUsers($rank)->get()->toArray();
 
-        return view('admin.users', ['data' => $data, 'perPage' => $perPage, 'module' => 'users']);
+        // Loops through all users to collect the necessary data (ORM functions)
+        foreach ($data['users'] as &$user) {
+            $user['schoolTitle'] = User::find($user['id'])->school['title'];
+
+            switch ($user['rank']) {
+                case 'admin':
+                    $user['rankName'] = 'Админ';
+                    break;
+                case 'headmaster':
+                    $user['rankName'] = 'Директор';
+                    break;
+                case 'subheadmaster':
+                    $user['rankName'] = 'Зам. директор';
+                    break;
+                case 'teacher':
+                    $user['rankName'] = 'Учител';
+                    break;
+                case 'student':
+                    $user['rankName'] = 'Ученик';
+                    break;
+                case 'parent':
+                    $user['rankName'] = 'Родител';
+                    break;
+            }
+        }
+
+        $data['dataTableColumns'] = [
+            'Име', 'Фамилия', 'Емейл', 'Училище', 'Опции'
+        ];
+
+        return view('admin.users', [
+            'users' => $data['users'],
+            'columns' => $data['dataTableColumns'],
+            'module' => 'users',
+            'rank' => $rank
+        ]);
     }
 
     /**
@@ -64,33 +125,143 @@ class AdminHomeController extends Controller
      * @param int $perPage
      * @return \Illuminate\Http\Response | Redirector
      */
-    public function curricula ($perPage = 25) {
+    public function curricula () {
         session()->put('menuModule', 'curricula');
 
-        $curricula = Curriculum::getAllCurricula()->paginate($perPage);
+        $data['curricula'] = Curriculum::getAllCurricula()->get()->toArray();
 
-        foreach ($curricula as &$curriculum) {
-            $curriculum['gradeTitle'] = Grade::getGradeTitleAndStudents($curriculum['grade_id'])->first()['title'];
-            $grade = Grade::find($curriculum['grade_id']);
-            $curriculum['schoolTitle'] = School::getSchoolTitle($grade['school_id'])->first()['title'];
+        // Loops through all curricula to collect the necessary data (ORM functions)
+        foreach ($data['curricula'] as &$curriculum) {
+            $grade = Curriculum::find($curriculum['id'])->grade;
+            $curriculum['gradeTitle'] = $grade['title'] . ' клас';
+            $curriculum['gradeShift'] = $grade['shift'];
+            $curriculum['schoolTitle'] = Grade::find($grade['id'])->school['title'];
         }
 
-        $data = $curricula;
+        $data['dataTableColumns'] = [
+            'Програма на:', 'Смяна', 'Училище', 'Опции'
+        ];
 
-        return view('admin.curricula', ['data' => $data, 'perPage' => $perPage, 'module' => 'curricula']);
+        return view('admin.curricula', [
+            'curricula' => $data['curricula'],
+            'columns' => $data['dataTableColumns'],
+            'module' => 'curricula'
+        ]);
     }
 
     /**
      * Displays all subjects in the Admin home page.
      *
-     * @param int $perPage
      * @return \Illuminate\Http\Response | Redirector
      */
-    public function subjects ($perPage = 50) {
+    public function subjects () {
         session()->put('menuModule', 'subjects');
 
-        $data = Subject::getAllSubjects()->paginate($perPage);
+        $data['subjects'] = Subject::getAllSubjects()->get()->toArray();
+        $data['dataTableColumns'] = [
+            'Предмет:', 'Опции'
+        ];
 
-        return view('admin.subjects', ['data' => $data, 'module' => 'subjects']);
+        return view('admin.subjects', [
+            'subjects' => $data['subjects'],
+            'columns' => $data['dataTableColumns'],
+            'module' => 'subjects'
+        ]);
+    }
+
+    /**
+     * Displays all absences in the Admin home page.
+     *
+     * @return \Illuminate\Http\Response | Redirector
+     */
+    public function absences () {
+        session()->put('menuModule', 'absences');
+
+        $data['absences'] = Absence::all()->toArray();
+
+        // Loops through all absences to collect the necessary data (ORM functions)
+        foreach ($data['absences'] as &$absence) {
+            $id = $absence['id'];
+
+            $timestamp = explode(' ', $absence['created_at']);
+            $userName = Absence::find($id)->user;
+            $absence['userName'] = $userName['name'] . ' ' . $userName['family'];
+            $absence['lessonTitle'] = Absence::find($id)->lesson['title'];
+            $absence['gradeTitle'] = Absence::find($id)->grade['title'];
+            $absence['schoolTitle'] = Absence::find($id)->school['title'];
+            $absence['date'] = $timestamp[0];
+            $absence['time'] = $timestamp[1];
+
+            if ($absence['excused']) {
+                $absence['excused'] = 'ДА';
+            } else {
+                $absence['excused'] = 'НЕ';
+            }
+
+            if ($absence['late']) {
+                $absence['late'] = 'ДА';
+            } else {
+                $absence['late'] = 'НЕ';
+            }
+        }
+
+        $data['dataTableColumns'] = [
+            'Име', 'Учебен час', 'Клас', 'Училище', 'Дата', 'Час', 'Извинено', 'Закъснение', 'Опции'
+        ];
+
+        return view('admin.absences', [
+            'absences' => $data['absences'],
+            'columns' => $data['dataTableColumns'],
+            'module' => 'absences'
+        ]);
+    }
+
+    /**
+     * Displays all accounts which await verification in the Admin home page.
+     *
+     * @return \Illuminate\Http\Response | Redirector
+     */
+    public function verifyAccounts () {
+        session()->put('menuModule', 'verify');
+
+        $data['unverifiedUsers'] = User::getAllUnverifiedUsers()->get()->toArray();
+
+        // Loops through all unverified users to collect the necessary data (ORM functions)
+        foreach ($data['unverifiedUsers'] as &$unverifiedUser) {
+            $unverifiedUser['schoolTitle'] = User::find($unverifiedUser['id'])->school['title'];
+
+            switch ($unverifiedUser['rank']) {
+                case 'admin':
+                    $unverifiedUser['rankName'] = 'Админ';
+                    break;
+                case 'headmaster':
+                    $unverifiedUser['rankName'] = 'Директор';
+                    break;
+                case 'subheadmaster':
+                    $unverifiedUser['rankName'] = 'Зам. директор';
+                    break;
+                case 'teacher':
+                    $unverifiedUser['rankName'] = 'Учител';
+                    break;
+                case 'student':
+                    $unverifiedUser['rankName'] = 'Ученик';
+                    break;
+                case 'parent':
+                    $unverifiedUser['rankName'] = 'Родител';
+                    break;
+            }
+        }
+
+        //dd($data);
+
+        $data['dataTableColumns'] = [
+            'Име', 'Фамилия', 'Емейл', 'Ниво на достъп', 'Училище', 'Потвърди'
+        ];
+
+        return view('admin.verifyAccounts', [
+            'unverifiedUsers' => $data['unverifiedUsers'],
+            'columns' => $data['dataTableColumns'],
+            'module' => 'verify'
+        ]);
     }
 }

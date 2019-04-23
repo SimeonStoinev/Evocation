@@ -55,6 +55,7 @@ Route::post('/checkins/close/', 'CheckinListenerController@closeCheckin')->name(
 */
 Route::middleware('admin')->group(function () {
     Route::get('/admin/home', 'Admin\AdminHomeController@index')->name('admin.home');
+    Route::post('/admin/getDataTableInfo', 'Admin\AdminHomeController@getDataTableInfo')->name('admin.getDataTableInfo');
 
     // Admin School routes
     Route::resource('admin/schools', 'Admin\AdminSchoolController')->except([
@@ -81,7 +82,7 @@ Route::middleware('admin')->group(function () {
         'update' => 'adminGrades.update'
     ]);
 
-    Route::get('/admin/grades/{perPage?}', 'Admin\AdminHomeController@grades')->name('admin.grades');
+    Route::get('/admin/grades', 'Admin\AdminHomeController@grades')->name('admin.grades');
     Route::get('/admin/grade/{id?}', 'Admin\AdminGradeController@display')->name('adminGrades.display');
     Route::get('/admin/grade/edit/{id?}', 'Admin\AdminGradeController@edit')->name('adminGrades.edit');
     Route::post('/admin/getGradesBySchool', 'Admin\AdminGradeController@getGradesBySchool')->name('adminGrades.getGrades');
@@ -99,9 +100,11 @@ Route::middleware('admin')->group(function () {
         'update' => 'adminUsers.update'
     ]);
 
-    Route::get('/admin/users/{perPage?}', 'Admin\AdminHomeController@users')->name('admin.users');
+    Route::get('/admin/users/{rank?}', 'Admin\AdminHomeController@users')->name('admin.users');
     Route::get('/admin/user/{id?}', 'Admin\AdminUserController@display')->name('adminUsers.display');
     Route::get('/admin/user/edit/{id?}', 'Admin\AdminUserController@edit')->name('adminUsers.edit');
+    Route::post('/admin/user/verify', 'Admin\AdminUserController@verifyUser')->name('adminUsers.verifyUser');
+    Route::post('/admin/verify/destroy', 'Admin\AdminUserController@destroy')->name('adminUsers.destroyUnverified');
     Route::post('/admin/users/destroy', 'Admin\AdminUserController@destroy')->name('adminUsers.destroy');
     // End of Admin User routes
 
@@ -116,7 +119,7 @@ Route::middleware('admin')->group(function () {
         'update' => 'adminCurricula.update'
     ]);
 
-    Route::get('/admin/curricula/{perPage?}', 'Admin\AdminHomeController@curricula')->name('admin.curricula');
+    Route::get('/admin/curricula', 'Admin\AdminHomeController@curricula')->name('admin.curricula');
     Route::get('/admin/curriculum/{id?}', 'Admin\AdminCurriculumController@display')->name('adminCurricula.display');
     Route::get('/admin/curriculum/edit/{id?}', 'Admin\AdminCurriculumController@edit')->name('adminCurricula.edit');
     Route::post('/admin/getGradesAndTeachers', 'Admin\AdminCurriculumController@getGradesAndTeachers')->name('adminCurricula.getGradesAndTeachers');
@@ -134,8 +137,20 @@ Route::middleware('admin')->group(function () {
         'edit' => 'adminSubjects.edit'
     ]);
 
-    Route::get('/admin/subjects/{perPage?}', 'Admin\AdminHomeController@subjects')->name('admin.subjects');
+    Route::get('/admin/subjects', 'Admin\AdminHomeController@subjects')->name('admin.subjects');
     Route::post('/admin/subjects/update', 'Admin\AdminSubjectController@update')->name('adminSubjects.update');
     Route::post('/admin/subjects/destroy', 'Admin\AdminSubjectController@destroy')->name('adminSubjects.destroy');
     // End of Admin Subject routes
+
+
+    // Admin Absences routes
+    Route::get('/admin/absences', 'Admin\AdminHomeController@absences')->name('admin.absences');
+    Route::post('/admin/absences/destroy', 'Admin\AdminAbsenceController@destroy')->name('adminAbsences.destroy');
+    Route::post('/admin/absences/update', 'Admin\AdminAbsenceController@update')->name('adminAbsences.update');
+    // End of Admin Absences routes
+
+
+    // Admin Verify Accounts routes
+    Route::get('/admin/verify', 'Admin\AdminHomeController@verifyAccounts')->name('admin.verifyAccounts');
+    // End of Admin Verify Accounts routes
 });

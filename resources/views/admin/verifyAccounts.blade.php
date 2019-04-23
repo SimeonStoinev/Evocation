@@ -13,10 +13,7 @@
                     <div class="adminContent" style="display: block;">
                         <table id="adminDataTable" class="display" style="width:100%">
                             <caption>
-                                <span class="tableTitle">Предмети:</span>
-                                <span class="upperRight">
-                                    <button onclick="modalCreate()" type="button" class="btn btn-success">Добави <i class="icon-plus"></i></button>
-                                </span>
+                                <span class="tableTitle">Непотвърдени потребители:</span>
                             </caption>
                             <thead>
                             <tr>
@@ -26,12 +23,16 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($subjects as $subject)
+                            @foreach ($unverifiedUsers as $user)
                                 <tr>
-                                    <td class="modalTarget">{{ $subject['title'] }}</td>
+                                    <td>{{ $user['name'] }}</td>
+                                    <td>{{ $user['family'] }}</td>
+                                    <td>{{ $user['email'] }}</td>
+                                    <td>{{ $user['rankName'] }}</td>
+                                    <td>{{ $user['schoolTitle'] }}</td>
                                     <td>
-                                        <button onclick="modalEdit($(this), {{ $subject['id'] }})"><i class="icon-pencil"></i></button>
-                                        <button onclick="modalDelete({{ $subject['id'] }})"><i class="icon-close" style="color: red;"></i></button>
+                                        <button onclick="verifyUser({{ $user['id'] }})"><i class="icon-check" style="color: green;"></i></button>
+                                        <button onclick="modalDelete({{ $user['id'] }})"><i class="icon-close" style="color: red;"></i></button>
                                     </td>
                                 </tr>
                             @endforeach

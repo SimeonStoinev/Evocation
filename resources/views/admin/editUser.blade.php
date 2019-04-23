@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container adminContainer">
         <div class="row justify-content-center">
 
             @include('admin.menu')
