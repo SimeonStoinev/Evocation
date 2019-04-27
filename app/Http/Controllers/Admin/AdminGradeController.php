@@ -50,7 +50,9 @@ class AdminGradeController extends Controller
 
         $grade = new Grade();
         $grade->title = $validated['title'];
+        $grade->classteacher_id = $validated['classteacher_id'];
         $grade->school_id = $validated['school_id'];
+        $grade->shift = $validated['shift'];
 
         $grade->save();
 
@@ -119,9 +121,11 @@ class AdminGradeController extends Controller
     public function display($id) {
         $grade = Grade::where('id', $id)->first()->toArray();
 
-        foreach (json_decode($grade['student_ids']) as $row) {
-            $nameAndFamily = User::getUserFullName($row)->first();
-            $grade['students'][] = $nameAndFamily['name'] . ' ' . $nameAndFamily['family'];
+        if ($grade['student_ids'] !== null) {
+            foreach (json_decode($grade['student_ids']) as $row) {
+                $nameAndFamily = User::getUserFullName($row)->first();
+                $grade['students'][] = $nameAndFamily['name'] . ' ' . $nameAndFamily['family'];
+            }
         }
 
         $grade['schoolTitle'] = School::getSchoolTitle($grade['school_id'])->first()['title'];

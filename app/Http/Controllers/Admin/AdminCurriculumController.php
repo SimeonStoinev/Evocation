@@ -92,6 +92,8 @@ class AdminCurriculumController extends Controller
 
         $curriculum->save();
 
+        // TODO Update grade's curriculum!!!
+
         return redirect('admin/curricula');
     }
 

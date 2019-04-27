@@ -383,20 +383,70 @@ $('#curriculumFormSchool').change(function () {
 // Adds a curriculum lesson form block in the admin panel
 function addFormLesson (el) {
     const lastLesson = $(el).prev();
-    const lastLessonNumber = $(lastLesson).find('p').html().split(' ');
 
     $(lastLesson).after('<div class="singleFormLesson" style="display: none;">' + $(lastLesson).html() + '</div>');
-    $(lastLesson).next().find('p').html('Час номер ' + (parseInt(lastLessonNumber[2]) + 1) );
+    //$(lastLesson).next().find('p').html('Час номер ' + recalculateLessonNumber(el) );
     $(lastLesson).next().find('.deleteLessonBtn').removeAttr('disabled');
     $(lastLesson).next().fadeIn(300);
-    //console.log($('.singleFormLesson:last'));
+
+    recalculateLessonNumber(el);
 }
 
 // Removes a curriculum lesson form block in the admin panel
 function deleteFormLesson (el) {
+    let currentLessonsWrapper = $(el).parent().parent();
+
     $(el).parent().remove();
+
+    recalculateLessonNumber(currentLessonsWrapper, true);
 }
 
+// Fixes lesson number upon adding and removing a form lesson
+function recalculateLessonNumber (el, afterDelete = false) {
+    let currentDayLessons;
+
+    if (afterDelete) {
+        currentDayLessons = $(el).find('.singleFormLesson');
+    } else {
+        currentDayLessons = $(el).parent().find('.singleFormLesson');
+    }
+
+    for (let i = 0; i < $(currentDayLessons).length; i++) {
+        let lesson = $(currentDayLessons)[i];
+        $(lesson).find('p').html('Час номер ' + (i+1));
+    }
+}
+
+// Binds on change event to the gradeFormSchoolSelect select and if it's value is different than 0, display all resources in the form
+$('#gradeFormSchoolSelect').change(function () {
+    if ($('#gradeFormSchoolSelect').val() !== '0') {
+        $('.teachers').fadeIn(300);
+        $('#gradeFormClassteacherSelect').fadeIn(300);
+
+        $.ajax({
+            url: "/admin/getGradesAndTeachers",
+            type: "POST",
+            data:{
+                schoolID: $(this).val()
+            },
+            success: function(data){
+                $('#gradeFormClassteacherSelect').each(function () {
+                    const teacherSelect = this;
+
+                    $(teacherSelect).empty().append("<option value='" + 0 + "'>Изберете класен ръководител:</option>");
+                    $(data[1]).each(function () {
+                        $(teacherSelect).children('option:last').after(
+                            "<option value='" + $(this)[0].id + "'>" + $(this)[0].name + ' ' + $(this)[0].family + "</option>"
+                        );
+                    });
+                });
+            }
+        });
+    } else {
+        $('.teachers').fadeOut(300);
+        $('#gradeFormClassteacherSelect').empty().fadeOut(300).append("<option value='" + 0 + "' selected>Изберете класен ръководител:</option>");
+    }
+});
 
 /*
     |--------------------------------------------------------------------------

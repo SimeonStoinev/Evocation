@@ -28,7 +28,9 @@ class CreateGradeRequest extends FormRequest
 
         return [
             'title' => 'required|max:190',
-            'school_id' => 'required|gt:0'
+            'school_id' => 'required|gt:0',
+            'classteacher_id' => 'required|gt:0',
+            'shift' => 'required|gt:0'
         ];
     }
 }
